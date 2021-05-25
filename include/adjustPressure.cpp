@@ -1,18 +1,24 @@
-// Stillum öll dekk í einu.
-// Þetta þarf sennilega að bæta...
+/*
+* 	Here we adjust the pressure in the tires
+*   This needs a lot of rework
+*   
+*
+*
+*/
+
 void adjustAllTires()
 {
-  //unsigned long millis() = millis(); //Uppfærum teljara
+
   if(((pressure_ALL*100-selectedPressure*100))>25) // þegar það er of mikill þrýstingur
   {
-    tiretoken = 5; // Við höldum token til að stilla öll dekk
+    tiretoken = 5; // Token for adjusting all tires
     digitalWrite(AIR_IN,OFF);
-    digitalWrite(TIRE_LR,ON); // Opnum loka í dekk
+    digitalWrite(TIRE_LR,ON); 
     digitalWrite(TIRE_LF,ON);
     digitalWrite(TIRE_RF,ON);
     digitalWrite(TIRE_RR, ON);
-    digitalWrite(AIR_OUT,ON); // Opnum fyrir loft út
-    tirePaint(C_URHLEYPING,tiretoken); // Litum dekk fjólublátt
+    digitalWrite(AIR_OUT,ON); 
+    tirePaint(C_URHLEYPING,tiretoken);
 
     if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
     {
@@ -20,14 +26,17 @@ void adjustAllTires()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if(millis() - previousMillis > interval_ALL) // ef það er kominn tími á að mæla
+    if(millis() - timer_deflate > interval_deflate) 
     {
-      read_LRT(); // Lesum þrýsting
+      read_LRT(); 
       read_LFT();
       read_RFT();
       read_RRT();
-      previousMillis = millis(); //endurstillum teljara
+      timer_deflate = millis(); //endurstillum teljara
+
       updateValues();
+
+
       // Hérna myndum við vilja bera saman þrýsting á öllum dekkjum
       // Við breytum öllu í heiltölu í centiPSI, fyrir lesanleika
       uint16_t test_LRT = pressure_LRT*100;
@@ -38,15 +47,22 @@ void adjustAllTires()
       // Reynist summa allra vera hærri en valins þrýstings.
       if((test_LRT + test_LFT + test_RFT + test_RRT)  > (selectedPressure*400))
       {
-        // Þá leiðréttum við hvert dekk fyrir sig, og höldum svo áfram.
+        //Þá leiðréttum við hvert dekk fyrir sig, og höldum svo áfram.
         adjustLRT(); // Stillum vinstra afturdekk
         adjustLFT(); // Stillum vinstra framdekk
         adjustRFT(); // Stillum hægra framdekk
         adjustRRT(); // Stillum hægra afturdekk
         tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
+        interval_deflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_deflate);
+        pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+        timer_deflate = millis(); //endurstillum teljara
       }
       else
-      pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+      {
+        interval_deflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_deflate);
+        pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+        timer_deflate = millis(); //endurstillum teljara
+      }
     }
   } // Lækkun þrýstings fall lokar
 
@@ -65,10 +81,9 @@ void adjustAllTires()
         {
           updateBaseValue(); // Uppfærum mælingu á kistu
           previousMillis2 = millis(); // Endurstillum teljarann
-
         }
 
-        if(millis() - previousMillis > interval_ALL) // Ef það er kominn tími til að mæla
+        if(millis() - timer_inflate > interval_inflate) // Ef það er kominn tími til að mæla
         {
           air_base_close(); // Lokum kistu
           read_LRT(); // Lesum þrýsting
@@ -76,7 +91,7 @@ void adjustAllTires()
           read_RFT();
           read_RRT();
           updateValues();
-          previousMillis = millis(); //endurstillum teljara
+          timer_inflate = millis(); //endurstillum teljara
 
           // Hérna myndum við vilja bera saman þrýsting á öllum dekkjum
           // Við breytum öllu í heiltölu í milliPSI, fyrir lesanleika
@@ -94,9 +109,16 @@ void adjustAllTires()
             adjustRFT(); // Stillum hægra framdekk
             adjustRRT(); // Stillum hægra afturdekk
             tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
+            interval_inflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
+            pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+            timer_inflate = millis(); //endurstillum teljara
           }
           else
-          pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+          {
+            interval_inflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
+            pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+            timer_inflate = millis(); //endurstillum teljara
+          }
         }
       }// Hækkun þrýstings fall lokar
 

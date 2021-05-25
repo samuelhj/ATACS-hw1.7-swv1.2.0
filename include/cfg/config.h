@@ -1,4 +1,7 @@
-
+/*  Config file 
+*   Here we define global variables, defines, and constants etc
+*   This probably needs some rework and clean up.
+*/
 
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" // Þetta ætti að vera lesið úr EEPROM...
@@ -45,6 +48,7 @@
 
 // Skilgreinum pinna fyrir PWM
 //#define BACKLIGHT 4 
+// Það þarf að finna þetta í kóðanum, og lagfæra, þessi breyta er týnd.
 
 // Global variables
 
@@ -63,12 +67,19 @@ static float pressure_RFT = 0.00f; // Breyta sem geymir þrýsting Hægra framde
 static float pressure_LRT = 0.00f; // Breyta sem geymir vinstra afturdekks
 static float pressure_RRT = 0.00f; // Breyta sem geymir hægra afturdekks.
 
+// Þessa teljara þarf eitthvað að endurhanna... Þetta er algjör steik eins og er.
+unsigned long timer_measure = 0;  // Timer between measurements of tire pressure 
+unsigned long interval_measure = 600000; // interval1 er hugsað fyrir athugun á dekkjaþrýstingi, er 10mínútur.
+unsigned long timer_inflate = 0; // timer for inflation
+unsigned long interval_inflate = 2000; // interval for inflation, this should be measured every now and then but default is 2s
+unsigned long timer_deflate = 0;
+unsigned long interval_deflate = 2000; 
 
 unsigned long previousMillis = 0; // Teljari 1
 unsigned long previousMillis1 = 0; // Teljari 2
 unsigned long previousMillis2 = 0; // Teljari 3
 unsigned long interval = 6000; // hve lengi á að bíða þar til athugað er aftur. 6s ~= 0.1psi
-unsigned long interval1 = 600000; // interval1 er hugsað fyrir athugun á dekkjaþrýstingi, er 10mínútur.
+
 unsigned long interval2 = 300000; // interval2 er hugsað fyrir athugun dekkjaþrýstings
 static uint16_t interval_ALL = 6000;
 static uint16_t interval_LRT = 6000; // Tími LRT
@@ -114,7 +125,7 @@ void calibrate(); // Calibrate lúppa sem er hugsuð fyrir upphafsstillingu, les
 void writeSelectedPressure(); // Skrifum þrýstingsval í EEPROM.
 void toggleMenu(); // Litum menu takka grænan eða svartan eftir því hvort vöktun sé virk eður ei
 //void timerSelector();
-//int timerSelector2(float Pt, float Pv);
+float timerSelector2(float Pt, float Pv, float Pd, float time);
 void bootMessage();
 void menu(); // Fall sem opnar Menu
 int backlightAdjust(int);

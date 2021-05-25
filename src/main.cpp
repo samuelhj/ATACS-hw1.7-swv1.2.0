@@ -54,6 +54,7 @@
 // Include for Menu
 #include "menu.cpp"
 #include "backlight.cpp"
+#include "settings.cpp"
 
 #include "Warningcheck.cpp" // 
 #include "readPressure.cpp"
@@ -95,9 +96,8 @@ void setup()
   air_base_close();
 
 // Næst koma skilgreiningar fyrir TFT skjá
-  //delay(5000); // Gefum þéttum og öðru tíma til að hlaðast upp svo skjárinn komi rétt upp.
   digitalWrite(RESET,LOW); // Endurræsing á skjá.
-  //delay(10); // töf
+  delay(10); // töf
   digitalWrite(RESET,HIGH); // Ræsum skjá
   delay(100); // Töf
   tft.begin(); // Virkjum skjáinn
@@ -129,16 +129,6 @@ void setup()
 
 void loop()
 {
-  //timerSelector(); // Ákveðum lengd á tímanum sem þarf að dæla í
-
-    //millis() = millis(); // Tími fyrir teljara 0
-    //unsigned long millis1 = millis(); // Tími fyrir teljara 1
-    //unsigned long millis()2 = millis(); // Tími fyrir teljara 2
-    /* Það þarf að endursmíða alla teljara
-    * Tillaga:
-    * Timer
-    * 
-    */
     backlightAdjust(backlight_selected); // Við kveikjum á skjá.
 
   // sækjum hnit sem ýtt er á
@@ -195,7 +185,7 @@ void loop()
       {
         adjust = false;
         delay(150); // töf svo við hækkum ekki of hratt up
-        if(selectedPressure >= 6) // sé þrýstingur yfir 6psi hækkum við um 1psi í skrefi
+        if(selectedPressure >= 6 && manual == false) // sé þrýstingur yfir 6psi hækkum við um 1psi í skrefi
         {
           selectedPressure = selectedPressure + 1.0; // Við hækkum gildið um 1psi
           selectedPressure_LRT = selectedPressure_LRT + 1.0;
@@ -203,6 +193,7 @@ void loop()
           selectedPressure_RFT = selectedPressure_RFT + 1.0;
           selectedPressure_RRT = selectedPressure_RRT + 1.0;
         }
+
 
         if((selectedPressure < 35 && (selectedPressure < 6))) // Sé þrýstingurinn undir 6psi hækkum við um 0.25psi í hverju skrefi.
         {
@@ -243,7 +234,7 @@ void loop()
       }
 
     } // + pressure ends
-
+  }
 
 
       // Er kominn tími til að mæla dekk? 10 mín ef við erum ekki í stillingu/vöktun
@@ -252,7 +243,7 @@ void loop()
         if(menuval == 0 && tiretoken == 0 && selectedPressure < 20) // Ef við erum ekki í menu og erum ekki að stilla ákveðið dekk
         {
 
-          if((millis() - previousMillis1) > interval1) // Athugum hve langt er liðið frá síðustu uppfærslu gilda
+          if((millis() - timer_measure) > interval_measure) // Athugum hve langt er liðið frá síðustu uppfærslu gilda
           {
             read_LRT(); // Lesum vinstra afturdekk
             updateValues(); // uppfærum gildi
@@ -263,7 +254,7 @@ void loop()
             read_RRT(); // Lesum hægra afturdekk
             updateValues(); // Lesum gildi.
             //warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
-            previousMillis1 = millis(); // Endurstillum teljara
+            timer_measure = millis(); // Endurstillum teljara
           }
         }//Lokum athugunarfalli
 
@@ -311,5 +302,5 @@ void loop()
             adjustAllTires();
           }
         }
-  }
+  
 } // Lokum void loop lykkju

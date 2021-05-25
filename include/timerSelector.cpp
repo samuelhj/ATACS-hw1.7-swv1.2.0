@@ -103,7 +103,7 @@ void timerSelector()
 }
 
 // More sophisticated method of determing the time
-int timerSelector2(float Pt, float Pv, float Pd, float time)
+float timerSelector2(float Pt, float Pv, float Pd, float time)
 {
   /*
   * values are
@@ -137,5 +137,10 @@ if(Pt< Pv)
     // let's ensure Pds is always positive number.
   tP = fabs(tP);
 
+  // We implement an upper limit as an failsafe, in case something goes wrong so it wont just deflate/inflate forever...
+  if(tP > 120000)
+  {
+    tP = 120000; // 2 minutes max
+  }
   return tP;
 }

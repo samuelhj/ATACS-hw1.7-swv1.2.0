@@ -18,30 +18,34 @@ void updateBaseValue() // Við uppfærum gildi á kistu
     // ef það er kveikt á debug
     if(debug == true)
     {
-      // Skrifum valið gildi á skjá
+      // Skrifum valið gildi á sk
+      // Hreinsum þar sem gildin eru á skjánum.
+
+      tft.fillRect(140,140,60,120,BLACK); 
       tft.setTextSize(2); // Stillum textastærð á 2
-      tft.setCursor(130,160); // Veljum staðsetningu
+      tft.setCursor(140,140); // Veljum staðsetningu
+      tft.println(tiretoken);
+      tft.setCursor(140,160); // Veljum staðsetningu
       float pressureall = pressure_ALL - selectedPressure;
       pressureall = fabs(pressureall);
       tft.println((pressure_ALL - selectedPressure)); // Skrifum út gildið.
-      //
-      //uint16_t sekundur = millis()/1000;
-      tft.println(interval_LFT);
-      tft.setCursor(130,140); // Veljum staðsetningu
-      tft.println(tiretoken);
+      tft.setCursor(140,180);
+      tft.println(interval_inflate);
+      tft.setCursor(140,200);
+      tft.println(timer_inflate);
+      tft.setCursor(140,220);
+      tft.println(millis());
     }
 } //updateBaseValue function closes
 
     void updateValues() // Við uppfærum gildi
 {
     // Hreinsum þar sem gildin eru á skjánum.
-    //updateBaseValue();
     tft.setTextSize(2);
     tft.fillRect(20,170,60,50, BLACK); // Hreinsum gildið fyrir LRT
     tft.fillRect(20,20,60,50,BLACK); // Hreinsum gildið fyrir LFT
     tft.fillRect(240,20,60,50,BLACK); // Hreinsum gildið fyrir RFT
     tft.fillRect(240,170,60,50,BLACK); // Hreinsum gildið fyrir RRT
-    //tft.fillRect(110,60,220,18,BLACK); // Hreinsum gildi fyrir hitastig
 
     // Skrifum mæld gildi.
     tft.setCursor(20,20); // Staðsetjum okkur v/m ofan

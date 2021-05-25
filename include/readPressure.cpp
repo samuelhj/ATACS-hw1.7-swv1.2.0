@@ -1,46 +1,46 @@
 // Lesum þrýsting á skynjara og skilum gildi
-
+// read pressure at sensor and return value
 
 float readPressure()
 {
-    /* Skynjarinn er MPX5700 og les max 100psi
-     *     100psi MAX pressure
-     * 6,4mV/0.145psi
-     * Við viljum lesa eins nákvæmt og hægt er, en þó ekki birta gögnin nema með 0.25psi nákvæmni.
-     * 11mV/0.250psi
-     */
+  /* Sensor is MPX5700 
+  * 100psi max pressure readout
+  * 6.4mV/0.145psi
+  * We want to read as accurate as possible, but display with 0.25psi resolution
+  * 11mV/0.250psi
+  */ 
 
-  int val = analogRead(P_SENSOR); // Lesum gildi
-  psi = val*100; // færum það upp um 100
-  psi = map(psi,4100,94000,0,10000); // efri/neðri mörk
+  int val = analogRead(P_SENSOR); // read value
+  psi = val*100; 
+  psi = map(psi,4100,94000,0,10000); 
 
-  float pressure = 0.00f; // Færum í fljótandi gildi
+  float pressure = 0.00f; // fix floating variable size
   pressure = psi;
-  pressure = pressure/100.00f; // Umreiknum
+  pressure = pressure/100.00f; // Recalculate
 
-  if(pressure < 0 || pressure > 650) // Komum í veg fyrir "buffer overflow"
+  if(pressure < 0 || pressure > 650) // We don't like "buffer overflow"
   {
     pressure = 0;
   }
   return pressure;
-} //readPressure fall lokar
+} //readPressure ends
 
 
-void read_LRT() // Lesum vinstra afturdekk
+void read_LRT() // Left rear tire
 {
-  tirePaint(C_MAELING,1); // Litum dekk rauðgult.
-  air_base_close(); // Lokum kistunni
-  digitalWrite(TIRE_LR,ON); // Opnum loka fyrir Vinstra afturdekk
-  delay(AIR_DELAY); // hinkrum
-  pressure_LRT = readPressure(); // Lesum þrýsting
+  tirePaint(C_MAELING,1);
+  air_base_close();
+  digitalWrite(TIRE_LR,ON); 
+  delay(AIR_DELAY); 
+  pressure_LRT = readPressure(); 
   digitalWrite(TIRE_LR,OFF);
   warningCheck(); // Athugum hvort allt sé með felldu
   //previousMillis = millis(); // endurstillum teljarann
 }
 
-void read_LFT() // Lesa vinstra framdekk
+void read_LFT() // Left front tire
 {
-  tirePaint(C_MAELING,2); // Litum dekk rauðgult meðan við mælum.
+  tirePaint(C_MAELING,2); 
   air_base_close(); // Verum viss um að kista sé lokuð
   delay(AIR_DELAY); // Hinkrum í 300ms
   digitalWrite(TIRE_LF,ON); // Opnum fyrir dekk LF

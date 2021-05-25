@@ -79,7 +79,7 @@ Valmöguleikarnir eru:
           //updateValues(); // Uppfærum gildin
           read_RRT(); // Lesum hægra afturdekk
           updateValues(); // Uppfærum gildi
-          previousMillis1 = millis(); // Endurstillum teljara svo hann mæli ekki strax aftur
+          timer_measure = millis(); // Endurstillum teljara svo hann mæli ekki strax aftur
 
         } // Lokum Mæla  lykkju
       }
@@ -103,7 +103,7 @@ Valmöguleikarnir eru:
       {
         if((y>10) && (y<60)) // Ef það er valið 2 PSI forval.
         {
-          delay(500); // Smá töf
+          delay(250); // Smá töf
           selectedPressure = 2.00; // Setjum valinn þrýsting í 4psi
           selectedPressure_LFT = 2.00; //
           selectedPressure_LRT = 2.00;
@@ -134,7 +134,7 @@ Valmöguleikarnir eru:
         } // Lokum if setningu
         if((y>130) && (y<160)) // Ef 8 psi eru valin
         {
-          delay(500); // Smá töf
+          delay(250); // Smá töf
           selectedPressure = 8.00; // Setjum valinn þrýsting á öll dekk í 8psi
           selectedPressure_LRT = 8.00;
           selectedPressure_LFT = 8.00;
