@@ -112,3 +112,4 @@ void writeSelectedPressure(); // Skrifum þrýstingsval í EEPROM.
 void toggleMenu(); // Litum menu takka grænan eða svartan eftir því hvort vöktun sé virk eður ei
 //void timerSelector();
 //int timerSelector2(float Pt, float Pv);
+void bootMessage();
