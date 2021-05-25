@@ -43,6 +43,9 @@
 // Skilgreinum pinna fyrir skynjara.
 #define P_SENSOR A0 // Þrýstingsnemi MPX5700 (40)
 
+// Skilgreinum pinna fyrir PWM
+//#define BACKLIGHT 4 
+
 // Global variables
 
 
@@ -67,23 +70,23 @@ unsigned long previousMillis2 = 0; // Teljari 3
 unsigned long interval = 6000; // hve lengi á að bíða þar til athugað er aftur. 6s ~= 0.1psi
 unsigned long interval1 = 600000; // interval1 er hugsað fyrir athugun á dekkjaþrýstingi, er 10mínútur.
 unsigned long interval2 = 300000; // interval2 er hugsað fyrir athugun dekkjaþrýstings
-uint16_t interval_ALL = 6000;
-uint16_t interval_LRT = 6000; // Tími LRT
-uint16_t interval_LFT = 6000;
-uint16_t interval_RFT = 6000;
-uint16_t interval_RRT = 6000;
+static uint16_t interval_ALL = 6000;
+static uint16_t interval_LRT = 6000; // Tími LRT
+static uint16_t interval_LFT = 6000;
+static uint16_t interval_RFT = 6000;
+static uint16_t interval_RRT = 6000;
 
-uint8_t menuval = 0; // er menu valið eða ekki?
-uint8_t selectedTire =0; // Hvaða dekk er valið.
-uint16_t psi = 0; //
-bool forval = false; // Er forval valið eða ekki?
-bool adjust = false; // Á að stilla eða á ekki að stilla?
-bool adjustall = false; // Breyta sem segir forritinu að stilla öll dekk í einu.
-bool manual = false; // Ef við erum í manual, þá er selectedpressure valinn fyrir hvert dekk fyrir sig
-uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
-uint8_t tireval = 0; // Valið dekk
-uint8_t backlight_selected = 255; // Styrkur á baklýsingu
-uint16_t timerTire = 0; //Hve oft við athugum þrýsting í dekkjum áður en við gefumst upp í bili.
+static uint8_t menuval = 0; // er menu valið eða ekki?
+static uint8_t selectedTire =0; // Hvaða dekk er valið.
+static uint16_t psi = 0; //
+static bool forval = false; // Er forval valið eða ekki?
+static bool adjust = false; // Á að stilla eða á ekki að stilla?
+static bool adjustall = false; // Breyta sem segir forritinu að stilla öll dekk í einu.
+static bool manual = false; // Ef við erum í manual, þá er selectedpressure valinn fyrir hvert dekk fyrir sig
+static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
+static uint8_t tireval = 0; // Valið dekk
+ uint8_t backlight_selected = 255; // Styrkur á baklýsingu
+static uint16_t timerTire = 0; //Hve oft við athugum þrýsting í dekkjum áður en við gefumst upp í bili.
 
 // Skilgreinum öll föll
 void updateValues(); // Við uppfærum öll gildi.
@@ -114,3 +117,4 @@ void toggleMenu(); // Litum menu takka grænan eða svartan eftir því hvort v�
 //int timerSelector2(float Pt, float Pv);
 void bootMessage();
 void menu(); // Fall sem opnar Menu
+int backlightAdjust(int);

@@ -23,43 +23,43 @@ Valmöguleikarnir eru:
     // Menu hluti byrjar.
     if(menuval == 0  && (x >MENU_X) && (x<(MENU_X+MENU_W))) // Ef ýtt er á x hnit Menu
     {
-    if((y>MENU_Y) && (y <= (MENU_Y + MENU_H))) // ef ýtt er á Y hnit menu
-    {
-
-    drawMenu(); // Teiknum Menu útlit
-
-    menuval = 1; // Þá er menuval 1 sem heldur okkur í Menu valglugganum
-    x = 0; // Hreinsum X ásinn svo við hoppum ekki beint í annað
-    y = 0; // Hreinsum Y ásinn svo við hoppum ekki beint í annað
-    //delay(500); // 500ms töf svo við hoppum ekki beint í annað
-    }
-
-
-      // Ef valið er að stilla dekk
-      if(menuval == 1  &&  (x > MENU_X) && (x < MENU_X+MENU_W))
+      if((y>MENU_Y) && (y <= (MENU_Y + MENU_H))) // ef ýtt er á Y hnit menu
       {
-        if(menuval == 1 && (y>0) && (y<40)) // Ef ýtt er á stilla
-        {
-          if(adjust == true) // Ef við erum nú þegar að stilla þá hættum við
-          {
-            adjust = false; // Breytum gildi
-            tiretoken = 0; // Ekkert dekk heldur tokeni
-            menuval = 0;
-            air_base_close(); // Gætum þess að kistan sé lokuð
-          }
-          else
-          {
-            adjust = true; // Setjum adjust gildið í true svo forritið byrji að stilla
-            writeSelectedPressure(); // Skrifum valinn þrýsting í EEPROM.
-            tiretoken = 0; // ekkert dekk heldur tokeni
-            menuval = 0; // og við förum úr valmynd.
-            delay(50); // Töf
-          }
-          drawMain(); // Teiknum aðalvalmynd
-          x = 0; // Hreinsum X ásinn svo við hoppum ekki beint í annað
-          y = 0; // Hreinsum Y ásinn svo við hoppum ekki beint í annað
-        } // Lokum stilla lykkju
+
+      drawMenu(); // Teiknum Menu útlit
+
+      menuval = 1; // Þá er menuval 1 sem heldur okkur í Menu valglugganum
+      x = 0; // Hreinsum X ásinn svo við hoppum ekki beint í annað
+      y = 0; // Hreinsum Y ásinn svo við hoppum ekki beint í annað
+      //delay(500); // 500ms töf svo við hoppum ekki beint í annað
       }
+    } 
+
+    // Ef valið er að stilla dekk
+    if(menuval == 1  &&  (x > MENU_X) && (x < MENU_X+MENU_W))
+    {
+      if(menuval == 1 && (y>0) && (y<40)) // Ef ýtt er á stilla
+      {
+        if(adjust == true) // Ef við erum nú þegar að stilla þá hættum við
+        {
+          adjust = false; // Breytum gildi
+          tiretoken = 0; // Ekkert dekk heldur tokeni
+          menuval = 0;
+          air_base_close(); // Gætum þess að kistan sé lokuð
+        }
+        else
+        {
+          adjust = true; // Setjum adjust gildið í true svo forritið byrji að stilla
+          writeSelectedPressure(); // Skrifum valinn þrýsting í EEPROM.
+          tiretoken = 0; // ekkert dekk heldur tokeni
+          menuval = 0; // og við förum úr valmynd.
+          delay(50); // Töf
+        }
+        drawMain(); // Teiknum aðalvalmynd
+        x = 0; // Hreinsum X ásinn svo við hoppum ekki beint í annað
+        y = 0; // Hreinsum Y ásinn svo við hoppum ekki beint í annað
+      } // Lokum stilla lykkju
+    }
 
 
 
@@ -197,8 +197,6 @@ Valmöguleikarnir eru:
         x = 0; // Núllstillum X ás
         y = 0; // Núllstillum Y ás
       } // Lokum forvals lykkju
-  }
-  
 
       // Til að stilla hvert dekk fyrir sig
       // Sennilega væri best að breyta þessu, þessi virkni ætti að vera í aðalvalmynd frekar. TBD
@@ -249,7 +247,7 @@ Valmöguleikarnir eru:
             if((y>50) && y< 150) // Athugum staðsetningu á y ásnum.
             {
               backlight_selected = backlight_selected - 25; // Þá lækkum við um 25 gildi
-              delay(500); // töf til að koma í veg fyrir að hoppa of hratt á milli stiga.
+              delay(200); // töf til að koma í veg fyrir að hoppa of hratt á milli stiga.
               backlightAdjust(backlight_selected);
               // Sýnum gildið á skjá
               tft.fillRect(145,100,80,40,BLACK); // Hreinsum eldra gildi
@@ -264,7 +262,7 @@ Valmöguleikarnir eru:
             if((y>50) && y< 150)
             {
               backlight_selected = backlight_selected + 25; // Hækkum um 25 gildi
-              delay(500); // Hinkrum í smá stund svo hann hækki sig ekki upp of hratt
+              delay(200); // Hinkrum í smá stund svo hann hækki sig ekki upp of hratt
               backlightAdjust(backlight_selected); //stillum birtu
               // Sýnum gildið á skjá
               tft.fillRect(145,100,80,40,BLACK); // Hreinsum eldra gildi
@@ -272,12 +270,12 @@ Valmöguleikarnir eru:
               tft.setTextSize(3); // Höfum textann í stærð 3
               tft.println(backlight_selected/10); // Skrifum gildið á skjá
             }
-        }
+          }
 
 
 
-            // Til baka úr menu eða úr undir-menu í menu.
-    if((menuval > 0) &&  (x > MENU_X) && (x < MENU_X+MENU_W)) // Ef við erum á takkanum
+    // Til baka úr menu eða úr undir-menu í menu.
+    if((menuval > 0) &&  (x > MENU_X) && (x < MENU_X+MENU_W)) // Ef við erum á tilbaka takkanum
     {
         if((menuval == 1) && (y>200) && (y<240)) // Fyrir til baka
         {
@@ -314,5 +312,5 @@ Valmöguleikarnir eru:
             menuval = 1;
         }
       }
-    }
+  }
 }// Main menu touch sense closes

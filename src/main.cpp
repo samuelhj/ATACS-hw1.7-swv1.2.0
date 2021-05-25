@@ -51,18 +51,21 @@
 // Project specific includes
 #include "cfg/config.h"  // include  for variables, defines, etc
 #include "cfg/tft.h" // include for TFT 
+// Include for Menu
+#include "menu.cpp"
+#include "backlight.cpp"
+
 #include "Warningcheck.cpp" // 
 #include "readPressure.cpp"
 #include "adjustPressure.cpp"
 #include "timerSelector.cpp"
 #include "updateValues.cpp"
-#include "backlight.cpp"
 #include "draw.cpp"
 #include "solenoids.cpp"
 #include "tirePaint.cpp"
 #include "toggleMenu.cpp"
 #include "bootMessage.cpp"
-#include "menu.cpp"
+
 
 // Við skrifum vistuð gildi í EEPROM
 void writeSelectedPressure()
@@ -158,6 +161,7 @@ void loop()
     {
       if((y>50) && y< 150) // Athugum staðsetningu á y ásnum.
       {
+        delay(150);
         adjust = false; // Við hættum að stilla
         if((selectedPressure < 6) && (selectedPressure > 0)) // Ef þrýstingur er undir 6 psi en yfir 0psi
         {
@@ -166,9 +170,6 @@ void loop()
           selectedPressure_LFT = selectedPressure_LFT - 0.25;
           selectedPressure_RFT = selectedPressure_RFT - 0.25;
           selectedPressure_RRT = selectedPressure_RRT - 0.25;
-          
-          delay(100); // töf til að koma í veg fyrir að hoppa of hratt á milli stiga.
-
         }
         if(selectedPressure >= 6) // ef þrýstingur er yfir 6
         {
@@ -177,10 +178,8 @@ void loop()
           selectedPressure_LFT = selectedPressure_LFT - 1.0;
           selectedPressure_RFT = selectedPressure_RFT - 1.0;
           selectedPressure_RRT = selectedPressure_RRT - 1.0;
-          
-          delay(500); // Töf til að koma í veg fyrir að hoppa of hratt milli stiga.
         }
-        adjust = true; // byrjum aftur að stilla
+        //adjust = true; // byrjum aftur að stilla
       tiretoken = 0;
       toggleMenu();
       updateValues(); // Uppfærum gildin á skjá.
@@ -195,6 +194,7 @@ void loop()
       if((y>50) && y< 150)
       {
         adjust = false;
+        delay(150); // töf svo við hækkum ekki of hratt up
         if(selectedPressure >= 6) // sé þrýstingur yfir 6psi hækkum við um 1psi í skrefi
         {
           selectedPressure = selectedPressure + 1.0; // Við hækkum gildið um 1psi
@@ -202,7 +202,6 @@ void loop()
           selectedPressure_LFT = selectedPressure_LFT + 1.0;
           selectedPressure_RFT = selectedPressure_RFT + 1.0;
           selectedPressure_RRT = selectedPressure_RRT + 1.0;
-          delay(500); // Hinkrum í smá stund svo hann hækki sig ekki upp of hratt
         }
 
         if((selectedPressure < 35 && (selectedPressure < 6))) // Sé þrýstingurinn undir 6psi hækkum við um 0.25psi í hverju skrefi.
@@ -210,13 +209,10 @@ void loop()
           if(selectedTire == 0)
           {
             selectedPressure = selectedPressure + 0.25; // bætum 0,25psi við valið gildi
-
             selectedPressure_LRT = selectedPressure_LRT + 0.25;
             selectedPressure_LFT = selectedPressure_LFT + 0.25;
             selectedPressure_RFT = selectedPressure_RFT + 0.25;
             selectedPressure_RRT = selectedPressure_RRT + 0.25;
-
-            delay(500); // töf svo við hækkum ekki of hratt upp
           }
 
           if(selectedTire == 1)
@@ -240,7 +236,7 @@ void loop()
           }
         }
         tiretoken = 0;
-        adjust = true; // förum aftur að stilla
+       // adjust = true; // förum aftur að stilla
         toggleMenu();
         updateValues(); // Uppfærum gildi á skjá.
 

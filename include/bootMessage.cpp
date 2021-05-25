@@ -7,7 +7,7 @@
  
   //tft.print("Bunadur nr: ");
   //tft.println(SERIALNUMBER);
-  tft.print("ATACS Version: "); // Útgáfa
+  tft.println("ATACS Version: "); // Útgáfa
   tft.println(VERSION); // Utgáfa
   tft.println(BUILDDATE); //Dagsetning útgáfu
   tft.println("Hofundur:");

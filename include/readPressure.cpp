@@ -22,7 +22,6 @@ float readPressure()
   {
     pressure = 0;
   }
-  pressure = 2.00; // test!
   return pressure;
 } //readPressure fall lokar
 
@@ -34,7 +33,6 @@ void read_LRT() // Lesum vinstra afturdekk
   digitalWrite(TIRE_LR,ON); // Opnum loka fyrir Vinstra afturdekk
   delay(AIR_DELAY); // hinkrum
   pressure_LRT = readPressure(); // Lesum þrýsting
-  delay(100); // töf
   digitalWrite(TIRE_LR,OFF);
   warningCheck(); // Athugum hvort allt sé með felldu
   //previousMillis = millis(); // endurstillum teljarann
@@ -48,7 +46,6 @@ void read_LFT() // Lesa vinstra framdekk
   digitalWrite(TIRE_LF,ON); // Opnum fyrir dekk LF
   delay(AIR_DELAY); // töf meðan kista fyllist
   pressure_LFT = readPressure(); // Lesum þrýsting
-  delay(100); // töf
   digitalWrite(TIRE_LF,OFF); // Lokum kistunni
   warningCheck(); // Athugum hvort allt sé með felldu
 }
@@ -61,7 +58,6 @@ void read_RFT() // Lesa Hægra framdekk
   digitalWrite(TIRE_RF,ON); // Opnum fyrir dekk
   delay(AIR_DELAY); // Töf á meðan kistan fyllist.
   pressure_RFT = readPressure(); // lesum þrýsting í dekki
-  delay(100); // Töf
   digitalWrite(TIRE_RF,OFF); // Lokum kistunni
   warningCheck(); // Athugum hvort allt sé með felldu
 }
@@ -74,7 +70,6 @@ void read_RRT() // Lesa hægra afturdekk
   digitalWrite(TIRE_RR,ON); // Opnum fyrir dekk
   delay(AIR_DELAY); // Töf á meðan kistan fyllist.
   pressure_RRT = readPressure(); // Lesum þrýsting í dekki.
-  delay(100); // Töf
   digitalWrite(TIRE_RR,OFF); // Lokum kistunni.
   warningCheck(); // Athugum hvort allt sé með felldu
 }

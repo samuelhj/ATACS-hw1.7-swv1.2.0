@@ -25,7 +25,7 @@ void updateBaseValue() // Við uppfærum gildi á kistu
       pressureall = fabs(pressureall);
       tft.println((pressure_ALL - selectedPressure)); // Skrifum út gildið.
       //
-      uint16_t sekundur = millis()/1000;
+      //uint16_t sekundur = millis()/1000;
       tft.println(interval_LFT);
       tft.setCursor(130,140); // Veljum staðsetningu
       tft.println(tiretoken);
