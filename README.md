@@ -25,9 +25,9 @@ fyrir loftdælu.
     * 15 pinna tengi fyrir SPI skjá.
 
 Kóðasöfn í notkun:
-TouchScreen.h  Við þurfum library til að lesa snertingu af skjá.
-Adafruit_GFX.h  Við þurfum library til að teikna á skjá.
-Adafruit_ILI9341.h  Við þurfum library til að tala við ILI9341 stýringu á skjá.
+* TouchScreen.h  Við þurfum library til að lesa snertingu af skjá.
+* Adafruit_GFX.h  Við þurfum library til að teikna á skjá.
+* Adafruit_ILI9341.h  Við þurfum library til að tala við ILI9341 stýringu á skjá.
 
 
 Ath breyta þarf línu í kóðasafninu Touchscreen.h fyrir ATmega1284P
