@@ -3,7 +3,7 @@
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" // Þetta ætti að vera lesið úr EEPROM...
 #define VERSION "hw1.7.0-swV1.2.0"
-#define BUILDDATE "2021-05-21"
+#define BUILDDATE "2021-05-25"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
 
 // Hér skilgreinum við fasta sem breytast ekki.
@@ -113,3 +113,4 @@ void toggleMenu(); // Litum menu takka grænan eða svartan eftir því hvort v�
 //void timerSelector();
 //int timerSelector2(float Pt, float Pv);
 void bootMessage();
+void menu(); // Fall sem opnar Menu

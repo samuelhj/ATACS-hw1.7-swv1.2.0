@@ -21,7 +21,9 @@ void updateBaseValue() // Við uppfærum gildi á kistu
       // Skrifum valið gildi á skjá
       tft.setTextSize(2); // Stillum textastærð á 2
       tft.setCursor(130,160); // Veljum staðsetningu
-      //tft.println((pressure_ALL - selectedPressure)*-1); // Skrifum út gildið.
+      float pressureall = pressure_ALL - selectedPressure;
+      pressureall = fabs(pressureall);
+      tft.println((pressure_ALL - selectedPressure)); // Skrifum út gildið.
       //
       uint16_t sekundur = millis()/1000;
       tft.println(interval_LFT);

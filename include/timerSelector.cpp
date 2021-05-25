@@ -133,13 +133,9 @@ if(Pt< Pv)
   float Pds; // Pressure delta / second
 
   Pds = (Pt-Pd)/time;
-  // let's ensure Pds is always positive number.
- 
-
   tP = (Pt-Pv)/Pds;
     // let's ensure Pds is always positive number.
-    tP = pow(tP,2);
-    tP = sqrt(tP);
+  tP = fabs(tP);
 
   return tP;
 }

@@ -94,6 +94,7 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC); // Skilgreining fyrir I
 #define DECREMENT_PRESSURE_X2 80
 #define DECREMENT_PRESSURE_Y2 90
 
+
 // Skilgreinum liti
 #define BLACK       0x0000        // Bakgrunnur
 #define DARKGREEN   0x04E0        // Vöktun - var 0x3E0
