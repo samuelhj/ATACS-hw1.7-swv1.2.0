@@ -22,28 +22,7 @@
     * Þrýstinemi sem les þrýsting frá kistu.
 
 
-    Útgangar eru eftirfarandi:
-    * 6 til að stýra loftlokum með MOSFET stýringu (Gefur jörð)
-    * RS232 útgangur fyrir t.d. RS232 skjá eða samskipti við hvað annað sem mönnum
-      gæti dottið í hug að bæta við seinna meir.
-    * 15 pinna tengi fyrir SPI skjá.
 
-      TODO OG ÖNNUR VANDAMÁL
-      * x PWM fyrir backlight virkar ekki
-      * x Klára tímasetningar fyrir loft í og úr dekkjunum
-      * x Viðvörunarhluti
-      * x úrhleypingar hluti
-      * x Inndælingarhluti
-      * x Baklýsing í menu
-      * x Truflanir af völdum PWM vegna baklýsingar
-      * x Virkja inndælingu/úrhleypingu dekkja úr menui
-      * x EEPROM lestur og skrif fyrir stillingar.
-      * x Viðvörunarhluti virkar ekki lengur! >:(
-      * x Bæta tíma við inndælingu/úrhleypingu
-      * þrepaskiptingu milli inndælingu/úrhleypingu m.v. þrýsting
-      * adjust lúppa sem lærir á tímann sem tekur að dæla í dekk og hleypa úr
-      * Valmöguleika til að stilla hvert dekk sér.
-      * x Mæling dekkja í stillingu virkar ekki
 
       Nýtt 2020
       * Auka lykku sem dælir minna í einu
