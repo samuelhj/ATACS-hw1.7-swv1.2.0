@@ -10,8 +10,31 @@ void air_base_close()
     digitalWrite(AIR_OUT,ON); // Tæmum kistu
     delay(AIR_DELAY);
     digitalWrite(AIR_OUT,OFF); // Lokum út
+  //  tirePaint(GREEN,5);
+  //  warningCheck();
 }
 
+void air_base_inflate()
+{
+  digitalWrite(AIR_OUT,OFF);
+  digitalWrite(TIRE_LR,ON);
+  digitalWrite(TIRE_LF,ON);
+  digitalWrite(TIRE_RF,ON);
+  digitalWrite(TIRE_RR,ON);
+  digitalWrite(AIR_IN,ON);
+  tirePaint(C_INNDAELING,5);
+}
+
+void air_base_deflate()
+{
+  digitalWrite(AIR_OUT,ON);
+  digitalWrite(TIRE_LR,ON);
+  digitalWrite(TIRE_LF,ON);
+  digitalWrite(TIRE_RF,ON);
+  digitalWrite(TIRE_RR,ON);
+  digitalWrite(AIR_IN,OFF);
+  tirePaint(C_URHLEYPING,5);
+}
 /*
 *   Loops to test allt solenoids
 *

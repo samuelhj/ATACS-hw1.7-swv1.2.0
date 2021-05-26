@@ -113,4 +113,5 @@ void updateBaseValue() // Við uppfærum gildi á kistu
     tft.println("MENU"); // Skrifum Menu
 
     warningCheck(); //Athugum hvort viðvörun gildi á einhverju dekki
+
 }

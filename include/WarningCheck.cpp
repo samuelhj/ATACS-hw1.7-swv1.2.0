@@ -6,7 +6,7 @@ void warningCheck()
      * * ef eitt eða fleiri dekk eru skyndilega komin undir 0.5psi
      * Á skjánum mun birtast hvert dekkjanna er sýnir hættumerki ef viðvörun fer í gildi.
      */
-  if(menuval == 0) // Ef við erum ekki í Menu
+  if(menuval == 0 && manual == false) // Ef við erum ekki í Menu
   {
       // Síðan þurfum við að tjekka hvaða dekk er í veseni.
 

@@ -177,7 +177,7 @@ void adjustLRT()
     // Ef það er kominn tími til að mæla
     if(millis() - timer_inflate > interval_inflate)
     {
-      tiretoken = tiretoken+1; //Förum síðan í næsta dekk eftir þessa mælingu
+      //tiretoken = tiretoken+1; //Förum síðan í næsta dekk eftir þessa mælingu
       digitalWrite(TIRE_LR,OFF); // Lokum loka
       delay(AIR_DELAY); // Hinkrum
       digitalWrite(AIR_OUT,OFF); // Lokum fyrir loft út
@@ -218,7 +218,7 @@ void adjustLFT()
 
     if(millis() - timer_deflate > interval_deflate) // ef það er kominn tími á að mæla
     {
-      tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
+      //tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       read_LFT(); // Lesum þrýsting
       updateValues(); // Uppfærum gildi
@@ -243,7 +243,7 @@ void adjustLFT()
 
     if(millis() - timer_inflate > interval_inflate) // Ef það er kominn tími til að mæla
     {
-      tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
+      //tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       delay(100); // Hinkrum
       read_LFT(); // Lesum vinstra framdekk
@@ -257,7 +257,7 @@ void adjustLFT()
   {
     air_base_close(); // Lokum kistunni
     timerTire = 0; // Núllstillum teljara
-    tiretoken = 3; // Færum okkur í næsta dekk
+    //tiretoken = 3; // Færum okkur í næsta dekk
     interval_inflate = 2000;
     timer_inflate = millis();
     timer_measure = millis();
@@ -282,7 +282,7 @@ void adjustRFT()
 
     if(millis() - timer_deflate > interval_deflate) // ef það er kominn tími á að mæla
     {
-      tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
+     // tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       read_RFT(); // Lesum þrýsting
       updateValues(); // Uppfærum gildi
@@ -305,7 +305,7 @@ void adjustRFT()
 
     if(millis() - timer_inflate > interval_inflate) // Ef það er kominn tími til að mæla
     {
-      tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
+      //tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       delay(100); // Hinkrum
       read_RFT(); // Lesum vinstra afturdekk
@@ -319,7 +319,7 @@ void adjustRFT()
   {
     air_base_close(); // Lokum kistu
     timerTire = 0; // Núllstillum teljara
-    tiretoken = 4; // Færum okkur í næsta dekk
+    //tiretoken = 4; // Færum okkur í næsta dekk
     interval_inflate = 2000;
     timer_inflate = millis();
     timer_measure = millis();
@@ -346,7 +346,7 @@ void adjustRRT()
 
     if(millis() - timer_deflate > interval_deflate) // ef það er kominn tími á að mæla
     {
-      tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
+      //tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       read_RRT(); // Lesum þrýsting
       updateValues(); // Uppfærum gildi
@@ -371,7 +371,7 @@ void adjustRRT()
 
     if(millis() - interval_inflate > interval_inflate) // Ef það er kominn tími til að mæla
     {
-      tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
+     // tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       delay(100); // Hinkrum
       read_RRT(); // Lesum vinstra afturdekk
@@ -385,7 +385,7 @@ void adjustRRT()
   {
     air_base_close(); // Lokum kistu
     timerTire = 0; // Núllstillum teljara
-    tiretoken = 1; // Færum okkur í næsta dekk
+   // tiretoken = 1; // Færum okkur í næsta dekk
     interval_inflate = 2000;
     timer_inflate = millis();
     timer_measure = millis(); 

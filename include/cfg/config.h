@@ -121,6 +121,8 @@ void adjustLFT(); // Jöfnum þrýsting í Vinstra framdekki
 void adjustRFT(); // Jöfnum þrýsting í hægra Framdekki
 void adjustRRT(); // Jöfnum þrýsting í hægra afturdekki
 void adjustAllTires(); // Við stillum öll dekk í einu.
+void air_base_inflate();
+void air_base_deflate();
 void calibrate(); // Calibrate lúppa sem er hugsuð fyrir upphafsstillingu, les CALIBRATE flaggið
 void writeSelectedPressure(); // Skrifum þrýstingsval í EEPROM.
 void toggleMenu(); // Litum menu takka grænan eða svartan eftir því hvort vöktun sé virk eður ei

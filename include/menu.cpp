@@ -204,10 +204,18 @@ Valmöguleikarnir eru:
       {
         if((menuval == 1) && (y>80) && (y<120))
         {
-          menuval = 3; // Festum okkur í þessari valmynd.
+          if(manual != true)
+          manual = true;
+          else
+          {
+            manual = false;
+          }
+          menuval = 0; // Back to main menu
+          drawMain();
+          //menuval = 3; // Festum okkur í þessari valmynd.
           // Teiknum upp dekkin
-          drawTireSelection(); // Teiknum valmynd fyrir dekkjaval
-
+         // drawTireSelection(); // Teiknum valmynd fyrir dekkjaval
+        
         }
       }
 

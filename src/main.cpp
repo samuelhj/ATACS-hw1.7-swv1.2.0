@@ -125,11 +125,9 @@ void setup()
   drawMain(); // Teiknum grunn útlit.
 }//Void Setup lokar
 
-//Aðalfall
-
 void loop()
 {
-    backlightAdjust(backlight_selected); // Við kveikjum á skjá.
+  backlightAdjust(backlight_selected); // Við kveikjum á skjá.
 
   // sækjum hnit sem ýtt er á
   TSPoint p = ts.getPoint();
@@ -169,7 +167,17 @@ void loop()
           selectedPressure_RFT = selectedPressure_RFT - 1.0;
           selectedPressure_RRT = selectedPressure_RRT - 1.0;
         }
-        //adjust = true; // byrjum aftur að stilla
+
+        if(manual == true)
+        {
+          if(digitalRead(AIR_OUT) == OFF)
+          {
+            air_base_deflate();
+          }
+         // else
+           // air_base_close();
+        }
+
       tiretoken = 0;
       toggleMenu();
       updateValues(); // Uppfærum gildin á skjá.
@@ -225,9 +233,20 @@ void loop()
           {
             selectedPressure_RRT = selectedPressure_RRT + 0.25;
           }
+
+        }
+              
+        if(manual == true)
+        {
+          if(digitalRead(AIR_IN) == OFF)
+          {
+            air_base_inflate();
+          }
+          //else
+            //air_base_close();
         }
         tiretoken = 0;
-       // adjust = true; // förum aftur að stilla
+
         toggleMenu();
         updateValues(); // Uppfærum gildi á skjá.
 
@@ -237,70 +256,71 @@ void loop()
   }
 
 
-      // Er kominn tími til að mæla dekk? 10 mín ef við erum ekki í stillingu/vöktun
-      // Tökum út adjust == false til prufu.
-      // Prófum að athuga hvort við erum yfir 20 psi.
-        if(menuval == 0 && tiretoken == 0 && selectedPressure < 20) // Ef við erum ekki í menu og erum ekki að stilla ákveðið dekk
-        {
+// Er kominn tími til að mæla dekk? 10 mín ef við erum ekki í stillingu/vöktun
+// Tökum út adjust == false til prufu.
+// Prófum að athuga hvort við erum yfir 20 psi.
+  if(menuval == 0 && tiretoken == 0 && selectedPressure < 20) // Ef við erum ekki í menu og erum ekki að stilla ákveðið dekk
+  {
 
-          if((millis() - timer_measure) > interval_measure) // Athugum hve langt er liðið frá síðustu uppfærslu gilda
-          {
-            read_LRT(); // Lesum vinstra afturdekk
-            updateValues(); // uppfærum gildi
-            read_LFT(); // Lesum vinstra framdekk
-            updateValues(); // uppfærum gildi
-            read_RFT(); // Lesum hægra framdekk
-            updateValues(); // Uppfærum gildi
-            read_RRT(); // Lesum hægra afturdekk
-            updateValues(); // Lesum gildi.
-            //warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
-            timer_measure = millis(); // Endurstillum teljara
-          }
-        }//Lokum athugunarfalli
+    if((millis() - timer_measure) > interval_measure) // Athugum hve langt er liðið frá síðustu uppfærslu gilda
+    {
+      read_LRT(); // Lesum vinstra afturdekk
+      updateValues(); // uppfærum gildi
+      read_LFT(); // Lesum vinstra framdekk
+      updateValues(); // uppfærum gildi
+      read_RFT(); // Lesum hægra framdekk
+      updateValues(); // Uppfærum gildi
+      read_RRT(); // Lesum hægra afturdekk
+      updateValues(); // Lesum gildi.
+      //warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
+      timer_measure = millis(); // Endurstillum teljara
+    }
+  }//Lokum athugunarfalli
 
 
-        if(manual == false) // Ef við erum ekki með kerfið stillt á manual.
-        {
-          // Ef við erum ekki í menu og erum að vakta dekkin, en ekki að stilla stakt dekk
+  if(manual == false) // Ef við erum ekki með kerfið stillt á manual.
+  {
+    // Ef við erum ekki í menu og erum að vakta dekkin, en ekki að stilla stakt dekk
 
-          if(menuval == 0 && adjust == true && tiretoken == 0)
-          {
-            uint16_t test_LRT = pressure_LRT*100;
-            uint16_t test_LFT = pressure_LFT*100;
-            uint16_t test_RFT = pressure_RFT*100;
-            uint16_t test_RRT = pressure_RRT*100;
-            // Reynist summa allra vera hærri en valins þrýstings.
-            if(((test_LRT + test_LFT) - (test_RFT + test_RRT) <= 100))
-            {
-              // Þá leiðréttum við öll dekk í einu
-              tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
-            }
-          }
-          // Ef við erum ekki í menu og viljum stilla Vinstra afturdekk
-          if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 1))
-          {
-            adjustLRT(); // svo stillum við vinstra afturdekk
-          }//Stillifall fyrir Vinstra afturdekk lokar
+    if(menuval == 0 && adjust == true && tiretoken == 0)
+    {
+      uint16_t test_LRT = pressure_LRT*100;
+      uint16_t test_LFT = pressure_LFT*100;
+      uint16_t test_RFT = pressure_RFT*100;
+      uint16_t test_RRT = pressure_RRT*100;
+      // Reynist summa allra vera hærri en valins þrýstings.
+      if(((test_LRT + test_LFT) - (test_RFT + test_RRT) <= 100))
+      {
+        // Þá leiðréttum við öll dekk í einu
+        tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
+      }
+    }
+    // Ef við erum ekki í menu og viljum stilla Vinstra afturdekk
+    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 1))
+    {
+      adjustLRT(); // svo stillum við vinstra afturdekk
+    }//Stillifall fyrir Vinstra afturdekk lokar
 
-          if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 2))
-          {
-            adjustLFT(); // athugum hvort stilla þurfi vinstra framdekk
-          }
-          // Ef við erum ekki í menu og það þarf að stilla hægra framdekk
-          if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 3))
-          {
-            adjustRFT();
-          }
-          // Ef við erum ekki í menu og það þarf að stilla hægra afturdekk
-          if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 4))
-          {
-            adjustRRT();
-          }
-          // Ef við erum ekki í menu og það þarf að stilla öll dekk
-          if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 5))
-          {
-            adjustAllTires();
-          }
-        }
-  
+    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 2))
+    {
+      adjustLFT(); // athugum hvort stilla þurfi vinstra framdekk
+    }
+    // Ef við erum ekki í menu og það þarf að stilla hægra framdekk
+    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 3))
+    {
+      adjustRFT();
+    }
+    // Ef við erum ekki í menu og það þarf að stilla hægra afturdekk
+    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 4))
+    {
+      adjustRRT();
+    }
+    // Ef við erum ekki í menu og það þarf að stilla öll dekk
+    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 5))
+    {
+      adjustAllTires();
+    }
+  }
+
+
 } // Lokum void loop lykkju
