@@ -6,19 +6,20 @@
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" // Þetta ætti að vera lesið úr EEPROM...
 #define VERSION "hw1.7.0-swV1.2.0"
-#define BUILDDATE "2021-05-25"
+#define BUILDDATE "2021-05-26"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
 
 // Hér skilgreinum við fasta sem breytast ekki.
 // Fastar tafir.
 #define AIR_DELAY 1000 // Hve lengi við hinkrum meðan verið er að dæla í eða úr kistu. 1s er nægur tími.
 #define TIMERTIRE 10
+// These timers can probably be removed soon.
 #define TIMER10PSI 45000 // 30s fyrir langa
 #define TIMER5PSI 30000
 #define TIMER1PSI 15000 // 7 sekúndur
 #define TIMER025PSI 7000
 
-// EEPROM minnishólf
+// EEPROM memory banks
 #define ESERIALNUMBER 0 // Skilgreinum hvar seríal númer er geymt.
 #define EBACKLIGHT 10 // Skilgreinum minnishólf fyrir baklýsingu
 #define EPRESSURE 15 // Skilgreinum minnishólf fyrir þrýsting
@@ -27,14 +28,14 @@
 #define EPRESSURE_RFT 30
 #define EPRESSURE_RRT 35
 
-// Val milli active high eða active low. Auðveldar portun á kóða fyrir aðrar útgangsstýringar.
+// In case we want to use P-Mosfets at some point.
 #define OFF LOW
 #define ON HIGH
 
-// Skilgreinum pinna fyrir hvern segulloka.
-// Þessi pinnaröð er miðað við Arduino digital pinnaröð samkvæmt ATmega1284, en miðast
-// ekki við fýsíska pinna örtölvunnar. Þeir koma í sviga fyrir aftan athugasemd.
-// Númer víra að lokum er svo aftast.
+// Define output pins for solenoids
+// Mightycore pinout, not the physical pins on the ATmega
+// They are in parenthesis behind followed by wire number in the harness
+// Númer víra í víralúmi eru aftast
 #define AIR_OUT 21   // Loft út af kistu (27) (6)
 #define TIRE_LR 20   // vinstra afturdekk (26) (5)
 #define TIRE_LF 19   // vinstra framdekk (25) (4)
@@ -44,17 +45,17 @@
 
 
 // Skilgreinum pinna fyrir skynjara.
+// Define pins for inputs
 #define P_SENSOR A0 // Þrýstingsnemi MPX5700 (40)
 
 // Skilgreinum pinna fyrir PWM
 //#define BACKLIGHT 4 
 // Það þarf að finna þetta í kóðanum, og lagfæra, þessi breyta er týnd.
 
+
 // Global variables
-
-
 // Skilgreinum global breytur
-bool debug = true; // breyta í true fyrir debug
+bool debug = true; // true for debug
 
 static float selectedPressure = 0.00f; // Valinn þrýstingur.
 static float selectedPressure_LRT = 0.00f;
@@ -75,6 +76,7 @@ unsigned long interval_inflate = 2000; // interval for inflation, this should be
 unsigned long timer_deflate = 0;
 unsigned long interval_deflate = 2000; 
 
+// Þessir mega væntanlega fara bráðlega?
 unsigned long previousMillis = 0; // Teljari 1
 unsigned long previousMillis1 = 0; // Teljari 2
 unsigned long previousMillis2 = 0; // Teljari 3
@@ -90,13 +92,11 @@ static uint16_t interval_RRT = 6000;
 static uint8_t menuval = 0; // er menu valið eða ekki?
 static uint8_t selectedTire =0; // Hvaða dekk er valið.
 static uint16_t psi = 0; //
-static bool forval = false; // Er forval valið eða ekki?
 static bool adjust = false; // Á að stilla eða á ekki að stilla?
-static bool adjustall = false; // Breyta sem segir forritinu að stilla öll dekk í einu.
 static bool manual = false; // Ef við erum í manual, þá er selectedpressure valinn fyrir hvert dekk fyrir sig
 static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
 static uint8_t tireval = 0; // Valið dekk
- uint8_t backlight_selected = 255; // Styrkur á baklýsingu
+uint8_t backlight_selected = 255; // Styrkur á baklýsingu
 static uint16_t timerTire = 0; //Hve oft við athugum þrýsting í dekkjum áður en við gefumst upp í bili.
 
 // Skilgreinum öll föll
