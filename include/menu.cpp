@@ -296,6 +296,7 @@ Valmöguleikarnir eru:
         {
           menuval = 0; // setjum gildið í 0 og þá skrifar hann hefðbundinn skjá á skjáinn.
           drawMain(); // Sennilega er betra að skrifa bara hefðbundinn skjá á til að losna við töfina.
+          manual = false; 
         //  warningCheck(); // Athugum hvort ekki sé í lagi með dekk
         }
         // Ef við vorum í forvali
