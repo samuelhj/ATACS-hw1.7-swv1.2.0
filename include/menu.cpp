@@ -43,6 +43,7 @@ Valmöguleikarnir eru:
         if(adjust == true) // Ef við erum nú þegar að stilla þá hættum við
         {
           adjust = false; // Breytum gildi
+          manual = false;
           tiretoken = 0; // Ekkert dekk heldur tokeni
           menuval = 0;
           air_base_close(); // Gætum þess að kistan sé lokuð
@@ -50,6 +51,7 @@ Valmöguleikarnir eru:
         else
         {
           adjust = true; // Setjum adjust gildið í true svo forritið byrji að stilla
+          manual = false;
           writeSelectedPressure(); // Skrifum valinn þrýsting í EEPROM.
           tiretoken = 0; // ekkert dekk heldur tokeni
           menuval = 0; // og við förum úr valmynd.

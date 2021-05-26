@@ -103,7 +103,7 @@ void setup()
   tft.begin(); // Virkjum skjáinn
   tft.fillScreen(ILI9341_BLACK); // Hreinsum skjáinn og skrifum svartan bakgrunn.
   tft.setRotation(1); // Við stillum skjá í landscape ham.
-
+  tft.setSPISpeed(4000000);
   // Hér lesum við úr minni eldri stillingar
   backlight_selected = EEPROM.read(EBACKLIGHT);
   EEPROM.get(EPRESSURE,selectedPressure); // Lesum þrýsting úr minni
