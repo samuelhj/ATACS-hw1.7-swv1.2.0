@@ -205,13 +205,20 @@ Valmöguleikarnir eru:
         if((menuval == 1) && (y>80) && (y<120))
         {
           if(manual != true)
-          manual = true;
+          {
+            manual = true;
+            drawMain();
+            tft.setCursor(130,60);
+            tft.println("STOP");
+          }
           else
           {
             manual = false;
+            drawMain();
           }
           menuval = 0; // Back to main menu
-          drawMain();
+
+
           //menuval = 3; // Festum okkur í þessari valmynd.
           // Teiknum upp dekkin
          // drawTireSelection(); // Teiknum valmynd fyrir dekkjaval

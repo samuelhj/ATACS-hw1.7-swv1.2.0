@@ -144,6 +144,15 @@ void loop()
 
     // Hér erum við í aðalvalmynd.
 
+    if(manual == true && x > 100 && x < 200)
+    {
+      if(y>60 && y < 100)
+      {
+        air_base_close();
+        tirePaint(GREEN,5);
+      }
+    }
+
     // Ef ýtt er á lækka þrýsting örina.
     if(menuval == 0 && (x > 10) && (x<100)) // Athugum staðsetningu á x ásnum
     {
