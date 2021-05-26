@@ -142,5 +142,10 @@ if(Pt< Pv)
   {
     tP = 120000; // 2 minutes max
   }
+  // In case, for some reason the time is less than a half a second
+  if(tP < 500)
+  {
+    tP = 500;
+  }
   return tP;
 }
