@@ -51,13 +51,15 @@ void air_base_deflate()
 
 /*
 *   Loops to test allt solenoids
-*
+*   Missing indicators which solenoid is active, and stuffs
 *
 */
 
 void test()
 {
-  // Hleypum úr 10s per dekk
+  tft.setCursor(130,60);
+  tft.println("test");
+
   digitalWrite(AIR_OUT,ON);
   delay(2000);
   digitalWrite(TIRE_LR,ON);
@@ -100,5 +102,6 @@ void test()
   delay(1000);
   digitalWrite(AIR_IN,OFF);
   delay(1000);
-
+  tft.setCursor(130,60);
+  tft.println("     ");
 }

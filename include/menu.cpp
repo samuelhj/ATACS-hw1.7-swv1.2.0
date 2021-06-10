@@ -228,8 +228,6 @@ Valmöguleikarnir eru:
         }
       }
 
-
-
  //stillingar
       if((menuval == 1)  &&  (x > MENU_X) && (x < MENU_X+MENU_W)) // Ef við erum á takkanum
       {
@@ -237,101 +235,34 @@ Valmöguleikarnir eru:
         {
           menuval = 5; // Við förum í stillingar
           drawSettings();
-          /*
-          //menuval = 4; // Segjum forritinu að við séum með menu baklýsing
-          tft.fillScreen(BLACK); // Hreinsum skjá
-          // Búum til örvatakka
-          // Tveir þríhyrningar fyrir hækka og lækka takkana.
-          tft.fillTriangle(INCREMENT_PRESSURE_X0, INCREMENT_PRESSURE_Y0, INCREMENT_PRESSURE_X1, INCREMENT_PRESSURE_Y1, INCREMENT_PRESSURE_X2, INCREMENT_PRESSURE_Y2, WHITE);
-          tft.fillTriangle(DECREMENT_PRESSURE_X0, DECREMENT_PRESSURE_Y0, DECREMENT_PRESSURE_X1, DECREMENT_PRESSURE_Y1, DECREMENT_PRESSURE_X2, DECREMENT_PRESSURE_Y2, WHITE);
-          // Sýnum núverandi gildið á skjá
-          tft.setCursor(145,100); // Staðsetjum hvar við viljum teikna gildið
-          tft.setTextSize(3); // Höfum textann í stærð 3
-          tft.println(backlight_selected/10); // Skrifum gildið á skjá
-
-          // Búum til tilbaka takka
-
-          //tft.drawRect(100,5*MENU_H+10,MENU_W+20,MENU_H, WHITE); // Teiknum ramma fyrir tilbaka
-          tft.setTextSize(2); // Textastærð í 2
-          tft.setCursor(100,5*MENU_H+20); // Stillum hvar við viljum byrja að teikna
-          tft.println(" Til baka "); // Prentum texta
-          delay(500); // Töf
-          */
-        } // Lokum baklýsingar hluta
+        }
       }
 
-
-          // Ef ýtt er á lækka birtu örina.
-          if(menuval == 5 && (x > 10) && (x<100) && (backlight_selected > 5)) // Athugum staðsetningu á x ásnum
-          {
-            if((y>50) && y< 150) // Athugum staðsetningu á y ásnum.
-            {
-              backlight_selected = backlight_selected - 25; // Þá lækkum við um 25 gildi
-              delay(200); // töf til að koma í veg fyrir að hoppa of hratt á milli stiga.
-              backlightAdjust(backlight_selected);
-              // Sýnum gildið á skjá
-              tft.fillRect(145,100,80,40,BLACK); // Hreinsum eldra gildi
-              tft.setCursor(145,100); // Staðsetjum hvar við viljum teikna gildið
-              tft.setTextSize(3); // Höfum textann í stærð 3
-              tft.println(backlight_selected/10); // Skrifum gildið á skjá
-            }
-          }
-          // Ef ýtt er á Hækka birtu örina.
-          if(menuval == 5 && (x > 250) && (x<320) && (backlight_selected < 255)) // Athugum staðsetningu á x ás og hvort þrýstingur sé undir 35psi.
-          {
-            if((y>50) && y< 150)
-            {
-              backlight_selected = backlight_selected + 25; // Hækkum um 25 gildi
-              delay(200); // Hinkrum í smá stund svo hann hækki sig ekki upp of hratt
-              backlightAdjust(backlight_selected); //stillum birtu
-              // Sýnum gildið á skjá
-              tft.fillRect(145,100,80,40,BLACK); // Hreinsum eldra gildi
-              tft.setCursor(145,100); // Staðsetjum hvar við viljum teikna gildið
-              tft.setTextSize(3); // Höfum textann í stærð 3
-              tft.println(backlight_selected/10); // Skrifum gildið á skjá
-            }
-          }
-
-
-
     // Til baka úr menu eða úr undir-menu í menu.
-    if((menuval > 0) &&  (x > MENU_X) && (x < MENU_X+MENU_W)) // Ef við erum á tilbaka takkanum
+    if((menuval > 0 && menuval < 5) &&  (x > MENU_X) && (x < MENU_X+MENU_W)) // Ef við erum á tilbaka takkanum
     {
       if((menuval == 1) && (y>200) && (y<240)) // Fyrir til baka
       {
         menuval = 0; // setjum gildið í 0 og þá skrifar hann hefðbundinn skjá á skjáinn.
         drawMain(); // Sennilega er betra að skrifa bara hefðbundinn skjá á til að losna við töfina.
         manual = false; 
-      //  warningCheck(); // Athugum hvort ekki sé í lagi með dekk
       }
       // Ef við vorum í forvali
       if((menuval == 2) && (y>200) && (y<240))
       {
         drawMenu();
         menuval = 1; // Förum aftur í Menu
-        delay(500);
       }
-      // Ef við vorum að stilla hvert dekk fyrir sig
-      if((menuval == 3) && (y>220) && (y<240))
-      {
-        drawMenu(); // Teiknum menu
-        menuval = 1; // Höldum okkur í menu.
-        delay(500);
-      }
-      if((menuval >30) && (menuval <35) && (y>200) && (y<240))
-      {
-        drawTireSelection(); // Teiknum valmynd fyrr handvirka stillingu.
-        delay(500);
-        menuval = 3; //
-      }
+/*
       // Ef við vorum að stilla baklýsingu
       if((menuval == 5) && (y>200) && (y<240))
       {
           drawMenu(); // Teiknum menu.
-          EEPROM.write(EBACKLIGHT,backlight_selected); // Geymum núverandi baklýsingu í EEPROM
+
           delay(100); // Töf
           menuval = 1;
       }
+*/
     }
   }
 }// Main menu touch sense closes

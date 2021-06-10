@@ -55,7 +55,7 @@
 
 // Global variables
 // Skilgreinum global breytur
-static bool debug = true; // true for debug
+static bool debug = false;
 
 static float selectedPressure = 0.00f; // Valinn þrýstingur.
 static float selectedPressure_LRT = 0.00f;
