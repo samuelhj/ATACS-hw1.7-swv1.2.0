@@ -94,14 +94,14 @@
             {
             debug = true;
             drawMain();
-            tft.setCursor(130,60);
+            tft.setCursor(130,220);
             tft.println("debug");
             }
             else
             {
             debug = false;
             drawMain();
-            tft.setCursor(130,60);
+            tft.setCursor(130,220);
             tft.println("     ");
             }
         menuval = 0; // Back to main menu

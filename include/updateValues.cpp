@@ -1,26 +1,23 @@
 
 void updateBaseValue() // Við uppfærum gildi á kistu
 {
-    // Hreinsum þar sem gildin eru á skjánum.
-    tft.fillRect(120,60,240,18,BLACK); // Hreinsum gildi fyrir þrýsting kistu
 
 
-    // Við skrifum mælt gildi á kistunni
-    float basePressure = 0.0;
-    basePressure = readPressure();
-    pressure_ALL = basePressure; // þrýstingur úr öllum dekkjum
-    tft.setTextSize(2);
-    tft.setCursor(125,60);
-    tft.println(basePressure);
-    tft.setCursor(175,60);
-    tft.println(" PSI");
-/*
-    // ef það er kveikt á debug
     if(debug == true)
     {
-      // Skrifum valið gildi á sk
       // Hreinsum þar sem gildin eru á skjánum.
-    //tft.fillRect(130,140,60,48,BLACK); // Hreinsum gildi fyrir valinn þrýsting burt.
+      tft.fillRect(120,60,240,18,BLACK); // Hreinsum gildi fyrir þrýsting kistu
+      // Við skrifum mælt gildi á kistunni
+      float basePressure = 0.0;
+      basePressure = readPressure();
+      pressure_ALL = basePressure; // þrýstingur úr öllum dekkjum
+      tft.setTextSize(2);
+      tft.setCursor(125,60);
+      tft.println(basePressure);
+      tft.setCursor(175,60);
+      tft.println(" PSI");
+      // Hreinsum þar sem gildin eru á skjánum.
+      //tft.fillRect(130,140,60,48,BLACK); // Hreinsum gildi fyrir valinn þrýsting burt.
       tft.fillRect(140,140,60,120,BLACK); 
       tft.setTextSize(2); // Stillum textastærð á 2
       tft.setCursor(140,140); // Veljum staðsetningu
@@ -28,14 +25,13 @@ void updateBaseValue() // Við uppfærum gildi á kistu
       tft.setCursor(140,160); // Veljum staðsetningu
       float pressureall = pressure_ALL - selectedPressure;
       pressureall = fabs(pressureall);
-      tft.println((pressure_ALL - selectedPressure)); // Skrifum út gildið.
+      tft.println(pressureall); // Skrifum út gildið.
       tft.setCursor(140,180);
       tft.println(interval_inflate);
       tft.setCursor(140,200);
       tft.println(timer_inflate);
       tft.setCursor(140,220);
-      tft.println(millis());
-    }*/
+    }
 } //updateBaseValue function closes
 
     void updateValues() // Við uppfærum gildi

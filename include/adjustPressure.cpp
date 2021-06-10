@@ -23,7 +23,7 @@ void adjustAllTires()
 
     if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
     {
-      //updateBaseValue(); // Uppfærum mælingu á kistu
+      updateBaseValue(); // Uppfærum mælingu á kistu
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
@@ -107,7 +107,7 @@ void adjustAllTires()
 
         if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
         {
-         // updateBaseValue(); // Uppfærum mælingu á kistu
+          updateBaseValue(); // Uppfærum mælingu á kistu
           previousMillis2 = millis(); // Endurstillum teljarann
         }
 

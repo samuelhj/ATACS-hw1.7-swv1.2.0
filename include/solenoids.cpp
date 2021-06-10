@@ -12,6 +12,10 @@ void air_base_close()
     digitalWrite(AIR_OUT,OFF); // Lokum út
   //  tirePaint(GREEN,5);
   //  warningCheck();
+  if(debug == true)
+  {
+    Serial.println("Solenoids close");
+  }
 }
 
 void air_base_inflate()
@@ -57,51 +61,47 @@ void air_base_deflate()
 
 void test()
 {
-  tft.setCursor(130,60);
+  if(debug == true)
+  {
+    Serial.println("Solenoid TEST loop begins");
+  }
+
+  tft.setCursor(130,220);
   tft.println("test");
 
+  digitalWrite(AIR_IN,ON);
+  delay(2000);
+  digitalWrite(TIRE_LR,ON);
+  tirePaint(C_INNDAELING,1);
+  delay(2000);
+  digitalWrite(TIRE_LR,OFF);
+  tirePaint(GREEN,1);
+  delay(1000);
+  digitalWrite(TIRE_LF,ON);
+  tirePaint(C_INNDAELING,2);
+  delay(2000);
+  digitalWrite(TIRE_LF,OFF);
+  tirePaint(GREEN,2);
+  delay(1000);
+  digitalWrite(TIRE_RF,ON);
+  tirePaint(C_INNDAELING,3);
+  delay(2000);
+  digitalWrite(TIRE_RF,OFF);
+  tirePaint(GREEN,3);
+  delay(1000);
+  digitalWrite(TIRE_RR,ON);
+  tirePaint(C_INNDAELING,4);
+  delay(2000);
+  digitalWrite(TIRE_RR,OFF);
+  tirePaint(GREEN,4);
+  delay(1000);
   digitalWrite(AIR_OUT,ON);
-  delay(2000);
-  digitalWrite(TIRE_LR,ON);
-  delay(2000);
-  digitalWrite(TIRE_LR,OFF);
-  delay(1000);
-  digitalWrite(TIRE_LF,ON);
-  delay(2000);
-  digitalWrite(TIRE_LF,OFF);
-  delay(1000);
-  digitalWrite(TIRE_RF,ON);
-  delay(2000);
-  digitalWrite(TIRE_RF,OFF);
-  delay(1000);
-  digitalWrite(TIRE_RR,ON);
-  delay(2000);
-  digitalWrite(TIRE_RR,OFF);
-  delay(1000);
-  digitalWrite(AIR_IN,ON); // Prófum dælu
   delay(5000);
-  digitalWrite(AIR_OUT,OFF);
+  air_base_close();
   delay(1000);
-  // Dælum í 10s í hvert dekk
-
-  digitalWrite(TIRE_LR,ON);
-  delay(2000);
-  digitalWrite(TIRE_LR,OFF);
-  delay(1000);
-  digitalWrite(TIRE_LF,ON);
-  delay(2000);
-  digitalWrite(TIRE_LF,OFF);
-  delay(1000);
-  digitalWrite(TIRE_RF,ON);
-  delay(2000);
-  digitalWrite(TIRE_RF,OFF);
-  delay(1000);
-  digitalWrite(TIRE_RR,ON);
-  delay(2000);
-  digitalWrite(TIRE_RR,OFF);
-  delay(1000);
-  digitalWrite(AIR_IN,OFF);
-  delay(1000);
-  tft.setCursor(130,60);
-  tft.println("     ");
+  tft.fillRect(120,220,240,20,BLACK); 
+  if(debug == true)
+    {
+      Serial.println("Solenoid TEST loop ends");
+    } 
 }

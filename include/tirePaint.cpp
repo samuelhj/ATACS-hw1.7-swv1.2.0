@@ -6,10 +6,9 @@
 
 int tirePaint(int tire_colour, int tire)
 {
-  uint8_t tire_colour_LRT;
-  uint8_t tire_colour_LFT;
+
   //Ef dekkið er nr 1, Vinstra afturdekk
-  if(tire == 1 && tire_colour_LRT != tire_colour)
+  if(tire == 1)
   {
     tft.fillRect(LRT_X, LRT_Y, TIRE_W, TIRE_H, BLACK); // Hreinsum vinstra afturhjól
     tft.fillRect(LRT_X, LRT_Y, TIRE_W, TIRE_H, tire_colour); // Teiknum vinstra afturhjól
