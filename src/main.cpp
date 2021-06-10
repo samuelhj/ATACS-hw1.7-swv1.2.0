@@ -112,7 +112,8 @@ void setup()
   EEPROM.get(EPRESSURE_LFT,selectedPressure_LFT); // Lesum þrýsting úr minni
   EEPROM.get(EPRESSURE_RFT,selectedPressure_RFT); // Lesum þrýsting úr minni
   EEPROM.get(EPRESSURE_RRT,selectedPressure_RRT); // Lesum þrýsting úr minni
-
+  debug = EEPROM.read(EDEBUG);
+  
   // Boot message
   bootMessage();
 
@@ -131,7 +132,7 @@ void loop()
   backlightAdjust(backlight_selected); // Við kveikjum á skjá.
   if(selectedPressure <20)
   tireMonitor();
-  
+
   // sækjum hnit sem ýtt er á
   TSPoint p = ts.getPoint();
 
