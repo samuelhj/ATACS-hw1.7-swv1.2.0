@@ -157,9 +157,9 @@ float timerSelector2(float Pt, float Pv, float Pd, float time)
   tP = fabs(tP);
 
   // We implement an upper limit as an failsafe, in case something goes wrong so it wont just deflate/inflate forever...
-  if(tP > 120)
+  if(tP > 30)
   {
-    tP = 120; // 2 minutes max
+    tP = 30; // 30s max
   }
   // In case, for some reason the time is less than two seconds
   if(tP < 2)

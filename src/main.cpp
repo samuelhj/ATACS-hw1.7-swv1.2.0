@@ -129,7 +129,7 @@ void setup()
 void loop()
 {
   backlightAdjust(backlight_selected); // Við kveikjum á skjá.
-
+  tireMonitor();
   // sækjum hnit sem ýtt er á
   TSPoint p = ts.getPoint();
 
@@ -143,7 +143,7 @@ void loop()
 
     menu();
     settings();
-    tireMonitor();
+
 
     // Hér erum við í aðalvalmynd.
 
