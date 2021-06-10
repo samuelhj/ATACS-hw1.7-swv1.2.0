@@ -5,8 +5,8 @@
 
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" // Þetta ætti að vera lesið úr EEPROM...
-#define VERSION "hw1.7.0-swV1.2.0"
-#define BUILDDATE "2021-06-07"
+#define VERSION "hw1.7.0-swV1.2.1"
+#define BUILDDATE "2021-06-10"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
 
 // Hér skilgreinum við fasta sem breytast ekki.
@@ -27,6 +27,7 @@
 #define EPRESSURE_LFT 25
 #define EPRESSURE_RFT 30
 #define EPRESSURE_RRT 35
+#define EDEBUG 40
 
 // In case we want to use P-Mosfets at some point.
 #define OFF LOW
@@ -119,7 +120,7 @@ static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
 static uint8_t tireval = 0; // Valið dekk
 uint8_t backlight_selected = 255; // Styrkur á baklýsingu
 static uint16_t timerTire = 0; //Hve oft við athugum þrýsting í dekkjum áður en við gefumst upp í bili.
-
+char tirecolour_status[4];
 
 // Skilgreinum öll föll
 void updateValues(); // Við uppfærum öll gildi.

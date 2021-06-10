@@ -33,4 +33,11 @@ void tireMonitor()
     }
   }//Lokum athugunarfalli
 
+  if(debug == true)
+  {
+    Serial.print("Interval Measure: ");
+    Serial.println(interval_measure);
+    Serial.println();
+  }
+
 }

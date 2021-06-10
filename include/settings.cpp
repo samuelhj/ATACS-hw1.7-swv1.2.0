@@ -93,10 +93,12 @@
             if(debug != true)
             {
                 debug = true;
+                EEPROM.write(EDEBUG,debug);
             }
             else
             {
                 debug = false;
+                EEPROM.write(EDEBUG,debug);
             }
         drawMain();
         menuval = 0; // Back to main menu
