@@ -253,16 +253,6 @@ Valmöguleikarnir eru:
         drawMenu();
         menuval = 1; // Förum aftur í Menu
       }
-/*
-      // Ef við vorum að stilla baklýsingu
-      if((menuval == 5) && (y>200) && (y<240))
-      {
-          drawMenu(); // Teiknum menu.
-
-          delay(100); // Töf
-          menuval = 1;
-      }
-*/
     }
   }
 }// Main menu touch sense closes

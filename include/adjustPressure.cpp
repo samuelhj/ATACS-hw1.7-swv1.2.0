@@ -448,7 +448,7 @@ void adjustRRT()
   {
     air_base_close(); // Lokum kistu
     timerTire = 0; // Núllstillum teljara
-    tiretoken = 1; // Færum okkur í næsta dekk
+    tiretoken = 0; // Færum okkur í næsta dekk
     interval_inflate_RRT = 2000;
     timer_inflate_RRT = millis();
     timer_measure = millis(); 

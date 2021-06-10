@@ -3,35 +3,66 @@ void updateBaseValue() // Við uppfærum gildi á kistu
 {
 
 
-    if(debug == true)
+  if(debug == true)
+  {
+    // Hreinsum þar sem gildin eru á skjánum.
+    tft.fillRect(120,60,240,18,BLACK); // Hreinsum gildi fyrir þrýsting kistu
+    // Við skrifum mælt gildi á kistunni
+    float basePressure = 0.0;
+    basePressure = readPressure();
+    //pressure_ALL = basePressure; // þrýstingur úr öllum dekkjum
+    tft.setTextSize(2);
+    tft.setCursor(125,60);
+    tft.println(basePressure);
+    tft.setCursor(175,60);
+    tft.println(" PSI");
+    // Hreinsum þar sem gildin eru á skjánum.
+    //tft.fillRect(130,140,60,48,BLACK); // Hreinsum gildi fyrir valinn þrýsting burt.
+    tft.fillRect(140,140,60,120,BLACK); 
+    tft.setTextSize(2); // Stillum textastærð á 2
+    tft.setCursor(140,140); // Veljum staðsetningu
+    tft.println(tiretoken);
+    tft.setCursor(140,160); // Veljum staðsetningu
+    float pressureall = pressure_ALL - selectedPressure;
+    pressureall = fabs(pressureall);
+    tft.println(pressureall); // Skrifum út gildið.
+
+    if(tiretoken == 1)
     {
-      // Hreinsum þar sem gildin eru á skjánum.
-      tft.fillRect(120,60,240,18,BLACK); // Hreinsum gildi fyrir þrýsting kistu
-      // Við skrifum mælt gildi á kistunni
-      float basePressure = 0.0;
-      basePressure = readPressure();
-      pressure_ALL = basePressure; // þrýstingur úr öllum dekkjum
-      tft.setTextSize(2);
-      tft.setCursor(125,60);
-      tft.println(basePressure);
-      tft.setCursor(175,60);
-      tft.println(" PSI");
-      // Hreinsum þar sem gildin eru á skjánum.
-      //tft.fillRect(130,140,60,48,BLACK); // Hreinsum gildi fyrir valinn þrýsting burt.
-      tft.fillRect(140,140,60,120,BLACK); 
-      tft.setTextSize(2); // Stillum textastærð á 2
-      tft.setCursor(140,140); // Veljum staðsetningu
-      tft.println(tiretoken);
-      tft.setCursor(140,160); // Veljum staðsetningu
-      float pressureall = pressure_ALL - selectedPressure;
-      pressureall = fabs(pressureall);
-      tft.println(pressureall); // Skrifum út gildið.
-      tft.setCursor(140,180);
-      tft.println(interval_inflate);
-      tft.setCursor(140,200);
-      tft.println(timer_inflate);
-      tft.setCursor(140,220);
+      tft.setCursor(140,180); 
+      tft.println(interval_inflate_LRT/1000);
+      tft.setCursor(140,200); 
+      tft.println(interval_deflate_LRT/1000);
     }
+    if(tiretoken == 2)
+    {
+      tft.setCursor(140,180); 
+      tft.println(interval_inflate_LFT/1000);
+      tft.setCursor(140,200); 
+      tft.println(interval_deflate_LFT/1000);
+    }
+    if(tiretoken == 3) 
+    {
+      tft.setCursor(140,180); 
+      tft.println(interval_inflate_RFT/1000);
+      tft.setCursor(140,200); 
+      tft.println(interval_deflate_RFT/1000);
+    }
+    if(tiretoken == 4)
+    {
+      tft.setCursor(140,180);
+      tft.println(interval_inflate_RRT/1000);
+      tft.setCursor(140,200);
+      tft.println(interval_deflate_RRT/1000);
+    }
+    if(tiretoken == 5)
+    {
+      tft.setCursor(140,180);
+      tft.println(interval_inflate/1000);
+      tft.setCursor(140,200);
+      tft.println(timer_deflate);
+    }
+  }
 } //updateBaseValue function closes
 
     void updateValues() // Við uppfærum gildi

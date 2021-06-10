@@ -92,18 +92,13 @@
         {
             if(debug != true)
             {
-            debug = true;
-            drawMain();
-            tft.setCursor(130,220);
-            tft.println("debug");
+                debug = true;
             }
             else
             {
-            debug = false;
-            drawMain();
-            tft.setCursor(130,220);
-            tft.println("     ");
+                debug = false;
             }
+        drawMain();
         menuval = 0; // Back to main menu
         }
     }

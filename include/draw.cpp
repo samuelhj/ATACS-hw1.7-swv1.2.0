@@ -54,6 +54,13 @@ void drawMain()
       }
     }
 
+  if(debug == true)
+  {
+    tft.setTextSize(2);
+    tft.setCursor(220,220);
+    tft.println("debug");
+  }
+
 }// drawMain fall lokar
 
 void drawMenu()

@@ -66,7 +66,7 @@
 #include "tirePaint.cpp"
 #include "toggleMenu.cpp"
 #include "bootMessage.cpp"
-
+#include "tireMonitor.cpp"
 
 // Við skrifum vistuð gildi í EEPROM
 void writeSelectedPressure()
@@ -143,7 +143,8 @@ void loop()
 
     menu();
     settings();
-    
+    tireMonitor();
+
     // Hér erum við í aðalvalmynd.
 
     if(manual == true && x > 100 && x < 200)
@@ -267,25 +268,7 @@ void loop()
   }
 
 
-// Er kominn tími til að mæla dekk? 10 mín ef við erum ekki í stillingu/vöktun
-// Prófum að athuga hvort við erum yfir 20 psi.
-  if(menuval == 0 && tiretoken == 0 && selectedPressure < 20) // Ef við erum ekki í menu og erum ekki að stilla ákveðið dekk
-  {
 
-    if((millis() - timer_measure) > interval_measure) // Athugum hve langt er liðið frá síðustu uppfærslu gilda
-    {
-      read_LRT(); // Lesum vinstra afturdekk
-      updateValues(); // uppfærum gildi
-      read_LFT(); // Lesum vinstra framdekk
-      updateValues(); // uppfærum gildi
-      read_RFT(); // Lesum hægra framdekk
-      updateValues(); // Uppfærum gildi
-      read_RRT(); // Lesum hægra afturdekk
-      updateValues(); // Lesum gildi.
-      //warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
-      timer_measure = millis(); // Endurstillum teljara
-    }
-  }//Lokum athugunarfalli
 
 
   if(manual == false) // Ef við erum ekki með kerfið stillt á manual.
@@ -346,6 +329,7 @@ void loop()
     {
       adjustAllTires();
     }
+
   }
 
 

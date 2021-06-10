@@ -157,3 +157,4 @@ void read_ALL();
 void drawSettings();
 void drawBacklight();
 void test();
+void tireMonitor();
