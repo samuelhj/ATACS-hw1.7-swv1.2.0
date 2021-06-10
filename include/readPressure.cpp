@@ -25,6 +25,19 @@ float readPressure()
   return pressure;
 } //readPressure ends
 
+void read_ALL()
+{
+  tirePaint(C_MAELING,1);
+  air_base_close();
+  digitalWrite(TIRE_LR,ON);
+  digitalWrite(TIRE_LF,ON);
+  digitalWrite(TIRE_RF,ON);
+  digitalWrite(TIRE_RR,ON);
+  delay(AIR_DELAY);
+  pressure_ALL = readPressure();
+  air_base_close();
+  warningCheck();
+}
 
 void read_LRT() // Left rear tire
 {

@@ -47,6 +47,7 @@ Valmöguleikarnir eru:
           tiretoken = 0; // Ekkert dekk heldur tokeni
           menuval = 0;
           air_base_close(); // Gætum þess að kistan sé lokuð
+          drawMain(); // Teiknum aðalvalmynd
         }
         else
         {
@@ -55,9 +56,14 @@ Valmöguleikarnir eru:
           writeSelectedPressure(); // Skrifum valinn þrýsting í EEPROM.
           tiretoken = 0; // ekkert dekk heldur tokeni
           menuval = 0; // og við förum úr valmynd.
-          delay(50); // Töf
+          drawMain(); // Teiknum aðalvalmynd
+          // it's probably best to read all tires
+          read_LRT();
+          read_LFT();
+          read_RFT();
+          read_RRT();
         }
-        drawMain(); // Teiknum aðalvalmynd
+  
         x = 0; // Hreinsum X ásinn svo við hoppum ekki beint í annað
         y = 0; // Hreinsum Y ásinn svo við hoppum ekki beint í annað
       } // Lokum stilla lykkju
@@ -82,7 +88,7 @@ Valmöguleikarnir eru:
           read_RRT(); // Lesum hægra afturdekk
           updateValues(); // Uppfærum gildi
           timer_measure = millis(); // Endurstillum teljara svo hann mæli ekki strax aftur
-
+          manual = false;
         } // Lokum Mæla  lykkju
       }
 
@@ -116,7 +122,7 @@ Valmöguleikarnir eru:
           tiretoken = 5; // við stillum öll dekk í einu
           menuval = 0; // förum úr menu
           drawMain(); // teiknum aðalvalmynd.
-          previousMillis = millis(); // endursetjum teljara
+          timer_measure = millis(); // endursetjum teljara
         } // Lokum if setningu
         if(y>80 && y<130) // Ef það er valið 4 PSI forval
         {
@@ -132,7 +138,7 @@ Valmöguleikarnir eru:
           tiretoken = 5; // Stillum öll dekk
           menuval = 0; // förum úr menu
           drawMain(); // Teiknum aðalvalmynd
-          previousMillis = millis(); // endursetjum teljara
+          timer_measure = millis(); // endursetjum teljara
         } // Lokum if setningu
         if((y>130) && (y<160)) // Ef 8 psi eru valin
         {
@@ -147,7 +153,7 @@ Valmöguleikarnir eru:
           tiretoken = 5; // Stillum öll dekk
           menuval = 0; // Förum úr menu
           drawMain(); // Teiknum aðalvalmynd
-          previousMillis = millis(); // endursetjum teljara
+          timer_measure = millis(); // endursetjum teljara
         }
       }
       // Ef ýtt er hægra megin á skjáinn (8,12,20,28 PSI)
@@ -219,12 +225,6 @@ Valmöguleikarnir eru:
             drawMain();
           }
           menuval = 0; // Back to main menu
-
-
-          //menuval = 3; // Festum okkur í þessari valmynd.
-          // Teiknum upp dekkin
-         // drawTireSelection(); // Teiknum valmynd fyrir dekkjaval
-        
         }
       }
 
@@ -236,6 +236,8 @@ Valmöguleikarnir eru:
         if((menuval == 1) && (y>180) && (y<200))
         {
           menuval = 5; // Við förum í stillingar
+          drawSettings();
+          /*
           //menuval = 4; // Segjum forritinu að við séum með menu baklýsing
           tft.fillScreen(BLACK); // Hreinsum skjá
           // Búum til örvatakka
@@ -254,6 +256,7 @@ Valmöguleikarnir eru:
           tft.setCursor(100,5*MENU_H+20); // Stillum hvar við viljum byrja að teikna
           tft.println(" Til baka "); // Prentum texta
           delay(500); // Töf
+          */
         } // Lokum baklýsingar hluta
       }
 
@@ -294,41 +297,41 @@ Valmöguleikarnir eru:
     // Til baka úr menu eða úr undir-menu í menu.
     if((menuval > 0) &&  (x > MENU_X) && (x < MENU_X+MENU_W)) // Ef við erum á tilbaka takkanum
     {
-        if((menuval == 1) && (y>200) && (y<240)) // Fyrir til baka
-        {
-          menuval = 0; // setjum gildið í 0 og þá skrifar hann hefðbundinn skjá á skjáinn.
-          drawMain(); // Sennilega er betra að skrifa bara hefðbundinn skjá á til að losna við töfina.
-          manual = false; 
-        //  warningCheck(); // Athugum hvort ekki sé í lagi með dekk
-        }
-        // Ef við vorum í forvali
-        if((menuval == 2) && (y>200) && (y<240))
-        {
-          drawMenu();
-          menuval = 1; // Förum aftur í Menu
-          delay(500);
-        }
-        // Ef við vorum að stilla hvert dekk fyrir sig
-        if((menuval == 3) && (y>220) && (y<240))
-        {
-          drawMenu(); // Teiknum menu
-          menuval = 1; // Höldum okkur í menu.
-          delay(500);
-        }
-        if((menuval >30) && (menuval <35) && (y>200) && (y<240))
-        {
-          drawTireSelection(); // Teiknum valmynd fyrr handvirka stillingu.
-          delay(500);
-          menuval = 3; //
-        }
-        // Ef við vorum að stilla baklýsingu
-        if((menuval == 5) && (y>200) && (y<240))
-        {
-            drawMenu(); // Teiknum menu.
-            EEPROM.write(EBACKLIGHT,backlight_selected); // Geymum núverandi baklýsingu í EEPROM
-            delay(100); // Töf
-            menuval = 1;
-        }
+      if((menuval == 1) && (y>200) && (y<240)) // Fyrir til baka
+      {
+        menuval = 0; // setjum gildið í 0 og þá skrifar hann hefðbundinn skjá á skjáinn.
+        drawMain(); // Sennilega er betra að skrifa bara hefðbundinn skjá á til að losna við töfina.
+        manual = false; 
+      //  warningCheck(); // Athugum hvort ekki sé í lagi með dekk
       }
+      // Ef við vorum í forvali
+      if((menuval == 2) && (y>200) && (y<240))
+      {
+        drawMenu();
+        menuval = 1; // Förum aftur í Menu
+        delay(500);
+      }
+      // Ef við vorum að stilla hvert dekk fyrir sig
+      if((menuval == 3) && (y>220) && (y<240))
+      {
+        drawMenu(); // Teiknum menu
+        menuval = 1; // Höldum okkur í menu.
+        delay(500);
+      }
+      if((menuval >30) && (menuval <35) && (y>200) && (y<240))
+      {
+        drawTireSelection(); // Teiknum valmynd fyrr handvirka stillingu.
+        delay(500);
+        menuval = 3; //
+      }
+      // Ef við vorum að stilla baklýsingu
+      if((menuval == 5) && (y>200) && (y<240))
+      {
+          drawMenu(); // Teiknum menu.
+          EEPROM.write(EBACKLIGHT,backlight_selected); // Geymum núverandi baklýsingu í EEPROM
+          delay(100); // Töf
+          menuval = 1;
+      }
+    }
   }
 }// Main menu touch sense closes

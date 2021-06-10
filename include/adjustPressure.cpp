@@ -8,6 +8,7 @@
 
 void adjustAllTires()
 {
+  float previous_pressure = pressure_ALL;
 
   if(((pressure_ALL*100-selectedPressure*100))>25) // þegar það er of mikill þrýstingur
   {
@@ -22,7 +23,7 @@ void adjustAllTires()
 
     if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu
+      //updateBaseValue(); // Uppfærum mælingu á kistu
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
@@ -47,20 +48,47 @@ void adjustAllTires()
       // Reynist summa allra vera hærri en valins þrýstings.
       if((test_LRT + test_LFT + test_RFT + test_RRT)  > (selectedPressure*400))
       {
+                if(debug == true)
+        {
+          Serial.print("Pressure All: ");
+          Serial.println(pressure_ALL);
+          Serial.print("SelectedPressure:");
+          Serial.println(selectedPressure);
+          Serial.print("pressre_LRT: ");
+          Serial.println(pressure_LRT);
+          Serial.print("Interval Deflate: ");
+          Serial.println(interval_deflate);
+          Serial.println("");
+          
+        }
+
         //Þá leiðréttum við hvert dekk fyrir sig, og höldum svo áfram.
         adjustLRT(); // Stillum vinstra afturdekk
         adjustLFT(); // Stillum vinstra framdekk
         adjustRFT(); // Stillum hægra framdekk
         adjustRRT(); // Stillum hægra afturdekk
         tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
-        interval_deflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_deflate);
-        pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+        interval_deflate = timerSelector2(previous_pressure, selectedPressure, pressure_LRT, interval_deflate);
+        read_ALL(); 
         timer_deflate = millis(); //endurstillum teljara
+        if(debug == true)
+        {
+          Serial.println("Keyrir thetta?");
+          Serial.print("Pressure All: ");
+          Serial.println(pressure_ALL);
+          Serial.print("SelectedPressure:");
+          Serial.println(selectedPressure);
+          Serial.print("pressre_LRT: ");
+          Serial.println(pressure_LRT);
+          Serial.print("Interval Deflate: ");
+          Serial.println(interval_deflate);
+          Serial.println("");
+        }
       }
       else
       {
-        interval_deflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_deflate);
-        pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
+        interval_deflate = timerSelector2(previous_pressure, selectedPressure, pressure_LRT, interval_deflate);
+        read_ALL(); // öll dekk hafa sama þrýsting.
         timer_deflate = millis(); //endurstillum teljara
       }
     }
@@ -79,7 +107,7 @@ void adjustAllTires()
 
         if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
         {
-          updateBaseValue(); // Uppfærum mælingu á kistu
+         // updateBaseValue(); // Uppfærum mælingu á kistu
           previousMillis2 = millis(); // Endurstillum teljarann
         }
 
@@ -103,6 +131,19 @@ void adjustAllTires()
           // Reynist summa allra vera lægri en valins þrýstings.
           if((selectedPressure*400) < (test_LRT + test_LFT + test_RFT + test_RRT))
           {
+            if(debug == true)
+            {
+              Serial.print("Pressure All: ");
+              Serial.println(pressure_ALL);
+              Serial.print("SelectedPressure:");
+              Serial.println(selectedPressure);
+              Serial.print("pressre_LRT: ");
+              Serial.println(pressure_LRT);
+              Serial.print("Interval Deflate: ");
+              Serial.println(interval_deflate);
+              Serial.println("");
+              
+            }
             // Þá leiðréttum við hvert dekk fyrir sig, og höldum svo áfram.
             adjustLRT(); // Stillum vinstra afturdekk
             adjustLFT(); // Stillum vinstra framdekk
@@ -112,6 +153,19 @@ void adjustAllTires()
             interval_inflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
             pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
             timer_inflate = millis(); //endurstillum teljara
+            if(debug == true)
+            {
+              Serial.print("Pressure All: ");
+              Serial.println(pressure_ALL);
+              Serial.print("SelectedPressure:");
+              Serial.println(selectedPressure);
+              Serial.print("pressre_LRT: ");
+              Serial.println(pressure_LRT);
+              Serial.print("Interval Deflate: ");
+              Serial.println(interval_deflate);
+              Serial.println("");
+              
+            }
           }
           else
           {
@@ -137,6 +191,7 @@ void adjustAllTires()
 //Stillum vinstra afturdekk
 void adjustLRT()
 {
+  float previous_pressure = pressure_LRT;
 
   if(((pressure_LRT*100)-(selectedPressure*100))>25) // þegar það er of mikill þrýstingur
   {
@@ -151,12 +206,13 @@ void adjustLRT()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if((millis() - timer_deflate) > interval_deflate) // ef það er kominn tími á að mæla
+    if((millis() - timer_deflate_LRT) > interval_deflate_LRT) // ef það er kominn tími á að mæla
     {
       tiretoken = tiretoken+1; //Förum síðan í næsta dekk eftir þessa mælingu
       read_LRT(); // Lesum þrýsting
       updateValues();
-      timer_deflate = millis(); //endurstillum teljara
+      timer_deflate_LRT = millis(); //endurstillum teljara
+      interval_deflate_LRT = timerSelector2(previous_pressure, selectedPressure_LRT, pressure_LRT, interval_inflate_LRT);
     }
   } // Lækkun þrýstings fall lokar
 
@@ -175,32 +231,33 @@ void adjustLRT()
     }
 
     // Ef það er kominn tími til að mæla
-    if(millis() - timer_inflate > interval_inflate)
+    if(millis() - timer_inflate_LRT > interval_inflate_LRT)
     {
-      //tiretoken = tiretoken+1; //Förum síðan í næsta dekk eftir þessa mælingu
+      tiretoken = tiretoken+1; //Förum síðan í næsta dekk eftir þessa mælingu
       digitalWrite(TIRE_LR,OFF); // Lokum loka
       delay(AIR_DELAY); // Hinkrum
       digitalWrite(AIR_OUT,OFF); // Lokum fyrir loft út
       delay(AIR_DELAY); // Hinkrum
       read_LRT(); // Lesum vinstra afturdekk
       updateValues(); // Uppfærum gildin
-      timer_inflate = millis(); // endurstillum teljarann
+      timer_inflate_LRT = millis(); // rest timer
+      interval_inflate_LRT = timerSelector2(previous_pressure, selectedPressure_LRT, pressure_LRT, interval_inflate_LRT);
     }
   }// Hækkun þrýstings fall lokar
 
     //Við athugum hvort við séum innan skekkjumarka
-    if(((pressure_LRT*100)-(selectedPressure*100))<=25 && (((selectedPressure*100) - (pressure_LRT*100))<=25 ))
+    if(((pressure_LRT*100)-(selectedPressure_LRT*100))<=25 && (((selectedPressure_LRT*100) - (pressure_LRT*100))<=25 ))
     {
       air_base_close();
       timerTire = 0; // Núllstillum teljara
       tiretoken = 2; // Færum okkur í næsta dekk
-      interval_inflate = 2000;
-      timer_inflate = millis(); // endurstillum teljarann
+      interval_inflate_LRT = 2000;
+      timer_inflate_LRT = millis(); // endurstillum teljarann
       timer_measure = millis();
     }
-} //Lokum adjustLRT
+} //End of adjustLRT
 
-//Við stillum vinstra framdekk
+//Adjust Left Front Tire
 void adjustLFT()
 {
   if(((pressure_LFT*100)-(selectedPressure*100))>25) // þegar það er of mikill þrýstingur
@@ -216,14 +273,15 @@ void adjustLFT()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if(millis() - timer_deflate > interval_deflate) // ef það er kominn tími á að mæla
+    if(millis() - timer_deflate_LFT > interval_deflate_LFT) // ef það er kominn tími á að mæla
     {
-      //tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
+      tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       read_LFT(); // Lesum þrýsting
       updateValues(); // Uppfærum gildi
-      timer_deflate = millis(); //endurstillum teljara
-      timer_measure = millis();
+      timer_deflate_LFT = millis(); //endurstillum teljara
+      timer_deflate_LFT = millis();
+      interval_deflate_LFT = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
     }
 
   }// Lækkun þrýstings fall lokar
@@ -241,14 +299,15 @@ void adjustLFT()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if(millis() - timer_inflate > interval_inflate) // Ef það er kominn tími til að mæla
+    if(millis() - timer_inflate_LFT > interval_inflate_LFT) // Ef það er kominn tími til að mæla
     {
-      //tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
+      tiretoken = 3; // Let us advance to next tire
       air_base_close(); // Lokum kistu
       delay(100); // Hinkrum
       read_LFT(); // Lesum vinstra framdekk
       updateValues(); // Uppfærum gildin
-      timer_inflate = millis(); // endurstillum teljarann
+      timer_inflate_LFT = millis(); // endurstillum teljarann
+      interval_inflate_LFT = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate_LRT);
     }
   }// Hækkun þrýstings fall lokar
 
@@ -257,10 +316,10 @@ void adjustLFT()
   {
     air_base_close(); // Lokum kistunni
     timerTire = 0; // Núllstillum teljara
-    //tiretoken = 3; // Færum okkur í næsta dekk
-    interval_inflate = 2000;
-    timer_inflate = millis();
-    timer_measure = millis();
+    tiretoken = 3; // Færum okkur í næsta dekk
+    interval_inflate_LFT = 2000;
+    timer_inflate_LFT = millis();
+    timer_inflate_LFT = millis();
   }
 }// adjustLFT ends
 
@@ -280,13 +339,14 @@ void adjustRFT()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if(millis() - timer_deflate > interval_deflate) // ef það er kominn tími á að mæla
+    if(millis() - timer_deflate_RFT > interval_deflate_RFT) // ef það er kominn tími á að mæla
     {
-     // tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
+      tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       read_RFT(); // Lesum þrýsting
       updateValues(); // Uppfærum gildi
-      timer_deflate = millis(); //endurstillum teljara
+      timer_deflate_RFT = millis(); //endurstillum teljara
+      interval_deflate_RFT = timerSelector2(pressure_RFT, selectedPressure, pressure_RFT, interval_inflate_RFT);
     }
   }// Lækkun þrýstings fall lokar
 
@@ -303,14 +363,15 @@ void adjustRFT()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if(millis() - timer_inflate > interval_inflate) // Ef það er kominn tími til að mæla
+    if(millis() - timer_inflate_RFT > interval_inflate_RFT) // Ef það er kominn tími til að mæla
     {
-      //tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
+      tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       delay(100); // Hinkrum
       read_RFT(); // Lesum vinstra afturdekk
       updateValues(); // Uppfærum Gildin
-      timer_inflate = millis(); // endurstillum teljarann
+      timer_inflate_RFT = millis(); // endurstillum teljarann
+      interval_inflate_RFT = timerSelector2(pressure_RFT, selectedPressure, pressure_RFT, interval_inflate_RFT);
     }
   }// Hækkun þrýstings fall lokar
 
@@ -319,9 +380,9 @@ void adjustRFT()
   {
     air_base_close(); // Lokum kistu
     timerTire = 0; // Núllstillum teljara
-    //tiretoken = 4; // Færum okkur í næsta dekk
-    interval_inflate = 2000;
-    timer_inflate = millis();
+    tiretoken = 4; // Færum okkur í næsta dekk
+    interval_inflate_RFT = 2000;
+    timer_inflate_RFT = millis();
     timer_measure = millis();
   }
 
@@ -344,14 +405,15 @@ void adjustRRT()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if(millis() - timer_deflate > interval_deflate) // ef það er kominn tími á að mæla
+    if(millis() - timer_deflate_RRT > interval_deflate_RRT) // ef það er kominn tími á að mæla
     {
-      //tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
+      tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       read_RRT(); // Lesum þrýsting
       updateValues(); // Uppfærum gildi
-      timer_deflate = millis(); // endurstillum teljarann
+      timer_deflate_RRT = millis(); // endurstillum teljarann
       timer_measure = millis(); 
+      interval_inflate_RRT = timerSelector2(pressure_RRT, selectedPressure, pressure_RRT, interval_inflate_RRT);
     }
 
   }// Lækkun þrýstings fall lokar
@@ -369,14 +431,15 @@ void adjustRRT()
       previousMillis2 = millis(); // Endurstillum teljarann
     }
 
-    if(millis() - interval_inflate > interval_inflate) // Ef það er kominn tími til að mæla
+    if(millis() - interval_inflate_RRT > interval_inflate_RRT) // Ef það er kominn tími til að mæla
     {
-     // tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
+      tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
       air_base_close(); // Lokum kistu
       delay(100); // Hinkrum
       read_RRT(); // Lesum vinstra afturdekk
       updateValues(); // Uppfærum gildin
-      timer_inflate = millis(); // endurstillum teljarann
+      timer_inflate_RRT = millis(); // endurstillum teljarann
+      interval_inflate_RRT = timerSelector2(pressure_RRT, selectedPressure, pressure_RRT, interval_inflate_RRT);
     }
   }// Hækkun þrýstings fall lokar
 
@@ -385,9 +448,9 @@ void adjustRRT()
   {
     air_base_close(); // Lokum kistu
     timerTire = 0; // Núllstillum teljara
-   // tiretoken = 1; // Færum okkur í næsta dekk
-    interval_inflate = 2000;
-    timer_inflate = millis();
+    tiretoken = 1; // Færum okkur í næsta dekk
+    interval_inflate_RRT = 2000;
+    timer_inflate_RRT = millis();
     timer_measure = millis(); 
   }
     

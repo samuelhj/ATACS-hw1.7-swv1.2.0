@@ -1,5 +1,5 @@
 
-
+/*
 
 // Við veljum tíma fyrir interval
 void timerSelector()
@@ -101,6 +101,7 @@ void timerSelector()
   }
 
 }
+*/
 
 // More sophisticated method of determing the time
 float timerSelector2(float Pt, float Pv, float Pd, float time)
@@ -121,31 +122,65 @@ float timerSelector2(float Pt, float Pv, float Pd, float time)
  
  // Let's do a measurement here, this needs to change in the future and needs to be implemented in a more
  // sane manner.
-  
-  
-if(Pt< Pv)
-{
-  //digitalWrite(AIR_IN,ON); 
-  //digitalWrite()
-}
-  //uint16_t t = 10;
+
   float tP;  // time Pressure 
   float Pds; // Pressure delta / second
 
   Pds = (Pt-Pd)/time;
   tP = (Pt-Pv)/Pds;
-    // let's ensure Pds is always positive number.
+
+
+
+  if(debug == true)
+  {
+    Serial.print("Pds = (Pt-Pd)/time: (");
+    Serial.print(Pt);
+    Serial.print(" - ");
+    Serial.print(Pd);
+    Serial.print(")/");
+    Serial.print(time);
+    Serial.print("=");
+    Serial.println(Pds); 
+    Serial.println("");
+    Serial.print("tP = (Pt-Pv)/Pds");
+    Serial.print(Pt); 
+    Serial.print(" - ");
+    Serial.print(Pv); 
+    Serial.print(")/");
+    Serial.print(Pds);
+    Serial.print("=");
+    Serial.println(tP);
+    Serial.println(" ");
+  }
+
+  // let's ensure Pds is always positive number.
   tP = fabs(tP);
 
   // We implement an upper limit as an failsafe, in case something goes wrong so it wont just deflate/inflate forever...
-  if(tP > 120000)
+  if(tP > 120)
   {
-    tP = 120000; // 2 minutes max
+    tP = 120; // 2 minutes max
   }
-  // In case, for some reason the time is less than a half a second
-  if(tP < 500)
+  // In case, for some reason the time is less than two seconds
+  if(tP < 2)
   {
-    tP = 500;
+    tP = 2;
   }
+
+  if(debug == true)
+  {
+    Serial.println("After timerSelector");
+    Serial.print("time to inflate/deflate: ");
+    Serial.println(tP);
+    Serial.print("delta Pressure / second: ");
+    Serial.println(Pds);
+    Serial.println(" ");
+  }
+
+  // We need to change back to milliseconds
+  tP = tP*1000;
   return tP;
+
+
+
 }

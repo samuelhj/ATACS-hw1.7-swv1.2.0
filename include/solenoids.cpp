@@ -23,6 +23,12 @@ void air_base_inflate()
   digitalWrite(TIRE_RR,ON);
   digitalWrite(AIR_IN,ON);
   tirePaint(C_INNDAELING,5);
+
+  if(debug == true)
+  {
+    Serial.println("INFLATING");
+  }
+
 }
 
 void air_base_deflate()
@@ -34,7 +40,15 @@ void air_base_deflate()
   digitalWrite(TIRE_RR,ON);
   digitalWrite(AIR_IN,OFF);
   tirePaint(C_URHLEYPING,5);
+
+  if(debug == true)
+  {
+    Serial.println("DEFLATING");
+  }
+
 }
+
+
 /*
 *   Loops to test allt solenoids
 *
@@ -47,19 +61,19 @@ void test()
   digitalWrite(AIR_OUT,ON);
   delay(2000);
   digitalWrite(TIRE_LR,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_LR,OFF);
   delay(1000);
   digitalWrite(TIRE_LF,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_LF,OFF);
   delay(1000);
   digitalWrite(TIRE_RF,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_RF,OFF);
   delay(1000);
   digitalWrite(TIRE_RR,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_RR,OFF);
   delay(1000);
   digitalWrite(AIR_IN,ON); // Prófum dælu
@@ -69,22 +83,22 @@ void test()
   // Dælum í 10s í hvert dekk
 
   digitalWrite(TIRE_LR,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_LR,OFF);
   delay(1000);
   digitalWrite(TIRE_LF,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_LF,OFF);
   delay(1000);
   digitalWrite(TIRE_RF,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_RF,OFF);
   delay(1000);
   digitalWrite(TIRE_RR,ON);
-  delay(10000);
+  delay(2000);
   digitalWrite(TIRE_RR,OFF);
   delay(1000);
   digitalWrite(AIR_IN,OFF);
-  delay(15000);
+  delay(1000);
 
 }

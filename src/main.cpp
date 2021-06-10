@@ -102,9 +102,10 @@ void setup()
   delay(100); // Töf
   tft.begin(); // Virkjum skjáinn
   tft.fillScreen(ILI9341_BLACK); // Hreinsum skjáinn og skrifum svartan bakgrunn.
-  tft.setRotation(1); // Við stillum skjá í landscape ham.
+  tft.setRotation(1); // Landscape
   tft.setSPISpeed(4000000);
-  // Hér lesum við úr minni eldri stillingar
+
+// Read from EEPROM
   backlight_selected = EEPROM.read(EBACKLIGHT);
   EEPROM.get(EPRESSURE,selectedPressure); // Lesum þrýsting úr minni
   EEPROM.get(EPRESSURE_LRT,selectedPressure_LRT); // Lesum þrýsting úr minni
@@ -112,17 +113,17 @@ void setup()
   EEPROM.get(EPRESSURE_RFT,selectedPressure_RFT); // Lesum þrýsting úr minni
   EEPROM.get(EPRESSURE_RRT,selectedPressure_RRT); // Lesum þrýsting úr minni
 
-  // Boot skilaboð
+  // Boot message
   bootMessage();
 
-  warningCheck(); // teiknum dekk rauð fyrir mælingu
   read_LRT(); // Lesum vinstra afturdekk
   read_LFT(); // Lesum vinstra framdekk
   read_RFT(); // Lesum hægra framdekk
   read_RRT(); // Lesum hægra afturdekki
-  tft.fillScreen(BLACK); // Hreinsum skjá.
-  tft.setTextColor(WHITE); // Breytum textanum yfir í hvítt
-  drawMain(); // Teiknum grunn útlit.
+  tft.fillScreen(BLACK); // Clean monitor
+  tft.setTextColor(WHITE); 
+  drawMain(); 
+
 }//Void Setup lokar
 
 void loop()
@@ -141,7 +142,8 @@ void loop()
     int x = p.y;
 
     menu();
-
+    settings();
+    
     // Hér erum við í aðalvalmynd.
 
     if(manual == true && x > 100 && x < 200)
@@ -266,7 +268,6 @@ void loop()
 
 
 // Er kominn tími til að mæla dekk? 10 mín ef við erum ekki í stillingu/vöktun
-// Tökum út adjust == false til prufu.
 // Prófum að athuga hvort við erum yfir 20 psi.
   if(menuval == 0 && tiretoken == 0 && selectedPressure < 20) // Ef við erum ekki í menu og erum ekki að stilla ákveðið dekk
   {
@@ -291,7 +292,7 @@ void loop()
   {
     // Ef við erum ekki í menu og erum að vakta dekkin, en ekki að stilla stakt dekk
 
-    if(menuval == 0 && adjust == true && tiretoken == 0)
+    if(menuval == 0 && adjust == true && tiretoken <5)
     {
       uint16_t test_LRT = pressure_LRT*100;
       uint16_t test_LFT = pressure_LFT*100;
@@ -302,6 +303,22 @@ void loop()
       {
         // Þá leiðréttum við öll dekk í einu
         tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
+      }
+      if(debug == true)
+      {
+        Serial.println("main loop");
+        Serial.print("Test_LRT: ");
+        Serial.println(test_LRT);
+        Serial.print("Pressure LRT; ");
+        Serial.println(pressure_LRT);
+        Serial.print("Test LFT: ");
+        Serial.println(test_LFT);
+        Serial.print("Test RFT: ");
+        Serial.println(test_RFT);
+        Serial.print("Test RRT: ");
+        Serial.println(test_RRT);
+        Serial.print("TireToken: ");
+        Serial.println(tiretoken);
       }
     }
     // Ef við erum ekki í menu og viljum stilla Vinstra afturdekk

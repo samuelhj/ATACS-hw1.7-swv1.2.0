@@ -130,3 +130,66 @@ void drawForval()
   tft.setCursor(100,5*MENU_H+20); // Stillum byrjunarreit
   tft.println(" Til baka "); // Prentum texta
 }
+
+
+void drawSettings()
+{
+/*  
+*   Backlight settings
+*   date / time
+*   Forval / preselection set pressure
+*   Debug ON / OFF 
+*   Test Solenoids  
+*/
+
+  tft.fillScreen(BLACK); 
+  tft.setTextSize(2);
+  // Let's draw boxes
+  tft.drawRect(100,3,MENU_W+20,MENU_H, WHITE); // Teiknum Stilla box
+  tft.drawRect(100,MENU_H+3,MENU_W+20,MENU_H, WHITE); // Teiknum Forval box
+  tft.drawRect(100,2*MENU_H+3,MENU_W+20,MENU_H, WHITE); // Teiknum Baklysing box
+  tft.drawRect(100,3*MENU_H+3,MENU_W+20,MENU_H, WHITE); // Teiknum Maela box
+  tft.drawRect(100,4*MENU_H+3,MENU_W+20,MENU_H, WHITE); // Teiknum Til baka box
+  tft.drawRect(100,5*MENU_H+3,MENU_W+20,MENU_H,WHITE); //
+
+  tft.setTextSize(2);
+  tft.setCursor(120,20);
+  tft.println("Baklysing");
+  tft.setTextSize(2);
+  tft.setCursor(100,MENU_H+20);
+  tft.println(" Dagsetning");
+  tft.setTextSize(2);
+  tft.setCursor(100,2*MENU_H+20);
+  tft.println(" Forval val");
+  tft.setTextSize(2);
+  tft.setCursor(100,3*MENU_H+20);
+  tft.println(" Debug ");
+  tft.setTextSize(2);
+  tft.setCursor(100,4*MENU_H+20);
+  tft.println(" Test ");
+  tft.setTextSize(2);
+  tft.setCursor(100,5*MENU_H+20);
+  tft.println(" Til baka");
+
+}
+
+void drawBacklight()
+{
+  //menuval = 4; // Segjum forritinu að við séum með menu baklýsing
+  tft.fillScreen(BLACK); // Hreinsum skjá
+  // Búum til örvatakka
+  // Tveir þríhyrningar fyrir hækka og lækka takkana.
+  tft.fillTriangle(INCREMENT_PRESSURE_X0, INCREMENT_PRESSURE_Y0, INCREMENT_PRESSURE_X1, INCREMENT_PRESSURE_Y1, INCREMENT_PRESSURE_X2, INCREMENT_PRESSURE_Y2, WHITE);
+  tft.fillTriangle(DECREMENT_PRESSURE_X0, DECREMENT_PRESSURE_Y0, DECREMENT_PRESSURE_X1, DECREMENT_PRESSURE_Y1, DECREMENT_PRESSURE_X2, DECREMENT_PRESSURE_Y2, WHITE);
+  // Sýnum núverandi gildið á skjá
+  tft.setCursor(145,100); // Staðsetjum hvar við viljum teikna gildið
+  tft.setTextSize(3); // Höfum textann í stærð 3
+  tft.println(backlight_selected/10); // Skrifum gildið á skjá
+
+  // Búum til tilbaka takka
+
+  //tft.drawRect(100,5*MENU_H+10,MENU_W+20,MENU_H, WHITE); // Teiknum ramma fyrir tilbaka
+  tft.setTextSize(2); // Textastærð í 2
+  tft.setCursor(100,5*MENU_H+20); // Stillum hvar við viljum byrja að teikna
+  tft.println(" Til baka "); // Prentum texta
+}

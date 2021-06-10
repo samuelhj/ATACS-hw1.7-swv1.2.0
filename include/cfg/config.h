@@ -6,7 +6,7 @@
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" // Þetta ætti að vera lesið úr EEPROM...
 #define VERSION "hw1.7.0-swV1.2.0"
-#define BUILDDATE "2021-05-26"
+#define BUILDDATE "2021-06-07"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
 
 // Hér skilgreinum við fasta sem breytast ekki.
@@ -55,7 +55,7 @@
 
 // Global variables
 // Skilgreinum global breytur
-bool debug = true; // true for debug
+static bool debug = true; // true for debug
 
 static float selectedPressure = 0.00f; // Valinn þrýstingur.
 static float selectedPressure_LRT = 0.00f;
@@ -76,19 +76,40 @@ unsigned long interval_inflate = 2000; // interval for inflation, this should be
 unsigned long timer_deflate = 0;
 unsigned long interval_deflate = 2000; 
 
+unsigned long interval_inflate_LRT = 2000;
+unsigned long interval_inflate_LFT = 2000;
+unsigned long interval_inflate_RFT = 2000;
+unsigned long interval_inflate_RRT = 2000;
+
+unsigned long interval_deflate_LRT = 2000;
+unsigned long interval_deflate_LFT = 2000;
+unsigned long interval_deflate_RFT = 2000;
+unsigned long interval_deflate_RRT = 2000;
+
+unsigned long timer_inflate_LRT = 0;
+unsigned long timer_inflate_LFT = 0;
+unsigned long timer_inflate_RFT = 0;
+unsigned long timer_inflate_RRT = 0;
+
+unsigned long timer_deflate_LRT = 0;
+unsigned long timer_deflate_LFT = 0;
+unsigned long timer_deflate_RFT = 0;
+unsigned long timer_deflate_RRT = 0;
+
 // Þessir mega væntanlega fara bráðlega?
-unsigned long previousMillis = 0; // Teljari 1
-unsigned long previousMillis1 = 0; // Teljari 2
+//unsigned long previousMillis = 0; // Teljari 1
+//unsigned long previousMillis1 = 0; // Teljari 2
 unsigned long previousMillis2 = 0; // Teljari 3
 unsigned long interval = 6000; // hve lengi á að bíða þar til athugað er aftur. 6s ~= 0.1psi
 
-unsigned long interval2 = 300000; // interval2 er hugsað fyrir athugun dekkjaþrýstings
+//unsigned long interval2 = 300000; // interval2 er hugsað fyrir athugun dekkjaþrýstings
+/*
 static uint16_t interval_ALL = 6000;
 static uint16_t interval_LRT = 6000; // Tími LRT
 static uint16_t interval_LFT = 6000;
 static uint16_t interval_RFT = 6000;
 static uint16_t interval_RRT = 6000;
-
+*/
 static uint8_t menuval = 0; // er menu valið eða ekki?
 static uint8_t selectedTire =0; // Hvaða dekk er valið.
 static uint16_t psi = 0; //
@@ -98,6 +119,7 @@ static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
 static uint8_t tireval = 0; // Valið dekk
 uint8_t backlight_selected = 255; // Styrkur á baklýsingu
 static uint16_t timerTire = 0; //Hve oft við athugum þrýsting í dekkjum áður en við gefumst upp í bili.
+
 
 // Skilgreinum öll föll
 void updateValues(); // Við uppfærum öll gildi.
@@ -131,3 +153,7 @@ float timerSelector2(float Pt, float Pv, float Pd, float time);
 void bootMessage();
 void menu(); // Fall sem opnar Menu
 int backlightAdjust(int);
+void read_ALL();
+void drawSettings();
+void drawBacklight();
+void test();

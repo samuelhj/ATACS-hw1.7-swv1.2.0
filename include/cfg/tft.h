@@ -102,8 +102,8 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC); // Skilgreining fyrir I
 #define GREEN       0x07E0      /*   0, 255,   0 */
 #define CYAN        0x07FF      /*   0, 255, 255 */
 #define C_WARNING   0xF800      // RED
-#define MAGENTA     0xF81F      /* 255,   0, 255 */
-#define C_URHLEYPING      0xFFE0      // úRHLEYPIING (YELLOW)
-#define WHITE       0xFFFF      // Valið dekk
+#define C_URHLEYPING     0xF81F      /* 255,   0, 255 DEFLATE */
+#define YELLOW      0xFFE0      // Yellow
+#define WHITE       0xFFFF      // Selected tire
 #define C_MAELING   0xFD20      // Mæling (ORANGE)
 #define PINK        0xF81F
