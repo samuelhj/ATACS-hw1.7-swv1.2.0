@@ -1,7 +1,7 @@
 # ATACS-hw1.7-swv1.2.0
  
-Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-updater-current.zip
-
+Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-V1.7.x-updater-current.zip
+Leiðbeiningar: ATACS-V1.7-Notkunarleidbeiningar-v1.0.pdf
 Eiginleikar:
 
 Forritið stýrir 6rása mosfet útgangsrás, snertiskjá og les frá þrýstinema. Gildin birtir það svo á skjánum.
