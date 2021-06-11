@@ -12,7 +12,7 @@ void adjustAllTires()
 
   if(((pressure_ALL*100-selectedPressure*100))>25) // þegar það er of mikill þrýstingur
   {
-    tiretoken = 5; // Token for adjusting all tires
+    //tiretoken = 5; // Token for adjusting all tires
     digitalWrite(AIR_IN,OFF);
     digitalWrite(TIRE_LR,ON); 
     digitalWrite(TIRE_LF,ON);

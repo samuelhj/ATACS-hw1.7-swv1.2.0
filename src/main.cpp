@@ -189,8 +189,6 @@ void loop()
           {
             air_base_deflate();
           }
-         // else
-           // air_base_close();
         }
 
       tiretoken = 0;
