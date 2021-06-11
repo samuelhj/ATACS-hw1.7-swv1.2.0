@@ -5,7 +5,7 @@ Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-V1.7.x-updater-c
 Leiðbeiningar: https://ulfraf.space/files/ATACS-V1.7-Notkunarleidbeiningar-v1.0.pdf
 
 
-#### Eiginleikar:
+### Eiginleikar:
 
 Forritið stýrir 6rása mosfet útgangsrás, snertiskjá og les frá þrýstinema. Gildin birtir það svo á skjánum.
 Frá skjánum tekur það valin gildi á hvaða þrýstingur á að vera í dekkjum og stillir þrýstingin í dekkjunum eftir því. Einnig fylgist það af og til með
@@ -27,7 +27,7 @@ fyrir loftdælu.
       gæti dottið í hug að bæta við seinna meir.
     * 15 pinna tengi fyrir SPI skjá.
 
-Kóðasöfn í notkun:
+### Kóðasöfn í notkun:
 * TouchScreen.h  Við þurfum library til að lesa snertingu af skjá.
 * Adafruit_GFX.h  Við þurfum library til að teikna á skjá.
 * Adafruit_ILI9341.h  Við þurfum library til að tala við ILI9341 stýringu á skjá.
