@@ -2,10 +2,10 @@
  
 Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-V1.7.x-updater-current.zip
 
-Leiðbeiningar: ATACS-V1.7-Notkunarleidbeiningar-v1.0.pdf
+Leiðbeiningar: https://ulfraf.space/files/ATACS-V1.7-Notkunarleidbeiningar-v1.0.pdf
 
 
-Eiginleikar:
+#### Eiginleikar:
 
 Forritið stýrir 6rása mosfet útgangsrás, snertiskjá og les frá þrýstinema. Gildin birtir það svo á skjánum.
 Frá skjánum tekur það valin gildi á hvaða þrýstingur á að vera í dekkjum og stillir þrýstingin í dekkjunum eftir því. Einnig fylgist það af og til með
