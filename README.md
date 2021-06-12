@@ -34,4 +34,6 @@ fyrir loftdælu.
 
 
 Ath breyta þarf línu í kóðasafninu Touchscreen.h fyrir ATmega1284P
-"TouchScreen.h: Lína 12 í TouchScreen.h, >bæta við ||defined(__AVR_ATmega1284P__)"
+
+"TouchScreen.h: Lína 12 í TouchScreen.h: 
+>bæta við ||defined(__AVR_ATmega1284P__)"
