@@ -36,7 +36,7 @@
 // Define output pins for solenoids
 // Mightycore pinout, not the physical pins on the ATmega
 // They are in parenthesis behind followed by wire number in the harness
-// Númer víra í víralúmi eru aftast
+// Numbers of each wire in the cable then follow
 #define AIR_OUT 21   // Loft út af kistu (27) (6)
 #define TIRE_LR 20   // vinstra afturdekk (26) (5)
 #define TIRE_LF 19   // vinstra framdekk (25) (4)
