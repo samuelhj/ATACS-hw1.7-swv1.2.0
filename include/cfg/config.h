@@ -4,7 +4,7 @@
 */
 
 // fastar sem eru bundnir við þetta tiltekna tæki.
-//#define SERIALNUMBER "003" // Þetta ætti að vera lesið úr EEPROM...
+//#define SERIALNUMBER "003" 
 #define VERSION "hw1.7.0-swV1.2.2"
 #define BUILDDATE "2021-06-18"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
@@ -15,8 +15,8 @@
 #define TIMERTIRE 10
 // Pressure Timer for inflate/deflate
 #define PTLONG 30000 // 30s fyrir langa
-#define PTMEDIUM 15000
-#define PTSHORT 5000 // 5 sekúndur
+#define PTMEDIUM 12000
+#define PTSHORT 3000 
 
 
 // EEPROM memory banks
