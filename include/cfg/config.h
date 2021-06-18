@@ -5,19 +5,19 @@
 
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" // Þetta ætti að vera lesið úr EEPROM...
-#define VERSION "hw1.7.0-swV1.2.1"
-#define BUILDDATE "2021-06-10"
+#define VERSION "hw1.7.0-swV1.2.2"
+#define BUILDDATE "2021-06-18"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
 
 // Hér skilgreinum við fasta sem breytast ekki.
 // Fastar tafir.
 #define AIR_DELAY 1000 // Hve lengi við hinkrum meðan verið er að dæla í eða úr kistu. 1s er nægur tími.
 #define TIMERTIRE 10
-// These timers can probably be removed soon.
-#define TIMER10PSI 45000 // 30s fyrir langa
-#define TIMER5PSI 30000
-#define TIMER1PSI 15000 // 7 sekúndur
-#define TIMER025PSI 7000
+// Pressure Timer for inflate/deflate
+#define PTLONG 30000 // 30s fyrir langa
+#define PTMEDIUM 15000
+#define PTSHORT 5000 // 5 sekúndur
+
 
 // EEPROM memory banks
 #define ESERIALNUMBER 0 // Skilgreinum hvar seríal númer er geymt.

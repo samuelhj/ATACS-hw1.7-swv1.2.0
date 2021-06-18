@@ -132,7 +132,8 @@ void loop()
   backlightAdjust(backlight_selected); // Við kveikjum á skjá.
   if(selectedPressure <20)
   tireMonitor();
-
+  timerSelector();
+  
   // sækjum hnit sem ýtt er á
   TSPoint p = ts.getPoint();
 

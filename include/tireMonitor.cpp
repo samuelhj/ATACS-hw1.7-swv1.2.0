@@ -28,7 +28,7 @@ void tireMonitor()
       updateValues(); // Uppfærum gildi
       read_RRT(); // Lesum hægra afturdekk
       updateValues(); // Lesum gildi.
-      //warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
+      warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
       timer_measure = millis(); // Endurstillum teljara
     }
   }//Lokum athugunarfalli

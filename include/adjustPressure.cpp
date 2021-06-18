@@ -8,7 +8,7 @@
 
 void adjustAllTires()
 {
-  float previous_pressure = pressure_ALL;
+  //float previous_pressure = pressure_ALL;
 
   if(((pressure_ALL*100-selectedPressure*100))>25) // þegar það er of mikill þrýstingur
   {
@@ -68,7 +68,7 @@ void adjustAllTires()
         adjustRFT(); // Stillum hægra framdekk
         adjustRRT(); // Stillum hægra afturdekk
         tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
-        interval_deflate = timerSelector2(previous_pressure, selectedPressure, pressure_LRT, interval_deflate);
+        //interval_deflate = timerSelector2(previous_pressure, selectedPressure, pressure_LRT, interval_deflate);
         read_ALL(); 
         timer_deflate = millis(); //endurstillum teljara
         if(debug == true)
@@ -87,7 +87,7 @@ void adjustAllTires()
       }
       else
       {
-        interval_deflate = timerSelector2(previous_pressure, selectedPressure, pressure_LRT, interval_deflate);
+        //interval_deflate = timerSelector2(previous_pressure, selectedPressure, pressure_LRT, interval_deflate);
         read_ALL(); // öll dekk hafa sama þrýsting.
         timer_deflate = millis(); //endurstillum teljara
       }
@@ -150,7 +150,7 @@ void adjustAllTires()
             adjustRFT(); // Stillum hægra framdekk
             adjustRRT(); // Stillum hægra afturdekk
             tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
-            interval_inflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
+            //interval_inflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
             pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
             timer_inflate = millis(); //endurstillum teljara
             if(debug == true)
@@ -169,7 +169,7 @@ void adjustAllTires()
           }
           else
           {
-            interval_inflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
+           // interval_inflate = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
             pressure_ALL = pressure_LRT; // öll dekk hafa sama þrýsting.
             timer_inflate = millis(); //endurstillum teljara
           }
@@ -191,7 +191,7 @@ void adjustAllTires()
 //Stillum vinstra afturdekk
 void adjustLRT()
 {
-  float previous_pressure = pressure_LRT;
+ // float previous_pressure = pressure_LRT;
 
   if(((pressure_LRT*100)-(selectedPressure*100))>25) // þegar það er of mikill þrýstingur
   {
@@ -212,7 +212,7 @@ void adjustLRT()
       read_LRT(); // Lesum þrýsting
       updateValues();
       timer_deflate_LRT = millis(); //endurstillum teljara
-      interval_deflate_LRT = timerSelector2(previous_pressure, selectedPressure_LRT, pressure_LRT, interval_inflate_LRT);
+      //interval_deflate_LRT = timerSelector2(previous_pressure, selectedPressure_LRT, pressure_LRT, interval_inflate_LRT);
     }
   } // Lækkun þrýstings fall lokar
 
@@ -241,7 +241,7 @@ void adjustLRT()
       read_LRT(); // Lesum vinstra afturdekk
       updateValues(); // Uppfærum gildin
       timer_inflate_LRT = millis(); // rest timer
-      interval_inflate_LRT = timerSelector2(previous_pressure, selectedPressure_LRT, pressure_LRT, interval_inflate_LRT);
+      //interval_inflate_LRT = timerSelector2(previous_pressure, selectedPressure_LRT, pressure_LRT, interval_inflate_LRT);
     }
   }// Hækkun þrýstings fall lokar
 
@@ -251,7 +251,7 @@ void adjustLRT()
       air_base_close();
       timerTire = 0; // Núllstillum teljara
       tiretoken = 2; // Færum okkur í næsta dekk
-      interval_inflate_LRT = 2000;
+      //interval_inflate_LRT = 2000;
       timer_inflate_LRT = millis(); // endurstillum teljarann
       timer_measure = millis();
     }
@@ -281,7 +281,7 @@ void adjustLFT()
       updateValues(); // Uppfærum gildi
       timer_deflate_LFT = millis(); //endurstillum teljara
       timer_deflate_LFT = millis();
-      interval_deflate_LFT = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
+      //interval_deflate_LFT = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate);
     }
 
   }// Lækkun þrýstings fall lokar
@@ -307,7 +307,7 @@ void adjustLFT()
       read_LFT(); // Lesum vinstra framdekk
       updateValues(); // Uppfærum gildin
       timer_inflate_LFT = millis(); // endurstillum teljarann
-      interval_inflate_LFT = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate_LRT);
+      //interval_inflate_LFT = timerSelector2(pressure_ALL, selectedPressure, pressure_LRT, interval_inflate_LRT);
     }
   }// Hækkun þrýstings fall lokar
 
@@ -317,7 +317,7 @@ void adjustLFT()
     air_base_close(); // Lokum kistunni
     timerTire = 0; // Núllstillum teljara
     tiretoken = 3; // Færum okkur í næsta dekk
-    interval_inflate_LFT = 2000;
+    //interval_inflate_LFT = 2000;
     timer_inflate_LFT = millis();
     timer_inflate_LFT = millis();
   }
@@ -346,7 +346,7 @@ void adjustRFT()
       read_RFT(); // Lesum þrýsting
       updateValues(); // Uppfærum gildi
       timer_deflate_RFT = millis(); //endurstillum teljara
-      interval_deflate_RFT = timerSelector2(pressure_RFT, selectedPressure, pressure_RFT, interval_inflate_RFT);
+      //interval_deflate_RFT = timerSelector2(pressure_RFT, selectedPressure, pressure_RFT, interval_inflate_RFT);
     }
   }// Lækkun þrýstings fall lokar
 
@@ -371,7 +371,7 @@ void adjustRFT()
       read_RFT(); // Lesum vinstra afturdekk
       updateValues(); // Uppfærum Gildin
       timer_inflate_RFT = millis(); // endurstillum teljarann
-      interval_inflate_RFT = timerSelector2(pressure_RFT, selectedPressure, pressure_RFT, interval_inflate_RFT);
+      //interval_inflate_RFT = timerSelector2(pressure_RFT, selectedPressure, pressure_RFT, interval_inflate_RFT);
     }
   }// Hækkun þrýstings fall lokar
 
@@ -381,7 +381,7 @@ void adjustRFT()
     air_base_close(); // Lokum kistu
     timerTire = 0; // Núllstillum teljara
     tiretoken = 4; // Færum okkur í næsta dekk
-    interval_inflate_RFT = 2000;
+    //interval_inflate_RFT = 2000;
     timer_inflate_RFT = millis();
     timer_measure = millis();
   }
@@ -413,7 +413,7 @@ void adjustRRT()
       updateValues(); // Uppfærum gildi
       timer_deflate_RRT = millis(); // endurstillum teljarann
       timer_measure = millis(); 
-      interval_inflate_RRT = timerSelector2(pressure_RRT, selectedPressure, pressure_RRT, interval_inflate_RRT);
+     // interval_inflate_RRT = timerSelector2(pressure_RRT, selectedPressure, pressure_RRT, interval_inflate_RRT);
     }
 
   }// Lækkun þrýstings fall lokar
@@ -439,7 +439,7 @@ void adjustRRT()
       read_RRT(); // Lesum vinstra afturdekk
       updateValues(); // Uppfærum gildin
       timer_inflate_RRT = millis(); // endurstillum teljarann
-      interval_inflate_RRT = timerSelector2(pressure_RRT, selectedPressure, pressure_RRT, interval_inflate_RRT);
+      //interval_inflate_RRT = timerSelector2(pressure_RRT, selectedPressure, pressure_RRT, interval_inflate_RRT);
     }
   }// Hækkun þrýstings fall lokar
 
@@ -449,7 +449,7 @@ void adjustRRT()
     air_base_close(); // Lokum kistu
     timerTire = 0; // Núllstillum teljara
     tiretoken = 0; // Færum okkur í næsta dekk
-    interval_inflate_RRT = 2000;
+   // interval_inflate_RRT = 2000;
     timer_inflate_RRT = millis();
     timer_measure = millis(); 
   }

@@ -1,107 +1,124 @@
 
-/*
-
 // Við veljum tíma fyrir interval
 void timerSelector()
 {
   // Hér þurfum við að bera saman selectedPressure og pressure
   // Byrjum á ALL
-  if(((selectedPressure - pressure_ALL) > 10.00) && ((selectedPressure - pressure_ALL) < 20.00))
+  if(tiretoken == 5)
   {
-    interval_ALL = TIMER10PSI; // 30 sekúndur
-  }
-  // Ef þrýstingsmunur á völdu gildi og raungildi er milli 5 og 10
-  if(((selectedPressure - pressure_ALL) > 5.00) && ((selectedPressure - pressure_ALL) < 10.00))
-  {
-    interval_ALL = TIMER5PSI; // 10 sekúndur
-  }
-  if(((selectedPressure - pressure_ALL) > 1.00) && ((selectedPressure - pressure_ALL) < 5.00))
-  {
-    interval_ALL = TIMER1PSI; // 6 sekúndur
-  }
-  if(((selectedPressure - pressure_ALL) > 0.00) && ((selectedPressure - pressure_ALL) < 1.00))
-  {
-    interval_ALL = TIMER025PSI; // 3 sekúndur
-  }
+    float a;
+    a = selectedPressure - pressure_ALL;
+    a = fabs(a);
 
-  // Næst LRT
-  if(((selectedPressure_LRT - pressure_LRT) > 10.00) && ((selectedPressure_LRT - pressure_LRT) < 30.00))
-  {
-    interval_LRT = TIMER10PSI; // 30 sekúndur
-  }
-  // Ef þrýstingsmunur á völdu gildi og raungildi er milli 5 og 10
-  if(((selectedPressure_LRT - pressure_LRT) > 5.00) && ((selectedPressure_LRT - pressure_LRT) < 10.00))
-  {
-    interval_LRT = TIMER5PSI; // 10 sekúndur
-  }
-  if(((selectedPressure_LRT - pressure_LRT) > 1.00) && ((selectedPressure_LRT - pressure_LRT) < 5.00))
-  {
-    interval_LRT = TIMER1PSI; // 6 sekúndur
-  }
-  if(((selectedPressure_LRT - pressure_LRT) > 0.00) && ((selectedPressure_LRT - pressure_LRT) < 1.00))
-  {
-    interval_LRT = TIMER025PSI; // 3 sekúndur
-  }
+    if(a > 10)
+    {
+      interval_deflate = PTLONG;
+      interval_inflate = PTLONG;
+    }
+    if(a > 5 && a < 10)
+    {
+      interval_deflate = PTMEDIUM;
+      interval_inflate = PTMEDIUM;
+    }
+    if(a < 5)
+    {
+      interval_deflate = PTSHORT;
+      interval_inflate = PTSHORT;
+    }
+  }// All closes
 
-  // Næst LFT
-  if(((selectedPressure_LFT - pressure_LFT) > 10.00) && ((selectedPressure_LFT - pressure_LFT) < 20.00))
+  if(tiretoken == 1)
   {
-    interval_LFT = TIMER10PSI; // 30 sekúndur
-  }
-  // Ef þrýstingsmunur á völdu gildi og raungildi er milli 5 og 10
-  if(((selectedPressure_LFT - pressure_LFT) > 5.00) && ((selectedPressure_LFT - pressure_LFT) < 10.00))
-  {
-    interval_LFT = TIMER5PSI; // 10 sekúndur
-  }
-  if(((selectedPressure_LFT - pressure_LFT) > 1.00) && ((selectedPressure_LFT - pressure_LFT) < 5.00))
-  {
-    interval_LFT = TIMER1PSI; // 6 sekúndur
-  }
-  if(((selectedPressure_LFT - pressure_LFT) > 0.00) && ((selectedPressure_LFT - pressure_LFT) < 1.00))
-  {
-    interval_LFT = TIMER025PSI; // 3 sekúndur
-  }
+    float a;
+    a = selectedPressure_LRT - pressure_LRT;
+    a = fabs(a);
+    
+    if(a > 10)
+    {
+      interval_deflate_LRT = PTLONG;
+      interval_inflate_LRT = PTLONG;
+    }
+    if(a > 5 && a < 10)
+    {
+      interval_deflate_LRT = PTMEDIUM;
+      interval_inflate_LRT = PTMEDIUM;
+    }
+    if(a < 5)
+    {
+      interval_deflate_LRT = PTSHORT;
+      interval_inflate_LRT = PTSHORT;
+    }
+  } // LRT (1) closes 
 
-  // RFT
-  if(((selectedPressure_RRT - pressure_RFT) > 10.00) && ((selectedPressure_RFT - pressure_RFT) < 20.00))
+  if(tiretoken == 2)
   {
-    interval_RFT = TIMER10PSI; // 30 sekúndur
-  }
-  // Ef þrýstingsmunur á völdu gildi og raungildi er milli 5 og 10
-  if(((selectedPressure_RFT - pressure_RFT) > 5.00) && ((selectedPressure_RFT - pressure_RFT) < 10.00))
-  {
-    interval_RFT = TIMER5PSI; // 10 sekúndur
-  }
-  if(((selectedPressure_RFT - pressure_RFT) > 1.00) && ((selectedPressure_RFT - pressure_RFT) < 5.00))
-  {
-    interval_RFT = TIMER1PSI; // 6 sekúndur
-  }
-  if(((selectedPressure_RFT - pressure_RFT) > 0.00) && ((selectedPressure_RFT - pressure_RFT) < 1.00))
-  {
-    interval_RFT = TIMER025PSI; // 3 sekúndur
-  }
+    float a;
+    a = selectedPressure_LFT - pressure_LFT;
+    a = fabs(a);
+    
+    if(a > 10)
+    {
+      interval_deflate_LFT = PTLONG;
+      interval_inflate_LFT = PTLONG;
+    }
+    if(a > 5 && a < 10)
+    {
+      interval_deflate_LFT = PTMEDIUM;
+      interval_inflate_LFT = PTMEDIUM;
+    }
+    if(a < 5)
+    {
+      interval_deflate_LFT = PTSHORT;
+      interval_inflate_LFT = PTSHORT;
+    }
+  } // LFT (2) closes 
 
-  // RRT
-  if(((selectedPressure_RRT - pressure_RRT) > 10.00) && ((selectedPressure_RRT - pressure_RRT) < 20.00))
+  if(tiretoken == 3)
   {
-    interval_RRT = TIMER10PSI; // 30 sekúndur
-  }
-  // Ef þrýstingsmunur á völdu gildi og raungildi er milli 5 og 10
-  if(((selectedPressure_RRT - pressure_RRT) > 5.00) && ((selectedPressure_RRT - pressure_RRT) < 10.00))
-  {
-    interval_RRT = TIMER5PSI; // 10 sekúndur
-  }
-  if(((selectedPressure_RRT - pressure_RRT) > 1.00) && ((selectedPressure_RRT - pressure_RRT) < 5.00))
-  {
-    interval_RRT = TIMER1PSI; // 6 sekúndur
-  }
-  if(((selectedPressure_RRT - pressure_RRT) > 0.00) && ((selectedPressure_RRT - pressure_RRT) < 1.00))
-  {
-    interval_RRT = TIMER025PSI; // 3 sekúndur
-  }
+    float a;
+    a = selectedPressure_RFT - pressure_RFT;
+    a = fabs(a);
+    
+    if(a > 10)
+    {
+      interval_deflate_RFT = PTLONG;
+      interval_inflate_RFT = PTLONG;
+    }
+    if(a > 5 && a < 10)
+    {
+      interval_deflate_RFT = PTMEDIUM;
+      interval_inflate_RFT = PTMEDIUM;
+    }
+    if(a < 5)
+    {
+      interval_deflate_RFT = PTSHORT;
+      interval_inflate_RFT = PTSHORT;
+    }
+  } // RFT (3) closes 
 
-}
-*/
+  if(tiretoken == 4)
+  {
+    float a;
+    a = selectedPressure_RRT - pressure_RRT;
+    a = fabs(a);
+    
+    if(a > 10)
+    {
+      interval_deflate_RRT = PTLONG;
+      interval_inflate_RRT = PTLONG;
+    }
+    if(a > 5 && a < 10)
+    {
+      interval_deflate_RRT = PTMEDIUM;
+      interval_inflate_RRT = PTMEDIUM;
+    }
+    if(a < 5)
+    {
+      interval_deflate_RRT = PTSHORT;
+      interval_inflate_RRT = PTSHORT;
+    }
+  } // RRT (4) closes 
+}//TimerSelector closes
 
 // More sophisticated method of determing the time
 float timerSelector2(float Pt, float Pv, float Pd, float time)
@@ -142,7 +159,7 @@ float timerSelector2(float Pt, float Pv, float Pd, float time)
     Serial.print("=");
     Serial.println(Pds); 
     Serial.println("");
-    Serial.print("tP = (Pt-Pv)/Pds");
+    Serial.print("tP = (Pt-Pv)/Pds : (");
     Serial.print(Pt); 
     Serial.print(" - ");
     Serial.print(Pv); 
