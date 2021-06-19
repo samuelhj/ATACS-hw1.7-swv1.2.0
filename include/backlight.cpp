@@ -5,6 +5,7 @@
 
 int backlightAdjust(int val)
 {
+  
   if(backlight_auto == true)
   {
     //uint16_t a;
@@ -22,11 +23,10 @@ int backlightAdjust(int val)
     Serial.print("Backlight sensor value: ");
     Serial.println(a);
     Serial.println(" ");
-    val = a/4;
+    //val = a/4;
   }
 
   analogWrite(BACKLIGHT,val); // Breytum birtustigi
-  
   return val; // Skilum völdu gildi
 }
 
