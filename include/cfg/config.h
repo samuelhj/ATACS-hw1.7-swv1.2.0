@@ -6,7 +6,7 @@
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" 
 #define VERSION "hw1.7.0-swV1.2.2"
-#define BUILDDATE "2021-06-18"
+#define BUILDDATE "2021-06-19"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
 
 // Hér skilgreinum við fasta sem breytast ekki.
@@ -69,7 +69,6 @@ static float pressure_RFT = 0.00f; // Breyta sem geymir þrýsting Hægra framde
 static float pressure_LRT = 0.00f; // Breyta sem geymir vinstra afturdekks
 static float pressure_RRT = 0.00f; // Breyta sem geymir hægra afturdekks.
 
-// Þessa teljara þarf eitthvað að endurhanna... Þetta er algjör steik eins og er.
 unsigned long timer_measure = 0;  // Timer between measurements of tire pressure 
 unsigned long interval_measure = 600000; // interval1 er hugsað fyrir athugun á dekkjaþrýstingi, er 10mínútur.
 unsigned long timer_inflate = 0; // timer for inflation
@@ -98,22 +97,10 @@ unsigned long timer_deflate_RFT = 0;
 unsigned long timer_deflate_RRT = 0;
 
 // Þessir mega væntanlega fara bráðlega?
-//unsigned long previousMillis = 0; // Teljari 1
-//unsigned long previousMillis1 = 0; // Teljari 2
 unsigned long previousMillis2 = 0; // Teljari 3
-unsigned long interval = 6000; // hve lengi á að bíða þar til athugað er aftur. 6s ~= 0.1psi
 
-//unsigned long interval2 = 300000; // interval2 er hugsað fyrir athugun dekkjaþrýstings
-/*
-static uint16_t interval_ALL = 6000;
-static uint16_t interval_LRT = 6000; // Tími LRT
-static uint16_t interval_LFT = 6000;
-static uint16_t interval_RFT = 6000;
-static uint16_t interval_RRT = 6000;
-*/
 static uint8_t menuval = 0; // er menu valið eða ekki?
-static uint8_t selectedTire =0; // Hvaða dekk er valið.
-static uint16_t psi = 0; //
+static uint8_t selectedTire = 0; // Hvaða dekk er valið.
 static bool adjust = false; // Á að stilla eða á ekki að stilla?
 static bool manual = false; // Ef við erum í manual, þá er selectedpressure valinn fyrir hvert dekk fyrir sig
 static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður

@@ -11,7 +11,7 @@ float readPressure()
   */ 
 
   int val = analogRead(P_SENSOR); // read value
-  psi = val*100; 
+  float psi = val*100; 
   psi = map(psi,4100,94000,0,10000); 
 
   float pressure = 0.00f; // fix floating variable size
