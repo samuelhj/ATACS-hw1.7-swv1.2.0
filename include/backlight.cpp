@@ -23,7 +23,6 @@ int backlightAdjust(int val)
     Serial.print("Backlight sensor value: ");
     Serial.println(a);
     Serial.println(" ");
-    //val = a/4;
   }
 
   analogWrite(BACKLIGHT,val); // Breytum birtustigi
