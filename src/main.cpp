@@ -256,14 +256,10 @@ void loop()
           {
             air_base_inflate();
           }
-          //else
-            //air_base_close();
         }
         tiretoken = 0;
-
         toggleMenu();
-        updateValues(); // Uppfærum gildi á skjá.
-
+        updateValues(); 
       }
 
     } // + pressure ends
@@ -331,7 +327,6 @@ void loop()
     {
       adjustAllTires();
     }
-
   }
 
 
