@@ -48,6 +48,7 @@
 // Skilgreinum pinna fyrir skynjara.
 // Define pins for inputs
 #define P_SENSOR A0 // Þrýstingsnemi MPX5700 (40)
+#define LITE_SENSE A5 // (35)
 
 // Skilgreinum pinna fyrir PWM
 //#define BACKLIGHT 4 
@@ -105,9 +106,12 @@ static bool adjust = false; // Á að stilla eða á ekki að stilla?
 static bool manual = false; // Ef við erum í manual, þá er selectedpressure valinn fyrir hvert dekk fyrir sig
 static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
 static uint8_t tireval = 0; // Valið dekk
-uint8_t backlight_selected = 255; // Styrkur á baklýsingu
 static uint16_t timerTire = 0; //Hve oft við athugum þrýsting í dekkjum áður en við gefumst upp í bili.
 char tirecolour_status[4];
+
+uint8_t backlight_selected = 255; // Styrkur á baklýsingu
+bool backlight_auto = false;
+
 
 // Skilgreinum öll föll
 void updateValues(); // Við uppfærum öll gildi.

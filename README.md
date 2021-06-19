@@ -1,6 +1,6 @@
 # ATACS-hw1.7-swv1.2.0
  
-Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-V1.7.x-updater-current.zip
+Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-V1.7.x-updater-current.7z
 
 Leiðbeiningar: https://ulfraf.space/files/ATACS-V1.7-Notkunarleidbeiningar-v1.0.pdf
 

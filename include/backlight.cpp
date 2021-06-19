@@ -5,7 +5,28 @@
 
 int backlightAdjust(int val)
 {
-    analogWrite(BACKLIGHT,val); // Breytum birtustigi
-    return val; // Skilum völdu gildi
-    
+  if(backlight_auto == true)
+  {
+    //uint16_t a;
+    val = analogRead(LITE_SENSE);
+    val = val/4;
+  }
+
+  if(debug == true)
+  {
+    uint16_t a;
+    a = analogRead(LITE_SENSE);
+    Serial.print("Backlight PWM value: ");
+    Serial.println(val);
+    Serial.println(" ");
+    Serial.print("Backlight sensor value: ");
+    Serial.println(a);
+    Serial.println(" ");
+    val = a/4;
+  }
+
+  analogWrite(BACKLIGHT,val); // Breytum birtustigi
+  
+  return val; // Skilum völdu gildi
 }
+
