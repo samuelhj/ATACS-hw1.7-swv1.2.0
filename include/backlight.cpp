@@ -2,7 +2,6 @@
 *   Later 
 *   Hvar er BACKLIGHT eiginlega skilgreint?
 */
-
 int backlightAdjust(int val)
 {
   

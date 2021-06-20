@@ -73,9 +73,9 @@ static float pressure_RRT = 0.00f; // Breyta sem geymir hægra afturdekks.
 unsigned long timer_measure = 0;  // Timer between measurements of tire pressure 
 unsigned long interval_measure = 600000; // interval1 er hugsað fyrir athugun á dekkjaþrýstingi, er 10mínútur.
 unsigned long timer_inflate = 0; // timer for inflation
-unsigned long interval_inflate = 2000; // interval for inflation, this should be measured every now and then but default is 2s
+unsigned long interval_inflate = 3000; // interval for inflation, this should be measured every now and then but default is 2s
 unsigned long timer_deflate = 0;
-unsigned long interval_deflate = 2000; 
+unsigned long interval_deflate = 3000; 
 
 unsigned long interval_inflate_LRT = 2000;
 unsigned long interval_inflate_LFT = 2000;
@@ -99,6 +99,7 @@ unsigned long timer_deflate_RRT = 0;
 
 // Þessir mega væntanlega fara bráðlega?
 unsigned long previousMillis2 = 0; // Teljari 3
+uint16_t previousMillis3 = 0; 
 
 static uint8_t menuval = 0; // er menu valið eða ekki?
 static uint8_t selectedTire = 0; // Hvaða dekk er valið.
@@ -150,3 +151,4 @@ void drawSettings();
 void drawBacklight();
 void test();
 void tireMonitor();
+void boot();

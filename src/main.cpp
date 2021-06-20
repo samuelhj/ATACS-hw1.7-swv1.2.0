@@ -67,73 +67,34 @@
 #include "toggleMenu.cpp"
 #include "bootMessage.cpp"
 #include "tireMonitor.cpp"
-
-// Við skrifum vistuð gildi í EEPROM
-void writeSelectedPressure()
-{
-  //EEPRON.put(ESERIALNUMBER,SERIALNUMBER); // Skrifum inn serial númer
-  EEPROM.put(EPRESSURE,selectedPressure); //valinn þrýstingur
-  EEPROM.put(EPRESSURE_LRT,selectedPressure_LRT); // Valinn þrýstingur per dekk
-  EEPROM.put(EPRESSURE_LFT,selectedPressure_LFT);
-  EEPROM.put(EPRESSURE_RFT,selectedPressure_RFT);
-  EEPROM.put(EPRESSURE_RRT,selectedPressure_RRT);
-}
-
-
+#include "boot.cpp"
+#include "memory.cpp"
 
 void setup()
 { 
-
-// Skilgreinum eftirfarandi sem útganga
-  pinMode(AIR_IN, OUTPUT);
-  pinMode(TIRE_RR, OUTPUT);
-  pinMode(TIRE_RF, OUTPUT);
-  pinMode(TIRE_LF, OUTPUT);
-  pinMode(TIRE_LR, OUTPUT);
-  pinMode(AIR_OUT, OUTPUT);
-  pinMode(BACKLIGHT, OUTPUT); // Baklýsing PWM
-  pinMode(RESET,OUTPUT); // Reset á skjá
-  air_base_close();
-
-// Næst koma skilgreiningar fyrir TFT skjá
-  digitalWrite(RESET,LOW); // Endurræsing á skjá.
-  delay(10); // töf
-  digitalWrite(RESET,HIGH); // Ræsum skjá
-  delay(100); // Töf
-  tft.begin(); // Virkjum skjáinn
-  tft.fillScreen(ILI9341_BLACK); // Hreinsum skjáinn og skrifum svartan bakgrunn.
-  tft.setRotation(1); // Landscape
-  tft.setSPISpeed(4000000);
-
-// Read from EEPROM
-  backlight_selected = EEPROM.read(EBACKLIGHT);
-  EEPROM.get(EPRESSURE,selectedPressure); // Lesum þrýsting úr minni
-  EEPROM.get(EPRESSURE_LRT,selectedPressure_LRT); // Lesum þrýsting úr minni
-  EEPROM.get(EPRESSURE_LFT,selectedPressure_LFT); // Lesum þrýsting úr minni
-  EEPROM.get(EPRESSURE_RFT,selectedPressure_RFT); // Lesum þrýsting úr minni
-  EEPROM.get(EPRESSURE_RRT,selectedPressure_RRT); // Lesum þrýsting úr minni
-  debug = EEPROM.read(EDEBUG);
-  
-  // Boot message
-  bootMessage();
-
-  read_LRT(); // Lesum vinstra afturdekk
-  read_LFT(); // Lesum vinstra framdekk
-  read_RFT(); // Lesum hægra framdekk
-  read_RRT(); // Lesum hægra afturdekki
-  tft.fillScreen(BLACK); // Clean monitor
-  tft.setTextColor(WHITE); 
-  drawMain(); 
-
+  boot();
 }//Void Setup lokar
 
 void loop()
 {
   backlightAdjust(backlight_selected); // Við kveikjum á skjá.
-  if(selectedPressure <20)
-  tireMonitor();
-  timerSelector();
   
+  if(manual == false && adjust == true)
+  {
+    timerSelector();
+    
+    if(debug == true)
+    {
+      if(millis() - previousMillis3 > 3000) // Ef það er kominn tími til að mæla
+      {
+        updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
+        previousMillis3 = millis(); // Endurstillum teljarann
+     }
+    }
+    if(selectedPressure < 20)
+      tireMonitor();
+
+  }
   // sækjum hnit sem ýtt er á
   TSPoint p = ts.getPoint();
 
@@ -302,6 +263,7 @@ void loop()
         Serial.println(tiretoken);
       }
     }
+
     // Ef við erum ekki í menu og viljum stilla Vinstra afturdekk
     if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 1))
     {

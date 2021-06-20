@@ -2,15 +2,15 @@
 // Prófum að athuga hvort við erum yfir 20 psi.
 void tireMonitor()
 {
-  if(selectedPressure < 20)
+  if(selectedPressure >= 10)
   {
     interval_measure = 600000;
   }
-  if(selectedPressure < 10)
+  if(selectedPressure < 10 && selectedPressure > 3)
   {
     interval_measure = 300000;
   }
-  if(selectedPressure < 3)
+  if(selectedPressure <= 3)
   {
     interval_measure = 120000;
   }
@@ -30,14 +30,14 @@ void tireMonitor()
       updateValues(); // Lesum gildi.
       warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
       timer_measure = millis(); // Endurstillum teljara
+
+      if(debug == true)
+      {
+        Serial.println("Maeling!");
+        Serial.print("Interval Measure: ");
+        Serial.println(interval_measure);
+        Serial.println(" ");
+      }
     }
   }//Lokum athugunarfalli
-
-  if(debug == true)
-  {
-    Serial.print("Interval Measure: ");
-    Serial.println(interval_measure);
-    Serial.println();
-  }
-
 }

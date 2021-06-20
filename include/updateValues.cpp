@@ -27,6 +27,14 @@ void updateBaseValue() // Við uppfærum gildi á kistu
     pressureall = fabs(pressureall);
     tft.println(pressureall); // Skrifum út gildið.
 
+    if(tiretoken == 0)
+    {
+      tft.setCursor(140,180); 
+      tft.println(interval_measure/1000);
+      tft.setCursor(140,200); 
+      tft.println(timer_measure/1000);
+    }
+
     if(tiretoken == 1)
     {
       tft.setCursor(140,180); 
@@ -60,7 +68,7 @@ void updateBaseValue() // Við uppfærum gildi á kistu
       tft.setCursor(140,180);
       tft.println(interval_inflate/1000);
       tft.setCursor(140,200);
-      tft.println(timer_deflate);
+      tft.println(interval_deflate);
     }
   }
 } //updateBaseValue function closes
