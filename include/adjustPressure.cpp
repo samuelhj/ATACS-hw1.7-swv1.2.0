@@ -182,7 +182,7 @@ void adjustAllTires()
       air_base_close();
       timerTire = 0; // Núllstillum teljara
       tiretoken = 1; // Færum okkur í fyrsta dekk og stillum hvert fyrir sig.
-      timer_measure = millis();
+    //  timer_measure = millis();
     }
 }// Lokum adjustAll
 
@@ -253,7 +253,7 @@ void adjustLRT()
       tiretoken = 2; // Færum okkur í næsta dekk
       //interval_inflate_LRT = 2000;
       timer_inflate_LRT = millis(); // endurstillum teljarann
-      timer_measure = millis();
+      //timer_measure = millis();
     }
 } //End of adjustLRT
 
@@ -383,7 +383,7 @@ void adjustRFT()
     tiretoken = 4; // Færum okkur í næsta dekk
     //interval_inflate_RFT = 2000;
     timer_inflate_RFT = millis();
-    timer_measure = millis();
+    //timer_measure = millis();
   }
 
 
@@ -451,7 +451,7 @@ void adjustRRT()
     tiretoken = 0; // Færum okkur í næsta dekk
    // interval_inflate_RRT = 2000;
     timer_inflate_RRT = millis();
-    timer_measure = millis(); 
+    //timer_measure = millis(); 
   }
     
 }// Lokum adjustRRT

@@ -2,6 +2,8 @@
  
 Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-V1.7.x-updater-current.7z
 
+Til að opna 7z skránna gæti þurft p7zip forritið. Það má nálgast hér: https://www.7-zip.org/download.html
+
 Leiðbeiningar: https://ulfraf.space/files/ATACS-V1.7-Notkunarleidbeiningar-v1.0.pdf
 
 

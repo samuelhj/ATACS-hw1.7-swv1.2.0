@@ -22,6 +22,12 @@ float readPressure()
   {
     pressure = 0;
   }
+/*
+  if(debug == true)
+  {
+    return 2.00;
+  }
+  */
   return pressure;
 } //readPressure ends
 

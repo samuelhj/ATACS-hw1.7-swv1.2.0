@@ -79,21 +79,11 @@ void loop()
 {
   backlightAdjust(backlight_selected); // Við kveikjum á skjá.
   
-  if(manual == false && adjust == true)
+  if(manual == false)
   {
     timerSelector();
-    
-    if(debug == true)
-    {
-      if(millis() - previousMillis3 > 3000) // Ef það er kominn tími til að mæla
-      {
-        updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-        previousMillis3 = millis(); // Endurstillum teljarann
-     }
-    }
-    if(selectedPressure < 20)
+    //if(selectedPressure < 20)
       tireMonitor();
-
   }
   // sækjum hnit sem ýtt er á
   TSPoint p = ts.getPoint();

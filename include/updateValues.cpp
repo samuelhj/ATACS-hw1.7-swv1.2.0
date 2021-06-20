@@ -1,8 +1,6 @@
 
 void updateBaseValue() // Við uppfærum gildi á kistu
 {
-
-
   if(debug == true)
   {
     // Hreinsum þar sem gildin eru á skjánum.
@@ -68,7 +66,7 @@ void updateBaseValue() // Við uppfærum gildi á kistu
       tft.setCursor(140,180);
       tft.println(interval_inflate/1000);
       tft.setCursor(140,200);
-      tft.println(interval_deflate);
+      tft.println(interval_deflate/1000);
     }
   }
 } //updateBaseValue function closes

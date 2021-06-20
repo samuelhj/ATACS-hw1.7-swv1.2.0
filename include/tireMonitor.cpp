@@ -12,12 +12,25 @@ void tireMonitor()
   }
   if(selectedPressure <= 3)
   {
-    interval_measure = 120000;
+    interval_measure = 30000;
   }
   
   if(menuval == 0 ) 
   {
 
+/*
+      if(debug == true)
+      {
+        tft.fillRect(20,220,60,18,BLACK); // Hreinsum gildi fyrir þrýsting kistu
+        Serial.println("Tjekk!");
+        Serial.print("Interval Measure: ");
+        Serial.println(interval_measure);
+        Serial.println(" ");
+        tft.setTextSize(1);
+        tft.setCursor(20,220);
+        tft.print(timer_measure);
+      }
+  */
     if((millis() - timer_measure) > interval_measure) // Athugum hve langt er liðið frá síðustu uppfærslu gilda
     {
       read_LRT(); // Lesum vinstra afturdekk
@@ -37,7 +50,12 @@ void tireMonitor()
         Serial.print("Interval Measure: ");
         Serial.println(interval_measure);
         Serial.println(" ");
+        tft.setTextSize(1);
+        tft.setCursor(20,240);
+        tft.print("maeling!");
       }
     }
+
+    
   }//Lokum athugunarfalli
 }
