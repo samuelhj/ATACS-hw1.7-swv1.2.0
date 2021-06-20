@@ -21,7 +21,9 @@ Líklega er ekki mikið mál að breyta forritinu svo það lesi aðrar
 tegundir af skynjurum. Ef ekki er ætlunin að nota loftút eða auka úrtak frá
 loftkerfi má sleppa AIR_IN loka og tengja þann útgang frá MOSFET stýringu beint
 á segulrofa fyrir loftdælu og spara þannig bæði einn loftloka og aflestunarloka
-fyrir loftdælu.
+fyrir loftdælu. Athugið að EKKI er mælst til þess að nota kerfið með loftkút, það gerir lítið gagn
+annað en að rugla kerfið. Ef einhverra hluta vegna er algjört möst að eyða pening í loftkút þá er best
+að einangra loftkútinn frá kerfinu með segulrofa, sem lokar á kútinn á meðan ATACS er virkt.
 
     Útgangar eru eftirfarandi:
     * 6 til að stýra loftlokum með MOSFET stýringu (Gefur jörð)
