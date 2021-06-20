@@ -9,14 +9,19 @@ int backlightAdjust(int val)
   if(backlight_auto == true)
   {
     //uint16_t a;
-    val = analogRead(LITE_SENSE);
-    val = val/4;
+    val = analogRead(LIGHT_SENSE);
+    if(val < 65)
+      val = 100;
+    if(val > 65)
+      val = 255;
+  
+  //  val = val/4;
   }
 
   if(debug == true)
   {
     uint16_t a;
-    a = analogRead(LITE_SENSE);
+    a = analogRead(LIGHT_SENSE);
     Serial.print("Backlight PWM value: ");
     Serial.println(val);
     Serial.println(" ");

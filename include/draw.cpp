@@ -195,8 +195,32 @@ void drawBacklight()
 
   // Búum til tilbaka takka
 
-  //tft.drawRect(100,5*MENU_H+10,MENU_W+20,MENU_H, WHITE); // Teiknum ramma fyrir tilbaka
   tft.setTextSize(2); // Textastærð í 2
   tft.setCursor(100,5*MENU_H+20); // Stillum hvar við viljum byrja að teikna
   tft.println(" Til baka "); // Prentum texta
+
+  if(backlight_auto == false)
+  {
+    tft.setCursor(140,20);
+    tft.setTextSize(3);
+    tft.print("AUTO");
+  }
+
+  if(backlight_auto == true)
+  {
+    tft.setCursor(140,20);
+    tft.setTextSize(3);
+    tft.setTextColor(GREEN);
+    tft.print("AUTO");
+    tft.setTextColor(WHITE);
+  }
+
+  if(debug == true)
+  {
+    tft.setCursor(220,20);
+    tft.setTextSize(2);
+    uint16_t a;
+    a = analogRead(LIGHT_SENSE);
+    tft.print(a);
+  }
 }

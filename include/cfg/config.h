@@ -48,7 +48,7 @@
 // Skilgreinum pinna fyrir skynjara.
 // Define pins for inputs
 #define P_SENSOR A0 // Þrýstingsnemi MPX5700 (40)
-#define LITE_SENSE A5 // (35)
+#define LIGHT_SENSE A5 // (35)
 
 // Skilgreinum pinna fyrir PWM
 //#define BACKLIGHT 4 
