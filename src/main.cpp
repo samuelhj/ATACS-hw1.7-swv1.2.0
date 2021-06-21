@@ -79,9 +79,9 @@ void loop()
 {
   backlightAdjust(backlight_selected); // Við kveikjum á skjá.
   
-  if(manual == false)
+  if(manual == false && adjust == true)
   {
-    timerSelector();
+    //timerSelector();
     //if(selectedPressure < 20)
       tireMonitor();
   }
@@ -220,62 +220,79 @@ void loop()
 
 
 
-  if(manual == false) // Ef við erum ekki með kerfið stillt á manual.
+  if(manual == false && adjust == true && menuval == 0) 
   {
-    // Ef við erum ekki í menu og erum að vakta dekkin, en ekki að stilla stakt dekk
+    
+    float a = pressure_LRT;
+    float b = pressure_LFT;
+    float c = pressure_RFT;
+    float d = pressure_RRT;
+    float sum = (a+b)-(c+d);
+    float sum2 = (a+c) - (b+d);
+    sum2 = fabs(sum2);
+    sum = fabs(sum);
+    sum = sum - sum2;
+    sum = fabs(sum);
 
-    if(menuval == 0 && adjust == true && tiretoken <5)
+    if(tiretoken == 0)
     {
-      uint16_t test_LRT = pressure_LRT*100;
-      uint16_t test_LFT = pressure_LFT*100;
-      uint16_t test_RFT = pressure_RFT*100;
-      uint16_t test_RRT = pressure_RRT*100;
-      // Reynist summa allra vera hærri en valins þrýstings.
-      if(((test_LRT + test_LFT) - (test_RFT + test_RRT) <= 100))
+      if(sum > 0.5)
       {
-        // Þá leiðréttum við öll dekk í einu
-        tiretoken = 5; // Setjum okkur aftur í að stilla öll dekk
-      }
-      if(debug == true)
-      {
-        Serial.println("main loop");
-        Serial.print("Test_LRT: ");
-        Serial.println(test_LRT);
-        Serial.print("Pressure LRT; ");
-        Serial.println(pressure_LRT);
-        Serial.print("Test LFT: ");
-        Serial.println(test_LFT);
-        Serial.print("Test RFT: ");
-        Serial.println(test_RFT);
-        Serial.print("Test RRT: ");
-        Serial.println(test_RRT);
-        Serial.print("TireToken: ");
-        Serial.println(tiretoken);
+       tiretoken = 1;
       }
     }
+    if(sum < 0.5)
+      {
+        pressure_ALL = pressure_LRT;
+
+        if(debug == true)
+        {
+          tft.setTextSize(2);
+          tft.setCursor(20,220); // Veljum staðsetningu
+          float pressure = pressure_LFT - selectedPressure_LFT;
+          pressure = fabs(pressure);
+          tft.println(pressure); // Skrifum út gildið.
+        }
+
+        if(selectedPressure - pressure_ALL > 0.25 || pressure_ALL - selectedPressure > 0.25)
+        {
+          tiretoken = 5;
+        }
+        else
+          tiretoken = 0;
+    }
+
+    if(debug = true)
+    {
+      tft.setTextSize(2);
+      tft.setCursor(20,220); // Veljum staðsetningu
+      tft.println(sum); // Skrifum út gildið.
+    }
+
+
 
     // Ef við erum ekki í menu og viljum stilla Vinstra afturdekk
-    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 1))
+    if( tiretoken == 1)
     {
       adjustLRT(); // svo stillum við vinstra afturdekk
     }//Stillifall fyrir Vinstra afturdekk lokar
 
-    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 2))
+    if(tiretoken == 2)
     {
       adjustLFT(); // athugum hvort stilla þurfi vinstra framdekk
     }
     // Ef við erum ekki í menu og það þarf að stilla hægra framdekk
-    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 3))
+    if(tiretoken == 3)
     {
       adjustRFT();
     }
     // Ef við erum ekki í menu og það þarf að stilla hægra afturdekk
-    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 4))
+    if(tiretoken == 4)
     {
       adjustRRT();
     }
     // Ef við erum ekki í menu og það þarf að stilla öll dekk
-    if(menuval == 0 && adjust == true && (tiretoken == 0 || tiretoken == 5))
+    if(tiretoken == 5)
     {
       adjustAllTires();
     }

@@ -11,7 +11,7 @@ void warningCheck()
       // Síðan þurfum við að tjekka hvaða dekk er í veseni.
 
       // Ef þrýstingur er undir 0.5psi eða yfir 35 psi í vinstra afturdekki
-      if((pressure_LRT*100 < 25) || (pressure_LRT > 35))
+      if((pressure_LRT < 0.25) || (pressure_LRT > 35))
       {
         tirePaint(C_WARNING,1); // Við litum dekkið rautt
       }
@@ -22,31 +22,31 @@ void warningCheck()
       }
 
       // Ef vinstra framhjól er loftlaust eða of hár þrýstingur
-      if((pressure_LFT*100 < 25) || (pressure_LFT > 35))
+      if((pressure_LFT < 0.25) || (pressure_LFT > 35))
       {
         tirePaint(C_WARNING,2); // Teiknum vinstra framhjól
       }
       // Ef ástand lagast
-      if((pressure_LFT*100 > 25) && (pressure_LFT < 35))
+      if((pressure_LFT > 0.25) && (pressure_LFT < 35))
       {
         tirePaint(GREEN,2); // Litum dekk grænt
       }
 
       // Ef hægra framhjól er loftlaust eða of hár þrýstingur
-      if((pressure_RFT*100 < 25) || (pressure_RFT > 35))
+      if((pressure_RFT < 0.25) || (pressure_RFT > 35))
       {
         tirePaint(C_WARNING,3); // Teiknum hægra framhjól
       }
-      if((pressure_RFT*100 > 25) && (pressure_RFT < 35))
+      if((pressure_RFT > 0.25) && (pressure_RFT < 35))
       {
         tirePaint(GREEN,3); // Litum dekk grænt
       }
       // Ef hægra afturhjól er loftlaust eða of hár þrýstingur
-      if((pressure_RRT*100 < 25 || pressure_RRT > 35))
+      if((pressure_RRT < 0.25 || pressure_RRT > 35))
       {
         tirePaint(C_WARNING,4); // Teiknum hægra afturhjól rautt
       }
-      if((pressure_RRT*100 > 25) && (pressure_RRT < 35))
+      if((pressure_RRT > 0.25) && (pressure_RRT < 35))
       {
         tirePaint(GREEN,4);  // Litum dekk grænt
       }

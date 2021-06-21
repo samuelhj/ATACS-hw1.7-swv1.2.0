@@ -12,7 +12,7 @@ void tireMonitor()
   }
   if(selectedPressure <= 3)
   {
-    interval_measure = 30000;
+    interval_measure = 60000;
   }
   
   if(menuval == 0 ) 
@@ -43,6 +43,10 @@ void tireMonitor()
       updateValues(); // Lesum gildi.
       warningCheck(); // Athugum hvort eitthvað dekk sé í veseni.
       timer_measure = millis(); // Endurstillum teljara
+      if((pressure_LRT + pressure_LFT)-(pressure_RFT + pressure_RRT) < 0.25)
+      {
+       pressure_ALL = pressure_LRT;
+      }
 
       if(debug == true)
       {

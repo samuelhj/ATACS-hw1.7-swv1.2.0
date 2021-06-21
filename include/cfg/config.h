@@ -107,7 +107,6 @@ static bool adjust = false; // Á að stilla eða á ekki að stilla?
 static bool manual = false; // Ef við erum í manual, þá er selectedpressure valinn fyrir hvert dekk fyrir sig
 static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
 static uint8_t tireval = 0; // Valið dekk
-static uint16_t timerTire = 0; //Hve oft við athugum þrýsting í dekkjum áður en við gefumst upp í bili.
 char tirecolour_status[4];
 
 uint8_t backlight_selected = 255; // Styrkur á baklýsingu
@@ -141,7 +140,7 @@ void air_base_deflate();
 void calibrate(); // Calibrate lúppa sem er hugsuð fyrir upphafsstillingu, les CALIBRATE flaggið
 void writeSelectedPressure(); // Skrifum þrýstingsval í EEPROM.
 void toggleMenu(); // Litum menu takka grænan eða svartan eftir því hvort vöktun sé virk eður ei
-//void timerSelector();
+void timerSelector();
 float timerSelector2(float Pt, float Pv, float Pd, float time);
 void bootMessage();
 void menu(); // Fall sem opnar Menu

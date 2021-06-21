@@ -10,17 +10,17 @@ void timerSelector()
     a = selectedPressure - pressure_ALL;
     a = fabs(a);
 
-    if(a > 10)
+    if(a >= 10)
     {
       interval_deflate = PTLONG;
       interval_inflate = PTLONG;
     }
-    if(a > 3 && a < 10)
+    if(a > 1 && a < 10)
     {
       interval_deflate = PTMEDIUM;
       interval_inflate = PTMEDIUM;
     }
-    if(a < 3)
+    if(a <= 1)
     {
       interval_deflate = PTSHORT;
       interval_inflate = PTSHORT;
@@ -33,17 +33,17 @@ void timerSelector()
     a = selectedPressure_LRT - pressure_LRT;
     a = fabs(a);
     
-    if(a > 10)
+    if(a >= 10)
     {
       interval_deflate_LRT = PTLONG;
       interval_inflate_LRT = PTLONG;
     }
-    if(a > 3 && a < 10)
+    if(a > 1 && a < 10)
     {
       interval_deflate_LRT = PTMEDIUM;
       interval_inflate_LRT = PTMEDIUM;
     }
-    if(a < 3)
+    if(a <= 1)
     {
       interval_deflate_LRT = PTSHORT;
       interval_inflate_LRT = PTSHORT;
@@ -56,17 +56,17 @@ void timerSelector()
     a = selectedPressure_LFT - pressure_LFT;
     a = fabs(a);
     
-    if(a > 10)
+    if(a >= 10)
     {
       interval_deflate_LFT = PTLONG;
       interval_inflate_LFT = PTLONG;
     }
-    if(a > 3 && a < 10)
+    if(a > 1 && a < 10)
     {
       interval_deflate_LFT = PTMEDIUM;
       interval_inflate_LFT = PTMEDIUM;
     }
-    if(a < 3)
+    if(a <= 1)
     {
       interval_deflate_LFT = PTSHORT;
       interval_inflate_LFT = PTSHORT;
@@ -79,17 +79,17 @@ void timerSelector()
     a = selectedPressure_RFT - pressure_RFT;
     a = fabs(a);
     
-    if(a > 10)
+    if(a >= 10)
     {
       interval_deflate_RFT = PTLONG;
       interval_inflate_RFT = PTLONG;
     }
-    if(a > 3 && a < 10)
+    if(a > 1 && a < 10)
     {
       interval_deflate_RFT = PTMEDIUM;
       interval_inflate_RFT = PTMEDIUM;
     }
-    if(a < 3)
+    if(a <= 1)
     {
       interval_deflate_RFT = PTSHORT;
       interval_inflate_RFT = PTSHORT;
@@ -102,17 +102,17 @@ void timerSelector()
     a = selectedPressure_RRT - pressure_RRT;
     a = fabs(a);
     
-    if(a > 10)
+    if(a >= 10)
     {
       interval_deflate_RRT = PTLONG;
       interval_inflate_RRT = PTLONG;
     }
-    if(a > 3 && a < 10)
+    if(a > 1 && a < 10)
     {
       interval_deflate_RRT = PTMEDIUM;
       interval_inflate_RRT = PTMEDIUM;
     }
-    if(a < 3)
+    if(a <= 1)
     {
       interval_deflate_RRT = PTSHORT;
       interval_inflate_RRT = PTSHORT;
