@@ -5,8 +5,8 @@
 
 // fastar sem eru bundnir við þetta tiltekna tæki.
 //#define SERIALNUMBER "003" 
-#define VERSION "hw1.7.0-swV1.2.2"
-#define BUILDDATE "2021-06-19"
+#define VERSION "hw1.7.0-swV1.3.2"
+#define BUILDDATE "2021-06-24"
 #define CALIBRATE ON // Ef calibrate er ON þá keyrir bara calibrate lúppan.
 
 // Hér skilgreinum við fasta sem breytast ekki.

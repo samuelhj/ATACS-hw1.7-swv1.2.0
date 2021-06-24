@@ -57,10 +57,8 @@ void read_LRT() // Left rear tire
   digitalWrite(TIRE_LR,ON); 
   delay(AIR_DELAY); 
   pressure_LRT = readPressure(); 
-  pressure_LRT = 5.00;
   digitalWrite(TIRE_LR,OFF);
   warningCheck(); // Athugum hvort allt sé með felldu
-  //previousMillis = millis(); // endurstillum teljarann
 }
 
 void read_LFT() // Left front tire
@@ -71,7 +69,6 @@ void read_LFT() // Left front tire
   digitalWrite(TIRE_LF,ON); // Opnum fyrir dekk LF
   delay(AIR_DELAY); // töf meðan kista fyllist
   pressure_LFT = readPressure(); // Lesum þrýsting
-  pressure_LFT = 5.00;
   digitalWrite(TIRE_LF,OFF); // Lokum kistunni
   warningCheck(); // Athugum hvort allt sé með felldu
 }

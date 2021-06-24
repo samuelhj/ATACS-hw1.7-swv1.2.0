@@ -69,6 +69,7 @@
 #include "tireMonitor.cpp"
 #include "boot.cpp"
 #include "memory.cpp"
+//#include <algorithm.h>
 
 void setup()
 { 
@@ -217,9 +218,6 @@ void loop()
   }
 
 
-
-
-
   if(manual == false && adjust == true && menuval == 0) 
   {
     
@@ -227,12 +225,8 @@ void loop()
     float b = pressure_LFT;
     float c = pressure_RFT;
     float d = pressure_RRT;
-    float sum = (a+b)-(c+d);
-    float sum2 = (a+c) - (b+d);
-    sum2 = fabs(sum2);
-    sum = fabs(sum);
-    sum = sum - sum2;
-    sum = fabs(sum);
+
+    float sum = max(max(a, b), max(c, d)) - min((a, b), min(c, d));
 
     if(tiretoken == 0)
     {
@@ -245,15 +239,6 @@ void loop()
       {
         pressure_ALL = pressure_LRT;
 
-        if(debug == true)
-        {
-          tft.setTextSize(2);
-          tft.setCursor(20,220); // Veljum staðsetningu
-          float pressure = pressure_LFT - selectedPressure_LFT;
-          pressure = fabs(pressure);
-          tft.println(pressure); // Skrifum út gildið.
-        }
-
         if(selectedPressure - pressure_ALL > 0.25 || pressure_ALL - selectedPressure > 0.25)
         {
           tiretoken = 5;
@@ -262,7 +247,7 @@ void loop()
           tiretoken = 0;
     }
 
-    if(debug = true)
+    if(debug == true)
     {
       tft.setTextSize(2);
       tft.setCursor(20,220); // Veljum staðsetningu

@@ -1,8 +1,7 @@
 
 void updateBaseValue() // Við uppfærum gildi á kistu
 {
-  if(debug == true)
-  {
+
     // Hreinsum þar sem gildin eru á skjánum.
     tft.fillRect(120,60,240,18,BLACK); // Hreinsum gildi fyrir þrýsting kistu
     // Við skrifum mælt gildi á kistunni
@@ -16,11 +15,20 @@ void updateBaseValue() // Við uppfærum gildi á kistu
     tft.println(" PSI");
     // Hreinsum þar sem gildin eru á skjánum.
     //tft.fillRect(130,140,60,48,BLACK); // Hreinsum gildi fyrir valinn þrýsting burt.
+  
+  if(debug == true)
+  {
     tft.fillRect(140,140,60,120,BLACK); 
     tft.setTextSize(2); // Stillum textastærð á 2
     tft.setCursor(140,140); // Veljum staðsetningu
     tft.println(tiretoken);
 
+   // tft.fillRect(20,220,240,18,BLACK); // Hreinsum gildi fyrir þrýsting kistu
+    tft.setTextSize(2);
+    tft.setCursor(20,220); // Veljum staðsetningu
+    float pressure = pressure_LFT - selectedPressure_LFT;
+    pressure = fabs(pressure);
+    tft.println(pressure); // Skrifum út gildið.
 
     if(tiretoken == 0)
     {
