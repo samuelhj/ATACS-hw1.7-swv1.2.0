@@ -44,6 +44,14 @@
 #define TIRE_RR 17   // hægra afturdekk (23) (2)
 #define AIR_IN 16  // Loft inn á kistu. (22) (1)
 
+// Secondary Solenoids, either for 4 extra tires, or 4 air bags
+#define AIRBAG_OUT 25
+#define AIRBAG_LR 26
+#define AIRBAG_LF 27
+#define AIRBAG_RF 28
+#define AIRBAG_RR 2
+#define AIRBAG_IN 3
+
 
 // Skilgreinum pinna fyrir skynjara.
 // Define pins for inputs
