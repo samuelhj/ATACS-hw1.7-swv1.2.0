@@ -29,7 +29,7 @@ int backlightAdjust(int val)
     Serial.println(" ");
   }
 
-  analogWrite(BACKLIGHT,val); // Breytum birtustigi
-  return val; // Skilum völdu gildi
+  analogWrite(BACKLIGHT,val); // Write to backlight
+  return val; // Return the selected value 
 }
 

@@ -1,3 +1,6 @@
+// Define the speed of the SPI bus
+#define SPISPEED 400000
+
 // Skilgreinum minnsta og mesta gildi sem snertingin má vera.
 #define TS_MINX 150
 #define TS_MINY 120

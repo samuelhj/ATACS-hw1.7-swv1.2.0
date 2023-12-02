@@ -1,7 +1,7 @@
 /*
-  Höfundur: Samúel Þór Hjaltalín Guðjónsson
-  samuel@ulfr.net
-  * 
+  Author: Samúel Þór Hjaltalín Guðjónsson
+  samuel@ulfr.net 
+  * English below
   Stutt lýsing:
     Forritið stýrir 6rása mosfet útgangsrás, snertiskjá og les einnig frá þrýstinema. 
     Gildin birtir það svo á skjánum.
@@ -21,9 +21,6 @@
     Inngangar eru eftirfarandi:
     * Þrýstinemi sem les þrýsting frá kistu.
 
-
-
-
       Nýtt 2020
       * Auka lykku sem dælir minna í einu
       * lengja tíma á standard dælingu/úrhleypingu
@@ -36,17 +33,41 @@
       * TouchScreen.h: Lína 12 í TouchScreen.h, bæta við ||defined(__AVR_ATmega1284P__)
       * 
 
+  Brief description of the project.
+    The program controls 6 MOSFETs that connect to pneumatic valve base, TFT touchscreen and read 
+    from MPX5700DP pressure sensor. The values are reported on the TFT and set values are selected on the TFT.
+    The program will try to adjust and keep the tyres in a set range (~0.25psi)
+
+    This program uses a valve base of 2+4 (2 in/out and then valve for each tyre). It can be modified to run some 
+    other types of bases and read other types of sensors. If the intention is to use the compressor ONLY for this
+    system the AIR_IN solenoid can be skipped, along with any controls for the air compressor and just use AIR_IN
+    MOSFET to control a relay for the air compressor.
+
+  INPUTS:
+  * pressure sensor
+
+  NEW 2020:
+  * better handling of adjusting pressure when closer to set value
+  * longer time for inflation/deflation when the value is far away from set value
+  * Always show pressure in valve base
+  * Less accuraccy on higher pressure (0.5psi does not really matter at higher pressure)
+  * Tyre flagged in WarningCheck gets measured more often
+  * 
+  
+  Libraries used and quirks:
+
+  * TouchScreen.h: line 12 needs to be modified, add ||defined(__AVR_ATmega1284P__)
 
 */
 
-#include <Arduino.h> //Við köllum á grunn library fyrir Arduino hlutann
-#include <SPI.h> // Við þurfum SPI library fyrir samskipti við snertiskjá.
-#include <EEPROM.h> // Við þurfum library til að skrifa og lesa EEPROM.
+#include <Arduino.h> 
+#include <SPI.h> // For SPI to TFT
+#include <EEPROM.h> // For nonvolatile memory
 #include <Wire.h>
-//  For Touchscreen // Fyrir snertiskjá
-#include <TouchScreen.h> // Við þurfum library til að lesa snertingu af skjá.
-#include <Adafruit_GFX.h> // Við þurfum library til að teikna á skjá.
-#include <Adafruit_ILI9341.h> // Við þurfum library til að tala við ILI9341 stýringu á skjá.
+//  For Touchscreen
+#include <TouchScreen.h> // For TFT Touchscreen
+#include <Adafruit_GFX.h> // For drawing on screen
+#include <Adafruit_ILI9341.h> // For ILI9341 on screen
 
 // Project specific includes
 #include "cfg/config.h"  // include  for variables, defines, etc
@@ -69,16 +90,16 @@
 #include "tireMonitor.cpp"
 #include "boot.cpp"
 #include "memory.cpp"
-//#include <algorithm.h>
+//#include <algorithm.h> // not used atm
 
 void setup()
 { 
   boot();
-}//Void Setup lokar
+}//Void Setup closes
 
 void loop()
 {
-  backlightAdjust(backlight_selected); // Við kveikjum á skjá.
+  backlightAdjust(backlight_selected); // Turn on backlight
   
   if(manual == false && adjust == true)
   {
@@ -86,24 +107,24 @@ void loop()
     //if(selectedPressure < 20)
       tireMonitor();
   }
-  // sækjum hnit sem ýtt er á
+  // fetch coordinates
   TSPoint p = ts.getPoint();
 
-  // Ef þrýst er á skjáinn og er innan min/max marka
+  // check whether input is within value
   if (p.z > MINPRESSURE && p.z < MAXPRESSURE)
   {
-    p.x = map(p.x, TS_MINY, TS_MAXY, 0, tft.height()); // möppum lesið gildi á X ás með min/max þrýstingi á skjá
-    p.y = map(p.y, TS_MINX, TS_MAXX, 0, tft.width()); //möppum lesið gildi á y ás með min/max þrýstingi á skjá
-    int y = tft.height() - p.x; // Y hnit eftir því hvernig skjár snýr
+    p.x = map(p.x, TS_MINY, TS_MAXY, 0, tft.height()); // min/max touch pressure x axis
+    p.y = map(p.y, TS_MINX, TS_MAXX, 0, tft.width()); // min/max touch pressure y axis
+    int y = tft.height() - p.x; // Y coordinates depend on orientation
     int x = p.y;
 
     menu();
     settings();
 
 
-    // Hér erum við í aðalvalmynd.
+    // Main menu.
 
-    if(manual == true && x > 100 && x < 200)
+    if(manual == true && x > 100 && x < 200) // if we're running manual
     {
       if(y>60 && y < 100)
       {
@@ -112,24 +133,24 @@ void loop()
       }
     }
 
-    // Ef ýtt er á lækka þrýsting örina.
-    if(menuval == 0 && (x > 10) && (x<100)) // Athugum staðsetningu á x ásnum
+    // Lower pressure arrow
+    if(menuval == 0 && (x > 10) && (x<100)) // check where x is
     {
-      if((y>50) && y< 150) // Athugum staðsetningu á y ásnum.
+      if((y>50) && y< 150) // check where y is
       {
         delay(150);
-        adjust = false; // Við hættum að stilla
-        if((selectedPressure < 6) && (selectedPressure > 0)) // Ef þrýstingur er undir 6 psi en yfir 0psi
+        adjust = false; // if we don't want to adjust pressure
+        if((selectedPressure < 6) && (selectedPressure > 0)) // If pressure is beneth 6 but above 0
         {
-          selectedPressure = selectedPressure - 0.25; // Þá lækkum við um 0.25 psi
+          selectedPressure = selectedPressure - 0.25; // decrement by 0.25 psi
           selectedPressure_LRT = selectedPressure_LRT - 0.25;
           selectedPressure_LFT = selectedPressure_LFT - 0.25;
           selectedPressure_RFT = selectedPressure_RFT - 0.25;
           selectedPressure_RRT = selectedPressure_RRT - 0.25;
         }
-        if(selectedPressure >= 6) // ef þrýstingur er yfir 6
+        if(selectedPressure >= 6) // IF pressure is above 6 psi 
         {
-          selectedPressure = selectedPressure - 1.0; // Lækkum við um 1psi í einu.
+          selectedPressure = selectedPressure - 1.0; // decrement by 6psi
           selectedPressure_LRT = selectedPressure_LRT - 1.0;
           selectedPressure_LFT = selectedPressure_LFT - 1.0;
           selectedPressure_RFT = selectedPressure_RFT - 1.0;
@@ -146,22 +167,22 @@ void loop()
 
       tiretoken = 0;
       toggleMenu();
-      updateValues(); // Uppfærum gildin á skjá.
+      updateValues(); // Update values on screen
       }
 
     } // - pressure closes
 
 
-    // Ef ýtt er á hækka þrýsting örina.
-    if(menuval == 0 && (x > 250) && (x<320) && (selectedPressure < 35)) // Athugum staðsetningu á x ás og hvort þrýstingur sé undir 35psi.
+    // increase pressure arrow
+    if(menuval == 0 && (x > 250) && (x<320) && (selectedPressure < 35)) // Make sure we aren't over 35 psi
     {
       if((y>50) && y< 150)
       {
         adjust = false;
-        delay(150); // töf svo við hækkum ekki of hratt up
-        if(selectedPressure >= 6 && manual == false) // sé þrýstingur yfir 6psi hækkum við um 1psi í skrefi
+        delay(150); 
+        if(selectedPressure >= 6 && manual == false) // if pressure is above 6 psi we increment by 1 psi 
         {
-          selectedPressure = selectedPressure + 1.0; // Við hækkum gildið um 1psi
+          selectedPressure = selectedPressure + 1.0; // increment by 1psi
           selectedPressure_LRT = selectedPressure_LRT + 1.0;
           selectedPressure_LFT = selectedPressure_LFT + 1.0;
           selectedPressure_RFT = selectedPressure_RFT + 1.0;
@@ -169,11 +190,11 @@ void loop()
         }
 
 
-        if((selectedPressure < 35 && (selectedPressure < 6))) // Sé þrýstingurinn undir 6psi hækkum við um 0.25psi í hverju skrefi.
+        if((selectedPressure < 35 && (selectedPressure < 6))) // If pressure is under 6 psi we increment by 0.25
         {
           if(selectedTire == 0)
           {
-            selectedPressure = selectedPressure + 0.25; // bætum 0,25psi við valið gildi
+            selectedPressure = selectedPressure + 0.25; // Increment by 0.25psi 
             selectedPressure_LRT = selectedPressure_LRT + 0.25;
             selectedPressure_LFT = selectedPressure_LFT + 0.25;
             selectedPressure_RFT = selectedPressure_RFT + 0.25;
@@ -182,7 +203,7 @@ void loop()
 
           if(selectedTire == 1)
           {
-            selectedPressure_LRT = selectedPressure_LRT +0.25; // Bætum við 0.25psi
+            selectedPressure_LRT = selectedPressure_LRT +0.25; // add 0.25 psi
             delay(500);
           }
           if(selectedTire == 2)
@@ -250,33 +271,33 @@ void loop()
     if(debug == true)
     {
       tft.setTextSize(2);
-      tft.setCursor(20,220); // Veljum staðsetningu
-      tft.println(sum); // Skrifum út gildið.
+      tft.setCursor(20,220); // Pick coordinates
+      tft.println(sum); // Write out value 
     }
 
 
 
-    // Ef við erum ekki í menu og viljum stilla Vinstra afturdekk
+    // IF we're not in main menu and want to adjust left rear tire
     if( tiretoken == 1)
     {
-      adjustLRT(); // svo stillum við vinstra afturdekk
-    }//Stillifall fyrir Vinstra afturdekk lokar
+      adjustLRT(); // adjust left rear tyre
+    }//LRT closes
 
     if(tiretoken == 2)
     {
-      adjustLFT(); // athugum hvort stilla þurfi vinstra framdekk
+      adjustLFT(); // Left front tyre
     }
-    // Ef við erum ekki í menu og það þarf að stilla hægra framdekk
+    // IF we're not in main menu and want to adjust right front tyre
     if(tiretoken == 3)
     {
       adjustRFT();
     }
-    // Ef við erum ekki í menu og það þarf að stilla hægra afturdekk
+    // IF we're not in main menu and want to adjust right rear tyre
     if(tiretoken == 4)
     {
       adjustRRT();
     }
-    // Ef við erum ekki í menu og það þarf að stilla öll dekk
+    // If we're not in main menu and want to adjust all tyres
     if(tiretoken == 5)
     {
       adjustAllTires();

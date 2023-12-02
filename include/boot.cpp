@@ -1,6 +1,6 @@
 void boot()
 {
-// Skilgreinum eftirfarandi sem útganga
+// Define outputs
   pinMode(AIR_IN, OUTPUT);
   pinMode(TIRE_RR, OUTPUT);
   pinMode(TIRE_RF, OUTPUT);
@@ -11,15 +11,15 @@ void boot()
   pinMode(RESET,OUTPUT); // Reset á skjá
   air_base_close();
 
-// Næst koma skilgreiningar fyrir TFT skjá
-  digitalWrite(RESET,LOW); // Endurræsing á skjá.
-  delay(10); // töf
-  digitalWrite(RESET,HIGH); // Ræsum skjá
+// Definitions for TFT
+  digitalWrite(RESET,LOW); // Reset display
+  delay(10); // delay
+  digitalWrite(RESET,HIGH); // Start display
   delay(100); // Töf
-  tft.begin(); // Virkjum skjáinn
-  tft.fillScreen(ILI9341_BLACK); // Hreinsum skjáinn og skrifum svartan bakgrunn.
+  tft.begin(); // enable display
+  tft.fillScreen(ILI9341_BLACK); // Clear display and make background black
   tft.setRotation(1); // Landscape
-  tft.setSPISpeed(4000000);
+  tft.setSPISpeed(4000000); // Speed of the SPI 
 
 // Read from EEPROM
   backlight_selected = EEPROM.read(EBACKLIGHT);

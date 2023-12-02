@@ -109,19 +109,19 @@ unsigned long timer_deflate_RRT = 0;
 unsigned long previousMillis2 = 0; // Teljari 3
 uint16_t previousMillis3 = 0; 
 
-static uint8_t menuval = 0; // er menu valið eða ekki?
-static uint8_t selectedTire = 0; // Hvaða dekk er valið.
-static bool adjust = false; // Á að stilla eða á ekki að stilla?
-static bool manual = false; // Ef við erum í manual, þá er selectedpressure valinn fyrir hvert dekk fyrir sig
-static uint8_t tiretoken = 0; // Dekk sem heldur tokeninu ræður
-static uint8_t tireval = 0; // Valið dekk
+static uint8_t menuval = 0; // Is main menu selected or not?
+static uint8_t selectedTire = 0; // Which tyre is selected
+static bool adjust = false; // To adjust, or not to adjust? That is the question.
+static bool manual = false; // When in manual selectedpressure is selected for each tyre
+static uint8_t tiretoken = 0; // The tyre that has the token rules
+static uint8_t tireval = 0; // Selected tyre 
 char tirecolour_status[4];
 
-uint8_t backlight_selected = 255; // Styrkur á baklýsingu
+uint8_t backlight_selected = 255; // Backlight
 bool backlight_auto = false;
 
 
-// Skilgreinum öll föll
+// Define all functions
 void updateValues(); // Við uppfærum öll gildi.
 void drawTireSelection(); // Við teiknum valmynd fyrir dekkjaval
 void drawMain(); // Við teiknum aðal útlit

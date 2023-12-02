@@ -11,7 +11,7 @@ void adjustAllTires()
   timerSelector();
 
   // DEFLATE
-  if(pressure_ALL - selectedPressure > 0.25) // þegar það er of mikill þrýstingur
+  if(pressure_ALL - selectedPressure > 0.25) // If pressure is too high
   {
     digitalWrite(AIR_IN,OFF);
     digitalWrite(TIRE_LR,ON); 
@@ -20,10 +20,10 @@ void adjustAllTires()
     digitalWrite(TIRE_RR, ON);
     digitalWrite(AIR_OUT,ON); 
 
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    if(millis() - previousMillis2 > 1000) // If there's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu
-      previousMillis2 = millis(); // Endurstillum teljarann
+      updateBaseValue(); // Update measurement on base
+      previousMillis2 = millis(); // Reset counter 
       tirePaint(C_URHLEYPING,tiretoken);
       timer_deflate = timer_deflate + 1000;
     }
@@ -37,32 +37,32 @@ void adjustAllTires()
       read_RRT();
       */
       read_ALL();
-      timer_deflate = 0; //endurstillum teljara
+      timer_deflate = 0; // Reset counter
       updateValues();
       tiretoken = 0;
     }
 
-  } // Lækkun þrýstings fall lokar
+  } // Decrement pressure function closes
 
   // INFLATE
-  if(selectedPressure - pressure_ALL > 0.25) // þegar það er of lítill þrýstingur
+  if(selectedPressure - pressure_ALL > 0.25) // If the pressure is too low
   {
-    digitalWrite(AIR_OUT,OFF); // Verum viss um að loft sé ekki að fara út
-    digitalWrite(TIRE_LR,ON); // Opnum loka í dekk
+    digitalWrite(AIR_OUT,OFF); // Make sure valve is closed
+    digitalWrite(TIRE_LR,ON); // Open valve to tyre
     digitalWrite(TIRE_LF,ON);
     digitalWrite(TIRE_RF,ON);
     digitalWrite(TIRE_RR,ON);
-    digitalWrite(AIR_IN,ON); // Opnum fyrir loft inn
+    digitalWrite(AIR_IN,ON); // Open valve for air in
 
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu
-      previousMillis2 = millis(); // Endurstillum teljarann
+      updateBaseValue(); // Update measurement on valve base
+      previousMillis2 = millis(); // Reset counter 
       tirePaint(C_INNDAELING,tiretoken);
       timer_inflate = timer_inflate + 1000;
     }
 
-    if(timer_inflate >= interval_inflate) // Ef það er kominn tími til að mæla
+    if(timer_inflate >= interval_inflate) // If it's time to measure 
     {
       /*
       read_LRT();
@@ -72,67 +72,67 @@ void adjustAllTires()
       */
       read_ALL();
       updateValues();
-      timer_inflate = 0; //endurstillum teljara
+      timer_inflate = 0; // reset counter 
       tiretoken = 0;
     }          
-  }// Hækkun þrýstings fall lokar
-}// Lokum adjustAll
+  }// Increment pressure function closes
+}// Close adjustAll
 
 
 
-//Stillum vinstra afturdekk
+// Adjust Left Rear Tyre
 void adjustLRT()
 {
   timerSelector();
   // DEFLATE
-  if(pressure_LRT - selectedPressure_LRT > 0.25) // þegar það er of mikill þrýstingur
+  if(pressure_LRT - selectedPressure_LRT > 0.25) // If the pressure is too high
   {
-    digitalWrite(TIRE_LR,ON); // Opnum loka í dekk
-    digitalWrite(AIR_OUT,ON); // Opnum fyrir loft út
+    digitalWrite(TIRE_LR,ON); // Open valve to tyre
+    digitalWrite(AIR_OUT,ON); // Open valve out
 
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    // Measure base
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-      previousMillis2 = millis(); // Endurstillum teljarann
-      tirePaint(C_URHLEYPING,tiretoken); // Litum dekk fjólublátt
+      updateBaseValue(); // Update measurement on base (experimental)
+      previousMillis2 = millis(); // Reset counter
+      tirePaint(C_URHLEYPING,tiretoken); // Change colour of tyre to violet
       timer_deflate_LRT = timer_deflate_LRT+1000;
     }
 
-    //if(millis() - timer_deflate_LRT > interval_deflate_LRT) // ef það er kominn tími á að mæla
+    //if(millis() - timer_deflate_LRT > interval_deflate_LRT) // If it's time to measure
     if(timer_deflate_LRT >= interval_deflate_LRT)
     {
-      tiretoken = 2; //Förum síðan í næsta dekk eftir þessa mælingu
-      read_LRT(); // Lesum þrýsting
+      tiretoken = 2; //Go to next tyre
+      read_LRT(); // Read pressure
       updateValues();
       timer_deflate_LRT = 0;
       timer_measure = millis();
     }
-  } // Lækkun þrýstings fall lokar
+  } // Decrement pressure function closes
 
-  if(selectedPressure_LRT - pressure_LRT>0.25) // þegar það er of lítill þrýstingur
+  if(selectedPressure_LRT - pressure_LRT>0.25) // If pressure is too low
   {
-    digitalWrite(TIRE_LR,ON); // Opnum loka í dekk
-    digitalWrite(AIR_IN,ON); // Opnum fyrir loft inn
+    digitalWrite(TIRE_LR,ON); // Open valve to tyre
+    digitalWrite(AIR_IN,ON); // Open valve for air in
 
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    // Measure valve base pressure
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-      previousMillis2 = millis(); // Endurstillum teljarann
+      updateBaseValue(); // Update measurement on base valve (experimental)
+      previousMillis2 = millis(); // Reset counter
       tirePaint(C_INNDAELING,tiretoken);
       timer_inflate_LRT = timer_inflate_LRT+1000;
     }
 
     if(timer_inflate_LRT >= interval_inflate_LRT)
     {
-      tiretoken = 2; //Förum síðan í næsta dekk eftir þessa mælingu
-      read_LRT(); // Lesum vinstra afturdekk
-      updateValues(); // Uppfærum gildin
-      timer_inflate_LRT = 0; // rest timer
+      tiretoken = 2; //Go to next tyre
+      read_LRT(); // Read Left Rear tyre
+      updateValues(); // Update valuesn
+      timer_inflate_LRT = 0; // Reset counter
       timer_measure = millis();
     }
-  }// Hækkun þrýstings fall lokar
+  }// Increment pressure function closes
 
   else if(((pressure_LRT)-(selectedPressure_LRT))<=0.25 && (((selectedPressure_LRT) - (pressure_LRT))<=0.25 ))
   {
@@ -148,26 +148,26 @@ void adjustLFT()
 {
   timerSelector();
   //DEFLATE
-  if(pressure_LFT - selectedPressure_LFT > 0.25) // þegar það er of mikill þrýstingur
+  if(pressure_LFT - selectedPressure_LFT > 0.25) // If pressure is too high
   {
-    digitalWrite(TIRE_LF,ON); // Opnum loka í dekk
-    digitalWrite(AIR_OUT,ON); // Opnum fyrir loft út
+    digitalWrite(TIRE_LF,ON); // Open valve to tyre
+    digitalWrite(AIR_OUT,ON); // Open valve to let out air
 
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    // Measure valve base pressure
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-      previousMillis2 = millis(); // Endurstillum teljarann
-      tirePaint(C_URHLEYPING,tiretoken); // Litum dekk fjólublátt
+      updateBaseValue(); // Update measurement on base valve (experimental)
+      previousMillis2 = millis(); // Reset counter
+      tirePaint(C_URHLEYPING,tiretoken); // Change colour of tyre to violet
       timer_deflate_LFT = timer_deflate_LFT + 1000;
     }
 
-    if(timer_deflate_LFT >= interval_deflate_LFT) // ef það er kominn tími á að mæla
+    if(timer_deflate_LFT >= interval_deflate_LFT) // If it's time to measure
     {
-      tiretoken = 3; //Förum síðan í næsta dekk eftir þessa mælingu
-      read_LFT(); // Lesum þrýsting
-      updateValues(); // Uppfærum gildi
-      timer_deflate_LFT = 0; //endurstillum teljara
+      tiretoken = 3; //Go to next tyre
+      read_LFT(); // Read pressure
+      updateValues(); // Update values
+      timer_deflate_LFT = 0; //Reset counter
       timer_measure = millis();
     }
 
@@ -179,8 +179,8 @@ void adjustLFT()
     digitalWrite(TIRE_LF,ON);
     digitalWrite(AIR_IN,ON); 
 
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    // Measure valve base pressure
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
       updateBaseValue(); 
       previousMillis2 = millis(); 
@@ -188,12 +188,12 @@ void adjustLFT()
       timer_inflate_LFT = timer_inflate_LFT + 1000;
     }
 
-    if(timer_inflate_LFT >= interval_inflate_LFT) // Ef það er kominn tími til að mæla
+    if(timer_inflate_LFT >= interval_inflate_LFT) // If it's time to measure
     {
       tiretoken = 3; // Let us advance to next tire
-      read_LFT(); // Lesum vinstra framdekk
-      updateValues(); // Uppfærum gildin
-      timer_inflate_LFT = 0; // endurstillum teljarann
+      read_LFT(); // Read Left Front Tyre
+      updateValues(); // Update valuesn
+      timer_inflate_LFT = 0; // Reset counter
       timer_measure = millis();
     }
   }// INFLATE closes
@@ -208,30 +208,30 @@ void adjustLFT()
 
 }// adjustLFT ends
 
-//Til að stilla hægra framdekk
+//To adjust Right Front Tyre
 void adjustRFT()
 {
   timerSelector();
   // DEFLATE
-  if(pressure_RFT - selectedPressure_RFT > 0.25) // þegar það er of mikill þrýstingur
+  if(pressure_RFT - selectedPressure_RFT > 0.25) // If pressure is too high
   {
-    digitalWrite(TIRE_RF,ON); // Opnum loka í dekk
-    digitalWrite(AIR_OUT,ON); // Opnum fyrir loft út
+    digitalWrite(TIRE_RF,ON); // Open valve to tyre
+    digitalWrite(AIR_OUT,ON); // Open valve to let out air
 
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    // Measure valve base pressure
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-      previousMillis2 = millis(); // Endurstillum teljarann
-      tirePaint(C_URHLEYPING,tiretoken); // Litum dekk fjólublátt
+      updateBaseValue(); // Update measurement on base valve (experimental)
+      previousMillis2 = millis(); // Reset counter
+      tirePaint(C_URHLEYPING,tiretoken); // Change colour of tyre to violet
       timer_deflate_RFT = timer_deflate_RFT+1000;
     }
 
-    //if(millis() - timer_deflate_LRT > interval_deflate_LRT) // ef það er kominn tími á að mæla
+    //if(millis() - timer_deflate_LRT > interval_deflate_LRT) // If it's time to measure
     if(timer_deflate_RFT >= interval_deflate_RFT)
     {
-      tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
-      read_RFT(); // Lesum þrýsting
+      tiretoken = 4; //Go to next tyre
+      read_RFT(); // Read pressure
       updateValues();
       timer_deflate_RFT = 0;
       timer_measure = millis();
@@ -239,29 +239,29 @@ void adjustRFT()
   } // DEFLATE Close
 
   // INFLATE
-  if(selectedPressure_RFT - pressure_RFT>0.25) // þegar það er of lítill þrýstingur
+  if(selectedPressure_RFT - pressure_RFT>0.25) // If pressure is too low
   {
-    digitalWrite(TIRE_RF,ON); // Opnum loka í dekk
-    digitalWrite(AIR_IN,ON); // Opnum fyrir loft inn
+    digitalWrite(TIRE_RF,ON); // Open valve to tyre
+    digitalWrite(AIR_IN,ON); // Open valve for air in
 
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    // Measure valve base pressure
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-      previousMillis2 = millis(); // Endurstillum teljarann
+      updateBaseValue(); // Update measurement on base valve (experimental)
+      previousMillis2 = millis(); // Reset counter
       tirePaint(C_INNDAELING,tiretoken);
       timer_inflate_RFT = timer_inflate_RFT+1000;
     }
 
     if(timer_inflate_RFT >= interval_inflate_RFT)
     {
-      tiretoken = 4; //Förum síðan í næsta dekk eftir þessa mælingu
-      read_LRT(); // Lesum vinstra afturdekk
-      updateValues(); // Uppfærum gildin
-      timer_inflate_LRT = 0; // rest timer
+      tiretoken = 4; //Go to next tyre
+      read_LRT(); // Read Left Rear tyre
+      updateValues(); // Update valuesn
+      timer_inflate_LRT = 0; // Reset counter
       timer_measure = millis();
     }
-  }// Hækkun þrýstings fall lokar
+  }// Increment pressure function closes
 
   else if(((pressure_RFT)-(selectedPressure_RFT))<=0.25 && (((selectedPressure_RFT) - (pressure_RFT))<=0.25 ))
   {
@@ -270,61 +270,61 @@ void adjustRFT()
     timer_deflate_RFT = 0;
     timer_measure = millis();
   }
-}// Lokum adjustRFT
+}// Close adjustRFT
 
-//Til að stilla hægra afturdekk
+//To adjust Right Rear Tyre
 void adjustRRT()
 {
   timerSelector();
   // DEFLATE
-  if(pressure_RRT -selectedPressure > 0.25) // þegar það er of mikill þrýstingur
+  if(pressure_RRT -selectedPressure > 0.25) // If pressure is too high
   {
-    digitalWrite(TIRE_RR,ON); // Opnum loka í dekk
-    digitalWrite(AIR_OUT,ON); // Opnum fyrir loft út
+    digitalWrite(TIRE_RR,ON); // Open valve to tyre
+    digitalWrite(AIR_OUT,ON); // Open valve to let out air
 
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    // Measure valve base pressure
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-      previousMillis2 = millis(); // Endurstillum teljarann
-      tirePaint(C_URHLEYPING,tiretoken); // Litum dekk fjólublátt
+      updateBaseValue(); // Update measurement on base valve (experimental)
+      previousMillis2 = millis(); // Reset counter
+      tirePaint(C_URHLEYPING,tiretoken); // Change colour of tyre to violet
       timer_deflate_RRT = timer_deflate_RRT + 1000;
     }
 
-    if(timer_deflate_RRT >= interval_deflate_RRT) // ef það er kominn tími á að mæla
+    if(timer_deflate_RRT >= interval_deflate_RRT) // If it's time to measure
     {
-      tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
-      read_RRT(); // Lesum þrýsting
-      updateValues(); // Uppfærum gildi
-      timer_deflate_RRT = 0; // endurstillum teljarann
+      tiretoken = 1; //Go to next tyre
+      read_RRT(); // Read pressure
+      updateValues(); // Update values
+      timer_deflate_RRT = 0; // Reset counter
       timer_measure = millis();
     }
 
   }// DEFLATE closes
 
   // INFLATE
-  if(selectedPressure - pressure_RRT > 0.25) // þegar það er of lítill þrýstingur
+  if(selectedPressure - pressure_RRT > 0.25) // If pressure is too low
   {
-    digitalWrite(TIRE_RR,ON); // Opnum loka í dekk
-    digitalWrite(AIR_IN,ON); // Opnum fyrir loft inn
-    // Mælum þrýsting á kistu
-    if(millis() - previousMillis2 > 1000) // Ef það er kominn tími til að mæla
+    digitalWrite(TIRE_RR,ON); // Open valve to tyre
+    digitalWrite(AIR_IN,ON); // Open valve for air in
+    // Measure valve base pressure
+    if(millis() - previousMillis2 > 1000) // If it's time to measure
     {
-      updateBaseValue(); // Uppfærum mælingu á kistu (Þetta er experimental)
-      previousMillis2 = millis(); // Endurstillum teljarann
+      updateBaseValue(); // Update measurement on base valve (experimental)
+      previousMillis2 = millis(); // Reset counter
       timer_inflate_RRT = timer_inflate_RRT + 1000;
-      tirePaint(C_INNDAELING,tiretoken); //Litum dekk
+      tirePaint(C_INNDAELING,tiretoken); //Change colour on tyre
     }
 
-    if(timer_inflate_RRT > interval_inflate_RRT) // Ef það er kominn tími til að mæla
+    if(timer_inflate_RRT > interval_inflate_RRT) // If it's time to measure
     {
-      tiretoken = 1; //Förum síðan í næsta dekk eftir þessa mælingu
-      read_RRT(); // Lesum vinstra afturdekk
-      updateValues(); // Uppfærum gildin
-      timer_inflate_RRT = 0; // endurstillum teljarann
+      tiretoken = 1; // Go to next tyre
+      read_RRT(); // Read Left Rear tyre
+      updateValues(); // Update valuesn
+      timer_inflate_RRT = 0; // Reset counter
       timer_measure = millis();
     }
-  }// Hækkun þrýstings fall lokar
+  }// Increment pressure function closes
 
   else if(((pressure_RRT)-(selectedPressure_RRT))<=0.25 && (((selectedPressure_RRT) - (pressure_RRT))<=0.25 ))
   {
@@ -334,4 +334,4 @@ void adjustRRT()
     timer_measure = millis();
   }
     
-}// Lokum adjustRRT
+}// Close adjustRRT
