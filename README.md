@@ -1,5 +1,6 @@
 # ATACS-hw1.7-swv1.2.0
- 
+English below
+
 Uppfærslur má nálgast hér: https://ulfraf.space/files/ATACS-V1.7.x-updater-current.7z
 
 Til að opna 7z skránna gæti þurft p7zip forritið. Það má nálgast hér: https://www.7-zip.org/download.html
@@ -40,4 +41,46 @@ að einangra loftkútinn frá kerfinu með segulrofa, sem lokar á kútinn á me
 Ath breyta þarf línu í kóðasafninu Touchscreen.h fyrir ATmega1284P
 
 "TouchScreen.h: Lína 12 í TouchScreen.h bæta þarf við:
+>||defined(__AVR_ATmega1284P__)"
+
+# ATACS-hw1.7-swv1.2.0 English
+ 
+Latest updates: https://ulfraf.space/files/ATACS-V1.7.x-updater-current.7z
+
+If you can't open 7zip you can get the program here: https://www.7-zip.org/download.html
+
+Manual: https://ulfraf.space/files/ATACS-Manual-V1.pdf
+
+
+### Function:
+
+The program controls 6 channel MOSFET outputs to a pneumatic valve base, touch screen and reads a pressure sensor. 
+The values are then reported on the TFT. On the TFT pressure is selected and which mode the program is in.
+If set to auto the program will periodically measure all the tyres (one at a time) and adjust the pressure if needed.
+
+The core of the system is ATmega1284P with mightycore bootloader along with ILI9341 display from Adafruit. Since the 
+ecosystem is Arduino it shouldn't be too difficult to port the code to a different arduino compatible MCU, or any other MCU.
+The ATmega328P does not have enough memory to control both the TFT and the system, but could be split up if there's desire to do so.
+
+The program works with a 2+4 valve base (2 valves for in/out and one valve per tyre).
+The pressure sensor is located on the PCB but modifications to run on different setup is probably not too difficult.
+The system is intended to be used only with an air compressor, and not with an extra air pressure tank. If you absolutely want
+to use such a thing, please add a solenoid to cut off the tank while the system is active. If the air compressor is only used for the
+ATACS the solenoid for AIR_IN can be omitted and that output can be used to drive a relay for the air compressor.
+
+    Outputs are as following:
+    * 6 N-channel MOSFET
+    * RS232 port for addons and debugging.
+    * 15 pin connector for display
+    * HwV1.8 has CAN BUS module (Tbd)
+
+### Libraries:
+* TouchScreen.h  For touchscreen
+* Adafruit_GFX.h  For drawing graphics.
+* Adafruit_ILI9341.h  For communication to ILI9341 on the TFT.
+
+
+Modifications for the touchscreen library so it works with ATmega1284P
+
+"TouchScreen.h: Line 12 in TouchScreen.h add:
 >||defined(__AVR_ATmega1284P__)"
